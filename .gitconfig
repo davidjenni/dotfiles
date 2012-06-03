@@ -1,0 +1,46 @@
+[alias]
+    ai = add --interactive
+    one = show -s --pretty='format:%h (%s)'
+    ci = commit
+    co = checkout
+    d = diff
+    dc = diff --cached
+    go = checkout -b
+    l = log --pretty=oneline -n 20 --graph
+    changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+    short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+    changelog = log --pretty=format:\" * %s\"
+    shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+    r = remote -v
+    st = status
+    # reset
+    unstage = reset HEAD              # remove files from index (tracking)
+    uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
+    filelog = log -u                  # show changes to a file
+    mt = mergetool                    # fire up the merge tool
+[user]
+	name = David Jenni
+	email = david@davidjenni.com
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+    grep = auto
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[core]
+excludesfile = $HOME/.gitignore
+[diff]
+    mmemonicprefix = true
+[difftool]
+	tool = vimdiff
+[merge]
+    log = true
+    summary = true
+[mergetool]
+	tool = vimdiff
