@@ -19,14 +19,19 @@
     filelog = log -u                  # show changes to a file
     mt = mergetool                    # fire up the merge tool
 [user]
-	name = David Jenni
-	email = david@davidjenni.com
+# Set your git user info in .secrets and soure it from your shell startup:
+#export GIT_AUTHOR_NAME='Your Name'
+#export GIT_AUTHOR_EMAIL='you@domain.com'
+#export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+#export GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL
+    name = David Jenni
+    email = david@davidjenni.com
 [color]
-	ui = auto
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
     grep = auto
 [color "diff"]
     meta = yellow bold
@@ -38,9 +43,9 @@ excludesfile = $HOME/.gitignore
 [diff]
     mmemonicprefix = true
 [difftool]
-	tool = vimdiff
+    tool = vimdiff
 [merge]
     log = true
     summary = true
 [mergetool]
-	tool = vimdiff
+    tool = vimdiff

@@ -101,6 +101,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f ~/.secrets ]; then
+    . ~/.secrets
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -139,9 +143,6 @@ fi
 
 if [  -x "/opt/Sublime2/sublime_text" ]; then
     alias s2='/opt/Sublime2/sublime_text'
-fi
-if  [ -x "/sw/bin/init.sh" ]; then
-    . /sw/bin/init.sh
 fi
 
 export PKG_CONFIG_PATH="/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/"
