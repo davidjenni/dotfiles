@@ -1,7 +1,7 @@
 dot files
 =========
 
-My dotFiles for my OSX, Win32 & Linux environments. Geared towards use of git and vim.
+DotFiles for my OSX, Win32 & Linux environments. Geared towards use of git and vim.
 
 
 Status
