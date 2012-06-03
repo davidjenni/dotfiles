@@ -24,8 +24,6 @@
 #export GIT_AUTHOR_EMAIL='you@domain.com'
 #export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
 #export GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL
-    name = David Jenni
-    email = david@davidjenni.com
 [color]
     ui = auto
     diff = auto
