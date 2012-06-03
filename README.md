@@ -3,6 +3,7 @@ dot files
 
 DotFiles for my OSX, Win32 & Linux environments. Geared towards use of git and vim.
 
+Uses pathogen and git submodules to manage plugin refresh.
 
 Status
 ------

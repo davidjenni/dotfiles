@@ -1,0 +1,15 @@
+[submodule "vimfiles/bundle/pathogen"]
+	path = vimfiles/bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vimfiles/bundle/vim-fugitive"]
+	path = vimfiles/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vimfiles/bundle/nerdtree"]
+	path = vimfiles/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vimfiles/bundle/cscope"]
+	path = vimfiles/bundle/cscope
+	url = https://github.com/brookhong/cscope.vim.git
+[submodule "vimfiles/bundle/command-t"]
+	path = vimfiles/bundle/command-t
+	url = git://git.wincent.com/command-t.git

@@ -6,6 +6,7 @@ behave xterm
 set title
 
 " wget --no-check-certificate https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim
+runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
 let mapleader = ","
