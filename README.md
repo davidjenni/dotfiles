@@ -8,7 +8,13 @@ Uses pathogen and git submodules to manage plugin refresh.
 Bootstrap
 ---------
 To bootstrap on a clean login, copy the bootstrap script and execute it. For OSX & Linux,
-use [this shell script](https://github.com/w7cf/dotfiles/blob/master/bootstrap.sh); for Win32 this is your cmd script
+use [this shell script](https://github.com/w7cf/dotfiles/blob/master/bootstrap.sh); for Win32 this is your cmd script.
+
+The script uses ssh access to github. If your login hasn't connected yet to github,
+initialize and verify the ssh connection with:
+
+    ssh -vT git@github.com
+
 
 OSX/Linux:
 
