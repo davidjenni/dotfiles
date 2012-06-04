@@ -137,9 +137,9 @@ else
     if !has("unix")
         colorscheme wombat
     else
-        "colorscheme darkblue
-        colorscheme ir_black
-"        colorscheme solarized
+"        colorscheme moria
+"        colorscheme ir_black
+        colorscheme solarized
     endif
 endif
 
