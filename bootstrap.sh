@@ -35,7 +35,8 @@ saveLink() {
 # main:
 myGitHub='git@github.com:w7cf/dotfiles.git'
 declare -a dotFiles=( .bashrc .gitconfig .gitignore .inputrc .pythonrc.py .vimrc );
-dotPath=$(dirname $this)
+#dotPath=$(dirname $this)
+dotPath=~/dotfiles
 
 getRepository $myGitHub
 
