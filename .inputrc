@@ -1,0 +1,8 @@
+# configure readline library for bash etc.
+set editing-mode vi
+set show-all-if-ambiguous on
+set completion-ignore-case on
+set meta-flag on
+set convert-meta off
+set output-meta on
+set bell-style visible

@@ -1,13 +1,19 @@
 " vim config for Linux, OSX & Win32
-" dj 2010/12/12
 
 set nocompatible
+
+set runtimepath^=~/dotfiles/vimfiles
+
 behave xterm
 set title
 
 " wget --no-check-certificate https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim
+" to refresh pathogen and plugins:
+" cd ~/dotfiles
+" git submodule foreach git pull origin master
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
+call pathogen#helptags()
 
 let mapleader = ","
 
@@ -31,7 +37,8 @@ if has("unix") || has("mac")
     set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
     set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 else
-    set dir=$HOMEPATH,$TEMP
+    set directory=$HOMEPATH/.vim-tmp,$HOMEPATH/tmp,$TEMP
+    set backupdir=$HOMEPATH/.vim-tmp,$HOMEPATH/tmp,$TEMP
 endif
 set incsearch
 set smartcase

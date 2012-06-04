@@ -7,6 +7,7 @@
     dc = diff --cached
     go = checkout -b
     l = log --pretty=oneline -n 20 --graph
+    ll = log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     changelog = log --pretty=format:\" * %s\"
