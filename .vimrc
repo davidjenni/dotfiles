@@ -232,3 +232,8 @@ nmap <leader>ll :lclose<CR>
 " use - and + to resize horizontal splits
 map - <C-W>-
 map + <C-W>+
+
+" use Ack.vim for Ag:
+" Ag from: https://github.com/ggreer/the_silver_searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
