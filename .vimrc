@@ -104,7 +104,7 @@ imap jj <Esc> " easy on my left pinky
 imap uu _
 imap hh =>
 imap aa @
-vmap // y/<C-R>"<CR>       : search for visually highlighted text
+vmap // y/<C-R>"<CR>       " search for visually highlighted text
 
 noremap <C-Tab>         :bnext<CR>
 inoremap <C-Tab>        :bnext<CR>
@@ -144,8 +144,8 @@ else
 endif
 
 " 2 additional <CR>s to get past prompting
-map <F6> : call SaveAndMake()<CR><CR><CR>
-map <S-F6> : call SaveAndRebuild()<CR><CR><CR>
+map <leader>m : call SaveAndMake()<CR><CR><CR>
+map <leader>M : call SaveAndRebuild()<CR><CR><CR>
 
 func! SaveAndMake()
     exec "w"
@@ -224,6 +224,8 @@ autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
 " shortcuts to open/close the quickfix window
 nmap <leader>c :copen<CR>
 nmap <leader>cc :cclose<CR>
+nmap <leader>n :cnext<CR>
+nmap <leader>N :cprevious<CR>
 
 nmap <leader>l :lopen<CR>
 nmap <leader>ll :lclose<CR>

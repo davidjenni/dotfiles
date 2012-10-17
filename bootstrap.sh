@@ -48,4 +48,6 @@ for aFile in "${dotFiles[@]}"
 do
     saveLink $aFile
 done
+cp $dotPath/.secrets ~/
+echo Make sure to edit ~/.secrets and customize to your name and email for GIT
 
