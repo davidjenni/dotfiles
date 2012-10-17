@@ -222,15 +222,12 @@ autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
 autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " shortcuts to open/close the quickfix window
-nmap <leader>c :copen<CR>
-nmap <leader>cc :cclose<CR>
-nmap <leader>n :cnext<CR>
-nmap <leader>N :cprevious<CR>
+nmap <leader>q :copen<CR>
+nmap <leader>qq :cclose<CR>
+" use he: unimpaired for quickfix navigation
 
 nmap <leader>l :lopen<CR>
 nmap <leader>ll :lclose<CR>
-nmap <leader>ln :lN<CR>
-nmap <leader>lp :lN<CR>
 
 " use - and + to resize horizontal splits
 map - <C-W>-
