@@ -15,12 +15,12 @@
     r = remote -v
     st = status
     # reset
-    unstage = reset HEAD              # remove files from index (tracking)
+    unstage = checkout --             # remove files from index (tracking) and revert to previous state
     uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
     filelog = log -u                  # show changes to a file
     mt = mergetool                    # fire up the merge tool
 [user]
-# Set your git user info in .secrets and soure it from your shell startup:
+# Set your git user info in .secrets and source it from your shell startup:
 #export GIT_AUTHOR_NAME='Your Name'
 #export GIT_AUTHOR_EMAIL='you@domain.com'
 #export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
@@ -48,9 +48,3 @@ excludesfile = $HOME/.gitignore
     summary = true
 [mergetool]
     tool = vimdiff
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
