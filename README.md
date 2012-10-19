@@ -20,7 +20,7 @@ OSX/Linux:
 
     cd ~
     wget https://github.com/w7cf/dotfiles/raw/master/bootstrap.sh
-    sh bootstrap.sh
+    bash bootstrap.sh
 
 Win32:
 

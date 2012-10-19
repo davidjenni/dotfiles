@@ -33,8 +33,8 @@ saveLink() {
 }
 
 # main:
-myGitHub='git@github.com:w7cf/dotfiles.git'
-declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py vimrc secrets );
+myGitHub='https://github.com/w7cf/dotfiles.git'
+declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py vimrc secrets )
 #dotPath=$(dirname $this)
 dotPath=~/dotfiles
 
