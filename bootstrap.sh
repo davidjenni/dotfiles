@@ -21,7 +21,7 @@ getRepository() {
 }
 
 saveLink() {
-    local orgFile=~/$1
+    local orgFile=~/.$1
     if [ -s "$orgFile" ]
     then
         echo "Saving $orgFile ..."
@@ -34,7 +34,7 @@ saveLink() {
 
 # main:
 myGitHub='git@github.com:w7cf/dotfiles.git'
-declare -a dotFiles=( .bashrc .gitconfig .gitignore .inputrc .pythonrc.py .vimrc );
+declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py vimrc secrets );
 #dotPath=$(dirname $this)
 dotPath=~/dotfiles
 
@@ -48,6 +48,5 @@ for aFile in "${dotFiles[@]}"
 do
     saveLink $aFile
 done
-cp $dotPath/.secrets ~/
 echo Make sure to edit ~/.secrets and customize to your name and email for GIT
 
