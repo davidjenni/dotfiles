@@ -34,7 +34,7 @@ saveLink() {
 
 # main:
 myGitHub='https://github.com/w7cf/dotfiles.git'
-declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py vimrc secrets )
+declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py vimrc )
 #dotPath=$(dirname $this)
 dotPath=~/dotfiles
 
@@ -48,5 +48,14 @@ for aFile in "${dotFiles[@]}"
 do
     saveLink $aFile
 done
+
+cat << EndOfSecrets > bla
+# Set your git user info in .secrets and source it from your shell startup:
+export GIT_AUTHOR_NAME='<add-your-name'
+export GIT_AUTHOR_EMAIL='<add-your-email>'
+export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+export GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL
+EndOfSecrets > ~/.secrets
+
 echo Make sure to edit ~/.secrets and customize to your name and email for GIT
 
