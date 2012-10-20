@@ -27,9 +27,9 @@ saveLink() {
         echo "Saving $orgFile ..."
         # don't just move, do copy to break any previous soft link
         cp $orgFile $bkpDir/$1
-        rm $orgFile
+        rm -f $orgFile
     fi
-    ln -s $dotPath/$1 $orgFile
+    ln $dotPath/$1 $orgFile
 }
 
 # main:
