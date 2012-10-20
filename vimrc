@@ -124,7 +124,7 @@ cnoremap <S-C-Tab>      :bprevious<CR>
 if has('gui_running')
     set background=dark
     "colorscheme solarized
-    colorscheme molokai2
+    colorscheme molokai
     let g:molokai_original = 0
     set lines=50
     set columns=160
@@ -143,7 +143,7 @@ else
 "        colorscheme moria
 "        colorscheme ir_black
         "colorscheme solarized
-        colorscheme molokai2
+        colorscheme molokai
     endif
 endif
 
