@@ -44,6 +44,7 @@ set incsearch
 set smartcase
 set ignorecase
 set cursorline
+set cursorcolumn
 
 " No sound on errors
 set noerrorbells
@@ -122,7 +123,9 @@ cnoremap <S-C-Tab>      :bprevious<CR>
 " http://ethanschoonover.com/solarized
 if has('gui_running')
     set background=dark
-    colorscheme solarized
+    "colorscheme solarized
+    colorscheme molokai2
+    let g:molokai_original = 0
     set lines=50
     set columns=160
     if has("gui-win32")
@@ -139,7 +142,8 @@ else
     else
 "        colorscheme moria
 "        colorscheme ir_black
-        colorscheme solarized
+        "colorscheme solarized
+        colorscheme molokai2
     endif
 endif
 
@@ -187,7 +191,7 @@ endfunc
 
 " Source the vimrc file after saving it
 if has("autocmd")
-  autocmd bufwritepost $MYVIMRC source $MYVIMRC
+"  autocmd bufwritepost $MYVIMRC source $MYVIMRC
 endif
 
 nmap <leader>v :split $MYVIMRC<CR>
