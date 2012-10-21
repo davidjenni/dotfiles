@@ -38,6 +38,12 @@ set complete=.,w,t
 set nobackup
 set noswapfile
 set incsearch
+
+" persist undo across sessions
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
+
 set smartcase
 set ignorecase
 set cursorline
@@ -48,6 +54,10 @@ set noerrorbells
 set visualbell
 set t_vb=
 set tm=500
+
+if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
+    set t_Co=256
+endif
 
 if &t_Co > 2 || has("gui_running")
   syntax on
