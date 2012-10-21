@@ -7,6 +7,9 @@ set runtimepath^=~/dotfiles/vimfiles
 behave xterm
 set title
 
+" see also: http://items.sjbach.com/319/configuring-vim-right
+runtime macros/matchit.vim
+
 " wget --no-check-certificate https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim
 " to refresh pathogen and plugins:
 " cd ~/dotfiles
@@ -21,8 +24,6 @@ set backspace=indent,eol,start
 
 " Allow switching edited buffers without saving
 set hidden
-"set nobackup
-"set noswapfile
 set writebackup
 set history=500
 set ruler
@@ -30,16 +31,12 @@ set showcmd
 set shortmess=atI
 
 set wildmenu
-set wildmode=longest,list
+" set wildmode=longest,list
+set wildmode=list:longest,list:full
+set complete=.,w,t
 
- " Auto-backup files and .swp files don't go to pwd
-if has("unix") || has("mac")
-    set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-    set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-else
-    set directory=$HOMEPATH/.vim-tmp,$HOMEPATH/tmp,$TEMP
-    set backupdir=$HOMEPATH/.vim-tmp,$HOMEPATH/tmp,$TEMP
-endif
+set nobackup
+set noswapfile
 set incsearch
 set smartcase
 set ignorecase
@@ -60,10 +57,22 @@ endif
 if has ("autocmd")
   " Enable file type detection
   filetype plugin indent on
-  " augroup vimrxEx
-  " au!
-  " autocmd FileType text setlocal textwidth=78
-  " augroup END
+  augroup vimrxEx
+      au!
+      autocmd FileType text setlocal textwidth=78
+
+      " Source the vimrc file after saving it
+      if has("autocmd")
+          "  autocmd bufwritepost $MYVIMRC source $MYVIMRC
+      endif
+
+      " Auto change the directory to the current file I'm working on
+      " autocmd BufEnter * lcd %:p:h
+
+      autocmd filetype help set nonumber      " no line numbers when viewing help
+      autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
+      autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
+  augroup END
 else
   set autoindent
 endif
@@ -85,6 +94,7 @@ set sidescroll=1
 set sidescrolloff=4
 set listchars=tab:>.,trail:#,extends:>,precedes:<
 set list
+set gdefault        " :s and :g goes global by default
 
 "set statusline=%<%f\ %h%m%r=%-14.(%l,%c%V%)\ %P
 set statusline=%n:%<%f%m%r%h%w%=%y\ (\%03.3b/0x\%02.2B)\ \ %5.l,%3(%c%V%)\ %P
@@ -97,6 +107,10 @@ if has("gui")
     set lines=50
     set columns=160
 endif
+
+"  treat both jump-to-mark the same (jump to line AND column)
+nnoremap ' `
+nnoremap ` '
 
 nnoremap <esc> :nohlsearch<cr><esc>
 map Q gq
@@ -114,16 +128,34 @@ noremap <S-C-Tab>       :bprevious<CR>
 inoremap <S-C-Tab>      :bprevious<CR>
 cnoremap <S-C-Tab>      :bprevious<CR>
 
+" buffer switching/management, might as well use those keys for something useful
+map <Right> :bnext<CR>
+imap <Right> <ESC>:bnext<CR>
+map <Left> :bprev<CR>
+imap <Left> <ESC>:bprev<CR>
+map <Del> :bd<CR>
+" switch upper/lower window:
+nmap <Down> :wincmd j<cr>
+nmap <Up> :wincmd k<cr>
+" remap terminal codes for arrows
+nnoremap <Esc>A :wincmd k<cr>
+nnoremap <Esc>B :wincmd j<cr>
+nnoremap <Esc>C :bnext<CR>
+nnoremap <Esc>D :bprev<CR>
+
+" use - and + to resize horizontal splits
+map - <C-W>-
+map + <C-W>+
+
+
 " src: http://files.werx.dk/wombat.vim
 " http://dengmao.wordpress.com/2007/01/22/vim-color-scheme-wombat/
-"colorscheme wombat
-
-" src:
-" wget --no-check-certificate https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim
 " http://ethanschoonover.com/solarized
+" wget --no-check-certificate https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim
 if has('gui_running')
-    set background=dark
-    "colorscheme solarized
+    " set background=dark
+    " colorscheme solarized
+    set background=light
     colorscheme molokai
     let g:molokai_original = 0
     set lines=50
@@ -140,9 +172,10 @@ else
     if !has("unix")
         colorscheme wombat
     else
-"        colorscheme moria
-"        colorscheme ir_black
-        "colorscheme solarized
+        " colorscheme moria
+        " colorscheme ir_black
+        " colorscheme solarized
+        set background=light
         colorscheme molokai
     endif
 endif
@@ -189,11 +222,6 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Source the vimrc file after saving it
-if has("autocmd")
-"  autocmd bufwritepost $MYVIMRC source $MYVIMRC
-endif
-
 nmap <leader>v :split $MYVIMRC<CR>
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -217,14 +245,6 @@ endif
 " shortcut to toggle spelling
 nmap <leader>s :setlocal spell! spelllang=en_us<CR>
 
-" Auto change the directory to the current file I'm working on
-" conflicts with Command-T
-" autocmd BufEnter * lcd %:p:h
-
-autocmd filetype help set nonumber      " no line numbers when viewing help
-autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
-autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
-
 " shortcuts to open/close the quickfix window
 nmap <leader>q :copen<CR>
 nmap <leader>qq :cclose<CR>
@@ -232,10 +252,6 @@ nmap <leader>qq :cclose<CR>
 
 nmap <leader>l :lopen<CR>
 nmap <leader>ll :lclose<CR>
-
-" use - and + to resize horizontal splits
-map - <C-W>-
-map + <C-W>+
 
 " use Ack.vim for Ag:
 " Ag from: https://github.com/ggreer/the_silver_searcher
