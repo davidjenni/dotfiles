@@ -40,9 +40,11 @@ set noswapfile
 set incsearch
 
 " persist undo across sessions
-silent !mkdir ~/.vim/backups > /dev/null 2>&1
-set undodir=~/.vim/backups
-set undofile
+if (v:version >= 703)
+    silent !mkdir ~/.vim/backups > /dev/null 2>&1
+    set undodir=~/.vim/backups
+    set undofile
+endif
 
 set smartcase
 set ignorecase
