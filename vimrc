@@ -167,12 +167,14 @@ map + <C-W>+
 if has('gui_running')
     " set background=dark
     " colorscheme solarized
-    set background=light
-    colorscheme molokai
+    " set background=light
+    " colorscheme molokai
+    set background=dark
+    colorscheme base16-ocean
     let g:molokai_original = 0
     set lines=50
     set columns=160
-    if has("gui-win32")
+    if has("gui_win32")
         set guifont=Consolas:h10
     elseif has("mac")
         set guifont=Monaco:h13
@@ -182,7 +184,11 @@ if has('gui_running')
 else
     set background=dark
     if !has("unix")
-        colorscheme wombat
+        set background=dark
+        " colorscheme wombat
+        " colorscheme desert
+        colorscheme blue
+        set nocursorcolumn
     else
         " colorscheme moria
         " colorscheme ir_black
