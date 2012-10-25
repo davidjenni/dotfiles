@@ -34,6 +34,15 @@ set wildmenu
 " set wildmode=longest,list
 set wildmode=list:longest,list:full
 set complete=.,w,t
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,*.a
+if has("win16") || has("win32")
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+    set wildignore+=*.obj,*.dll,*.exe
+else
+    set wildignore+=.git\*,.hg\*,.svn\*
+endif
+
 
 set nobackup
 set noswapfile
