@@ -64,7 +64,7 @@ set cursorcolumn
 set noerrorbells
 set visualbell
 set t_vb=
-set tm=500
+set timeoutlen=500
 
 if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
     set t_Co=256
@@ -83,9 +83,7 @@ if has ("autocmd")
       autocmd FileType text setlocal textwidth=78
 
       " Source the vimrc file after saving it
-      if has("autocmd")
-          "  autocmd bufwritepost $MYVIMRC source $MYVIMRC
-      endif
+      " autocmd bufwritepost $MYVIMRC source $MYVIMRC
 
       " Auto change the directory to the current file I'm working on
       " autocmd BufEnter * lcd %:p:h
@@ -93,6 +91,15 @@ if has ("autocmd")
       autocmd filetype help set nonumber      " no line numbers when viewing help
       autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
       autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
+
+      autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+
+      " Treat files as XML
+      autocmd BufNewFile,BufRead *.rss setfiletype xml
+      autocmd BufNewFile,BufRead *.proj setfiletype xml
+      autocmd BufNewFile,BufRead *.csproj setfiletype xml
+      autocmd BufNewFile,BufRead *.targets setfiletype xml
+      autocmd BufNewFile,BufRead *.settings setfiletype xml
   augroup END
 else
   set autoindent
@@ -136,11 +143,14 @@ nnoremap ` '
 nnoremap <esc> :nohlsearch<cr><esc>
 map Q gq
 
-imap jj <Esc> " easy on my left pinky
+" easy on my left pinky
+imap jj <Esc>
+imap jk <Esc> " easy on my left pinky
 imap uu _
 imap hh =>
 imap aa @
-vmap // y/<C-R>"<CR>       " search for visually highlighted text
+" search for visually highlighted text
+vmap // y/<C-R>"<CR>
 
 noremap <C-Tab>         :bnext<CR>
 inoremap <C-Tab>        :bnext<CR>
