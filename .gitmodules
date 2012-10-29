@@ -40,3 +40,6 @@
 [submodule "vimfiles/bundle/syntastic"]
 	path = vimfiles/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "vimfiles/bundle/csapprox"]
+	path = vimfiles/bundle/csapprox
+	url = https://github.com/godlygeek/csapprox.git
