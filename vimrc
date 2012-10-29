@@ -178,6 +178,8 @@ nnoremap <Esc>D :bprev<CR>
 map - <C-W>-
 map + <C-W>+
 
+" undo-tree panel:
+nnoremap <F5> :UndotreeToggle<cr>
 
 " src: http://files.werx.dk/wombat.vim
 " http://dengmao.wordpress.com/2007/01/22/vim-color-scheme-wombat/
