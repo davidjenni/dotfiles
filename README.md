@@ -23,8 +23,12 @@ OSX/Linux:
     bash bootstrap.sh
 
 Win32:
+	* install [Git](http://git-scm.com/download/win) into the default location,
+	  deselect all options (no explorer integration, no PATH modifications)
+	* open cmd prompt and run:
 
-    tbd
+    "%ProgramFiles(x86)%\git\bin\curl.exe" -L -o "%temp%\bootstrap.cmd" https://github.com/davidjenni/dotfiles/raw/master/bootstrap.cmd
+    "%temp%\bootstrap.cmd"
 
 The separately downloaded bootstrap script can be deleted once the dotfiles repo is created.
 
