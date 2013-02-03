@@ -15,8 +15,8 @@ set MY_BIN=%HOME%
 set WIN_BIN=%MY_BIN%\winUtils
 
 set PATH=%PATH%;%MY_BIN%\dotfiles\win
-if exist %MY_BIN%\Dropbox\Bin\nul set PATH=%PATH%;%MY_BIN%\Dropbox\Bin
-if exist d:\%USERNAME%\Dropbox\Bin\nul set PATH=%PATH%;d:\%USERNAME%\Dropbox\Bin
+if exist %USERPROFILE%\SkyDrive\Bin\Win\nul set PATH=%PATH%;%USERPROFILE%\SkyDrive\Bin\Win
+set PATH=%PATH%;%MY_BIN%\PuTTY
 set PATH=%PATH%;%MY_BIN%\vim\vim73
 set PATH=%PATH%;%ProgramFiles%\TortoiseHg
 set PATH=%PATH%;%ProgramFiles(x86)%\Git\bin

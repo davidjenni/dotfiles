@@ -1,11 +1,6 @@
 @if "%_echo%"=="" echo off
 setlocal EnableDelayedExpansion
 
-set _HERE=%~dp0
-set HERE=%_HERE:~0,-1%
-set _HERE=
-echo HERE=%HERE%
-
 set _vimOrigin=ftp://ftp.vim.org/pub/vim/pc
 set _vimVersion=73_46
 
