@@ -29,6 +29,9 @@ exit /b 4
     call "%_gitExe%" clone %githubDotfiles% %dotPath%
     if ERRORLEVEL 1 (echo ERROR cloning git repo %githubDotfiles% & exit /b 1)
 
+    echo Cloning submodules...
+    call "%_gitExe%" submodule update --init
+
     :: to complete bootstrap, relaunch this script from freshly cloned repository
     set this=%~nx0
     call %dotPath%\%this% setup
@@ -63,7 +66,7 @@ exit /b 4
         reg add %_consolePath% /v WindowSize        /d 0x00320078       /t REG_DWORD /f > nul
         reg add %_consolePath% /v ScreenBufferSize  /d 0x23280078       /t REG_DWORD /f > nul
         reg add %_consolePath% /v FontFamily        /d 0x36             /t REG_DWORD /f > nul
-    	reg add %_consolePath% /v HistoryBufferSize /d 0x64             /t REG_DWORD /f > nul
+        reg add %_consolePath% /v HistoryBufferSize /d 0x64             /t REG_DWORD /f > nul
         reg add %_consolePath% /v FaceName          /d "Consolas"       /t REG_SZ    /f > nul
         reg add %_consolePath% /v FontSize          /d 0x000E0000       /t REG_DWORD /f > nul
         set _consolePath=
@@ -126,20 +129,28 @@ exit /b 4
 
     for /F "tokens=2,3,4,5,6,7 delims=/: " %%i in ('echo %date%:%time: =0%') do set JULIANDATE=%%k%%i%%j-%%l%%m
 
-    echo _HOME=%_HOME%
-    echo JULIANDATE=%JULIANDATE%
-
     set dotFiles=gitconfig gitignore vimrc
 
-echo .. ren %_HOME%\_vimrc %_HOME%\_vimrc.o
-echo .. mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc
-echo .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
-echo .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
+    echo saving previously sym-linked files as extension -%JULIANDATE%...
+    copy %_HOME%\.gitconfig %_HOME%\.gitconfig-%JULIANDATE% > nul 2>&1
+    del /q %_HOME%\.gitconfig > nul 2>&1
+    mklink %_HOME%\.gitconfig %_HOME%\dotfiles\gitconfig
+
+    :: TODO add .hgrc for e.g. general email and other global mercurial options
+
+    copy %_HOME%\_vimrc %_HOME%\_vimrc-%JULIANDATE% > nul 2>&1
+    del /q %_HOME%\_vimrc > nul 2>&1
+    mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc
+
+:: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
+:: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
+
+    dir /b %_HOME%\*-%JULIANDATE% 2>nul
 
     echo remap CapsLock to LeftCtrl key:
     REM see http://www.experts-exchange.com/OS/Microsoft_Operating_Systems/Windows/A_2155-Keyboard-Remapping-CAPSLOCK-to-Ctrl-and-Beyond.html
     REM http://msdn.microsoft.com/en-us/windows/hardware/gg463447.aspx
-    echo .. reg add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /d 0000000000000000020000001D003A0000000000 /t REG_BINARY /f
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /d 0000000000000000020000001D003A0000000000 /t REG_BINARY /f > nul
     echo CapsLock remapped, will be effective after next system reboot.
  
     echo.
