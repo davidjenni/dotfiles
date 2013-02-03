@@ -14,7 +14,7 @@ if /i "%1"=="elevatedSetup" (shift && goto :elevatedSetup)
 if /i "%1"=="restore"       goto :restoreAutorun
 if "%1" NEQ ""              (echo ERROR: unknown verb: '%1'& exit /b 1)
 
-set _gitBin="%ProgramFiles(x86)%\Git\bin
+set _gitBin=%ProgramFiles(x86)%\Git\bin
 set _gitExe=%_gitBin%\git.exe
 
 echo Boot strap a console environment at: %_HOME%
