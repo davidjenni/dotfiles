@@ -14,17 +14,16 @@ set HOME=%USERPROFILE%
 set MY_BIN=%HOME%
 set WIN_BIN=%MY_BIN%\winUtils
 
-set PATH=%PATH%;%WIN_BIN%
+set PATH=%PATH%;%MY_BIN%\dotfiles\win
+if exist %MY_BIN%\Dropbox\Bin\nul set PATH=%PATH%;%MY_BIN%\Dropbox\Bin
+if exist d:\%USERNAME%\Dropbox\Bin\nul set PATH=%PATH%;d:\%USERNAME%\Dropbox\Bin
 set PATH=%PATH%;%MY_BIN%\vim\vim73
 set PATH=%PATH%;%ProgramFiles%\TortoiseHg
 set PATH=%PATH%;%ProgramFiles(x86)%\Git\bin
 set PATH=%PATH%;%MY_BIN%\7-Zip
 set PATH=%PATH%;%MY_BIN%\NTTools
-
-set _rubyBin=%MY_BIN%\ruby-1.9.1\bin
-if exist "%_rubyBin%\ruby.exe" set PATH=%PATH%;%_rubyBin%
-set _pythonBin=%MY_BIN%\Python-2.7
-if exist %_pythonBin%\python.exe set PATH=%PATH%;%_pythonBin%
+if exist %MY_BIN%\ruby-1.9.1\bin\nul set PATH=%PATH%;%MY_BIN%\ruby-1.9.1\bin
+if exist %MY_BIN%\Python-2.7\nul set PATH=%PATH%;%MY_BIN%\Python-2.7
 
 :setEnv
 :: set LESS=-C -M -i -x4 -N -Dn14.1$-Ds2.1$-Dd6.1$-Du12.1$-Dk15.1

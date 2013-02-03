@@ -36,7 +36,7 @@ exit /b 4
 
 :doSetup
     :: for each new cmd line window, hook in win32-rc (similar idea like .bashrc on unix)
-    set _win32rc=%dotPath%\win32-rc.cmd
+    set _win32rc=%dotPath%\win\win32-rc.cmd
     if not exist "%_win32rc%" (echo ERROR cannot find %_win32rc%; is the dotfiles repository up-to-date?& exit /b 1)
     reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d "%_win32rc%" /f > nul
 
