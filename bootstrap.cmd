@@ -14,7 +14,8 @@ if /i "%1"=="elevatedSetup" (shift && goto :elevatedSetup)
 if /i "%1"=="restore"       goto :restoreAutorun
 if "%1" NEQ ""              (echo ERROR: unknown verb: '%1'& exit /b 1)
 
-if not exist "%ProgramFiles(x86)%\Git\bin\git.exe" (echo ERROR: requires Git to be installed, script needs git, curl and unzip&&exit /b 1)
+set _gitBin="%ProgramFiles(x86)%\Git\bin
+set _gitExe=%_gitBin%\git.exe
 
 echo Boot strap a console environment at: %_HOME%
 choice /c YN /m "OK to proceed with setup?"
@@ -22,8 +23,10 @@ if %ERRORLEVEL% EQU 1 goto :startSetup
 exit /b 4
 
 :startSetup
+    if not exist "%_gitExe%" (echo ERROR: requires Git to be installed, script needs git, curl and unzip&&exit /b 1)
+
     echo Cloning %dotPath% from origin repository: %githubDotfiles%
-echo .. call git clone %githubDotfiles% %dotPath%
+    call "%_gitExe%" clone %githubDotfiles% %dotPath%
     if ERRORLEVEL 1 (echo ERROR cloning git repo %githubDotfiles% & exit /b 1)
 
     :: to complete bootstrap, relaunch this script from freshly cloned repository
