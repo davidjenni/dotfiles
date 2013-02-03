@@ -33,7 +33,7 @@ saveLink() {
 }
 
 # main:
-myGitHub='https://github.com/w7cf/dotfiles.git'
+myGitHub='https://github.com/davidjenni/dotfiles.git'
 declare -a dotFiles=( bashrc gitconfig gitignore inputrc pythonrc.py tmux.conf vimrc )
 #dotPath=$(dirname $this)
 dotPath=~/dotfiles

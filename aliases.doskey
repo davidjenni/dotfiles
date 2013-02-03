@@ -1,0 +1,33 @@
+..=cd ..\$*
+...=cd ..\.. && cd $*
+....=cd ..\..\.. && cd $*
+dir=dir /ogen $*
+L=less -i -M $*
+xx=exit
+la=ls.exe -a --color=auto -hF --sort=extension $*
+ls=ls.exe --color=auto -hF --sort=extension $*
+ll=ls.exe -l --almost-all --color=auto -hF --sort=extension $*
+ld=dir /b /ad $*
+a=attrib $*
+c=cd $*
+cc=pushd $*
+-=popd
+e=gvim --remote-silent $*
+v=vim $*
+g=gvim --remote-silent $*
+bb=pushd %USERPROFILE%
+hex=od -A x -t xC -t c -w16 $*
+ff=dir /a-d /b /s $*
+fff=findstr /n /s $*
+wd=windiff $*
+nv=net view $*
+nu=net use $*
+home=pushd %USERPROFILE%\$*
+ie=start "" "%ProgramFiles%\Internet Explorer\IEXPLORE.EXE" $*
+s="%ProgramFiles%\Sublime Text 2\sublime_text.exe" $*
+subl="%ProgramFiles%\Sublime Text 2\sublime_text.exe" -w -n $*
+pageant=pageant.exe %USERPROFILE%\putty-ssh\id_rsa.ppk
+gd=git --no-pager diff --color $*
+gdc=git --no-pager diff --color --cached $*
+gdl=git --no-pager diff $* | less
+gdcl=git --no-pager diff --cached $* | less
