@@ -73,10 +73,10 @@ EndOfSecrets
     saveLink $dotPath/hgrc $HOME/.hgrc
     saveLink $dotPath/vimrc $HOME/.vimrc
 
-    saveLink $dotPath/bashrc $HOME/.bashrc
-    saveLink $dotPath/inputrc $HOME/.inputrc
-    saveLink $dotPath/pythonrc.py $HOME/.pythonrc.py
-    saveLink $dotPath/tmux.conf $HOME/.tmux.conf
+    saveLink $dotPath/bash/bashrc $HOME/.bashrc
+    saveLink $dotPath/bash/inputrc $HOME/.inputrc
+    saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
+    saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
 }
 
 # main:
