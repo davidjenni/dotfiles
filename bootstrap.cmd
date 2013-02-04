@@ -26,7 +26,7 @@ exit /b 4
     if not exist "%_gitExe%" (echo ERROR: requires Git to be installed, script needs git, curl and unzip&&exit /b 1)
 
     echo Cloning %dotPath% from origin repository: %githubDotfiles%
-    call "%_gitExe%" clone %githubDotfiles% %dotPath%
+    call "%_gitExe%" clone --recursive %githubDotfiles% %dotPath%
     if ERRORLEVEL 1 (echo ERROR cloning git repo %githubDotfiles% & exit /b 1)
 
     echo Cloning submodules...
