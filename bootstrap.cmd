@@ -81,7 +81,7 @@ exit /b 4
         echo Requesting elevated privileges...
         call :requestUAC
     ) else (
-        call elevatedSetup %_HOME%
+        call :elevatedSetup %_HOME%
     )
     exit /b 0
 
@@ -128,11 +128,10 @@ exit /b 4
     set _HOME=%1
 
     for /F "tokens=2,3,4,5,6,7 delims=/: " %%i in ('echo %date%:%time: =0%') do set JULIANDATE=%%k%%i%%j-%%l%%m
-    set _bootstrapBackupsDir=%_HOME%/bootstrapBackups-%JULIANDATE%
+    set _bootstrapBackupsDir=%_HOME%\bootstrapBackups-%JULIANDATE%
     mkdir %_bootstrapBackupsDir%
 
     :: TODO use for loop and create helper subroutine safeLink that does the copying & nklink dance
-    echo saving previously sym-linked files as extension -%JULIANDATE%...
     copy %_HOME%\.gitconfig %_bootstrapBackupsDir% > nul 2>&1
     del /q %_HOME%\.gitconfig > nul 2>&1
     mklink %_HOME%\.gitconfig %_HOME%\dotfiles\gitconfig
@@ -156,7 +155,10 @@ exit /b 4
 :: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
 :: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
 
+    echo.
+    echo Saved previously sym-linked files in directory: %_bootstrapBackupsDir%
     dir /b %_bootstrapBackupsDir% 2>nul
+    echo.
 
     echo remap CapsLock to LeftCtrl key:
     REM see http://www.experts-exchange.com/OS/Microsoft_Operating_Systems/Windows/A_2155-Keyboard-Remapping-CAPSLOCK-to-Ctrl-and-Beyond.html
