@@ -128,24 +128,35 @@ exit /b 4
     set _HOME=%1
 
     for /F "tokens=2,3,4,5,6,7 delims=/: " %%i in ('echo %date%:%time: =0%') do set JULIANDATE=%%k%%i%%j-%%l%%m
+    set _bootstrapBackupsDir=%_HOME%/bootstrapBackups-%JULIANDATE%
+    mkdir %_bootstrapBackupsDir%
 
-    set dotFiles=gitconfig gitignore vimrc
-
+    :: TODO use for loop and create helper subroutine safeLink that does the copying & nklink dance
     echo saving previously sym-linked files as extension -%JULIANDATE%...
-    copy %_HOME%\.gitconfig %_HOME%\.gitconfig-%JULIANDATE% > nul 2>&1
+    copy %_HOME%\.gitconfig %_bootstrapBackupsDir% > nul 2>&1
     del /q %_HOME%\.gitconfig > nul 2>&1
     mklink %_HOME%\.gitconfig %_HOME%\dotfiles\gitconfig
 
-    :: TODO add .hgrc for e.g. general email and other global mercurial options
+    copy %_HOME%\.hgrc %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\.hgrc > nul 2>&1
+    mklink %_HOME%\.hgrc %_HOME%\dotfiles\hgrc
 
-    copy %_HOME%\_vimrc %_HOME%\_vimrc-%JULIANDATE% > nul 2>&1
+    copy %_HOME%\.os.hgrc %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\.os.hgrc > nul 2>&1
+    mklink %_HOME%\.os.hgrc %_HOME%\dotfiles\win\os.hgrc
+
+    copy %_HOME%\_vsvimrc %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\_vsvimrc > nul 2>&1
+    mklink %_HOME%\_vsvimrc %_HOME%\dotfiles\win\vsvimrc
+
+    copy %_HOME%\_vimrc %_bootstrapBackupsDir% > nul 2>&1
     del /q %_HOME%\_vimrc > nul 2>&1
     mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc
 
 :: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
 :: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
 
-    dir /b %_HOME%\*-%JULIANDATE% 2>nul
+    dir /b %_bootstrapBackupsDir% 2>nul
 
     echo remap CapsLock to LeftCtrl key:
     REM see http://www.experts-exchange.com/OS/Microsoft_Operating_Systems/Windows/A_2155-Keyboard-Remapping-CAPSLOCK-to-Ctrl-and-Beyond.html

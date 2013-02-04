@@ -1,0 +1,16 @@
+# Windows-specific .hgrc
+
+[ui]
+# assumes Git env variables set from .gitSecrets.cmd
+username = %GIT_AUTHOR_NAME% <%GIT_AUTHOR_EMAIL%>
+merge = kdiff3
+ssh = plink.exe -C -2 -batch -i c:\users\david\putty-ssh\id_rsa.ppk
+
+[tortoisehg]
+editor = %MY_BIN%\vim\vim73\gvim.exe
+tabwidth = 4
+fullpath = True
+autoresolve = True
+fontdiff = Consolas,10,-1,5,50,0,0,0,0,0
+fontlog = Consolas,10,-1,5,50,0,0,0,0,0
+
