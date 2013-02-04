@@ -73,6 +73,8 @@ EndOfSecrets
     saveLink $dotPath/hgrc $HOME/.hgrc
     saveLink $dotPath/vimrc $HOME/.vimrc
 
+    saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
+    saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
     saveLink $dotPath/bash/bashrc $HOME/.bashrc
     saveLink $dotPath/bash/inputrc $HOME/.inputrc
     saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py

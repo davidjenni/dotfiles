@@ -1,4 +1,5 @@
 # Windows-specific .hgrc
+# see reference under http://www.selenic.com/mercurial/hgrc.5.html
 
 [ui]
 # assumes Git env variables set from .gitSecrets.cmd

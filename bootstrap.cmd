@@ -136,6 +136,10 @@ exit /b 4
     del /q %_HOME%\.gitconfig > nul 2>&1
     mklink %_HOME%\.gitconfig %_HOME%\dotfiles\gitconfig
 
+    copy %_HOME%\.os.gitconfig %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\.os.gitconfig > nul 2>&1
+    mklink %_HOME%\.os.gitconfig %_HOME%\dotfiles\win\os.gitconfig
+
     copy %_HOME%\.hgrc %_bootstrapBackupsDir% > nul 2>&1
     del /q %_HOME%\.hgrc > nul 2>&1
     mklink %_HOME%\.hgrc %_HOME%\dotfiles\hgrc
