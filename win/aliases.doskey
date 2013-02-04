@@ -31,3 +31,4 @@ gd=git --no-pager diff --color $*
 gdc=git --no-pager diff --color --cached $*
 gdl=git --no-pager diff $* | less
 gdcl=git --no-pager diff --cached $* | less
+gs=git status
