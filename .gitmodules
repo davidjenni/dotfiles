@@ -43,3 +43,6 @@
 [submodule "vimfiles/bundle/csapprox"]
 	path = vimfiles/bundle/csapprox
 	url = https://github.com/godlygeek/csapprox.git
+[submodule "vimfiles/bundle/vim-seek"]
+	path = vimfiles/bundle/vim-seek
+	url = https://github.com/goldfeld/vim-seek.git
