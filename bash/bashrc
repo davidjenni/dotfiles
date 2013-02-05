@@ -104,8 +104,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.secrets ]; then
-    . ~/.secrets
+if [ -f ~/.gitSecrets.sh ]; then
+    . ~/.gitSecrets.sh
 fi
 
 # enable programmable completion features (you don't need to enable
