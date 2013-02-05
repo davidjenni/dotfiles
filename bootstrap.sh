@@ -18,9 +18,7 @@ getRepository() {
     local repo=$1
     echo "Cloning git repo from: $repo"
     echo "      into local repo: $dotPath"
-   # git clone $repo $dotPath
-    cd $dotPath
-   # git submodule update --init
+    git clone --recursive $repo $dotPath
     popd
 }
 
@@ -32,9 +30,9 @@ saveLink() {
         #echo "Saving $targetFile ..."
         # don't just move, do copy to break any previous soft link
         cp $targetFile $bkpDir/
-        echo rm -f $targetFile
+        rm -f $targetFile
     fi
-    echo ln -s $srcFile $targetFile
+    ln -s $srcFile $targetFile
 }
 
 function doSetup() {
@@ -85,7 +83,7 @@ EndOfSecrets
 if [ $1 = "setup" ]; then
     doSetup
 else
-#    getRepository $myGitHub
+    getRepository $myGitHub
     echo do clean setup
     doSetup
 fi
