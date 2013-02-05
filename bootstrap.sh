@@ -32,7 +32,7 @@ saveLink() {
         cp $targetFile $bkpDir/
         rm -f $targetFile
     fi
-    ln -s $srcFile $targetFile
+    ln -sf $srcFile $targetFile
 }
 
 function doSetup() {
