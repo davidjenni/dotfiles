@@ -199,6 +199,8 @@ if has('gui_running')
         set guifont=Consolas:h10
     elseif has("mac")
         set guifont=Monaco:h13
+        " <C-v>u21aa
+        set showbreak=↪
     elseif has("unix")
         set guifont=Dejavu\ Sans\ Mono\ 10
     endif
