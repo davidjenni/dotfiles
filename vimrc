@@ -294,6 +294,11 @@ nmap <leader>qq :cclose<CR>
 nmap <leader>l :lopen<CR>
 nmap <leader>ll :lclose<CR>
 
+" fugitive mappings:
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>gl :Glog<CR>
+
 " use Ack.vim for Ag:
 " Ag from: https://github.com/ggreer/the_silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'

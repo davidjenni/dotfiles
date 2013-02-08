@@ -25,10 +25,8 @@ if exist %MY_BIN%\ruby-1.9.1\bin\nul set PATH=%PATH%;%MY_BIN%\ruby-1.9.1\bin
 if exist %MY_BIN%\Python-2.7\nul set PATH=%PATH%;%MY_BIN%\Python-2.7
 
 :setEnv
-:: set LESS=-C -M -i -x4 -N -Dn14.1$-Ds2.1$-Dd6.1$-Du12.1$-Dk15.1
-:: set LESS=-C -M -i -x4 -N
-set LESS=-i -M -c -r -w -x4
-set LESSBINFMT=*n[%x]
+set LESS=-i -M -N -q -x4
+set LESSBINFMT=*d[%02x]
 
 set _gitSecrets=%HOME%\.gitSecrets.cmd
 if exist "%_gitSecrets%" call "%_gitSecrets%"
