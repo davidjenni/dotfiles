@@ -299,6 +299,15 @@ nmap <leader>gs :Gstatus<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gl :Glog<CR>
 
+if has("win32")
+    " TFS shortcuts: TODO: consider plugin similar to fugitive
+    nmap <leader>ta :!tf add %<CR>
+    nmap <leader>td :!tf diff /format:ss_unix %<CR>
+    nmap <leader>te :!tf edit %<CR>
+    nmap <leader>th :!tf hist /noprompt %<CR>
+    nmap <leader>ti :!tf properties %<CR>
+    nmap <leader>ts :!tf stat /format:brief<CR>
+endif
 " use Ack.vim for Ag:
 " Ag from: https://github.com/ggreer/the_silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
