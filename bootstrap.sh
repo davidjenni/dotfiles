@@ -35,7 +35,7 @@ saveLink() {
     ln -sf $srcFile $targetFile
 }
 
-function doSetup() {
+doSetup() {
     # generate git secrets file:
     local _gitSecretsFile=$HOME/.gitSecrets.sh
     local _gitEmail
