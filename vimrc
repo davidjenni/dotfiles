@@ -312,3 +312,7 @@ endif
 " Ag from: https://github.com/ggreer/the_silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+" tagbar
+nnoremap <silent> <F9> :TagbarToggle<CR>
+
+
