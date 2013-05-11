@@ -33,7 +33,7 @@ set shortmess=atI
 set wildmenu
 " set wildmode=longest,list
 set wildmode=list:longest,list:full
-set complete=.,w,t
+set complete=.,w,t,b
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,*.a
 if has("win16") || has("win32")
@@ -177,6 +177,9 @@ nnoremap <Esc>D :bprev<CR>
 " use - and + to resize horizontal splits
 map - <C-W>-
 map + <C-W>+
+" Switch between windows, maximizing the current window
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
 
 " undo-tree panel:
 nnoremap <F5> :UndotreeToggle<cr>
