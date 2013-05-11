@@ -132,6 +132,7 @@ if has("gui")
     set guioptions-=T   " no toolbar
     set guioptions-=t   " exclude tearoff menu
     set guioptions-=c   " use console for simple questions
+    set guioptions-=m   " don't bother showing GUI menu
     set lines=50
     set columns=160
 endif
