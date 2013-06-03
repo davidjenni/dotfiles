@@ -52,3 +52,6 @@
 [submodule "vimfiles/bundle/vim-abolish"]
 	path = vimfiles/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish.git
+[submodule "vimfiles/bundle/tern_for_vim"]
+	path = vimfiles/bundle/tern_for_vim
+	url = https://github.com/marijnh/tern_for_vim.git
