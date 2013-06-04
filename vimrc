@@ -319,4 +319,5 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " tagbar
 nnoremap <silent> <F9> :TagbarToggle<CR>
 
-
+" tern plugin
+let g:tern_map_keys=1
