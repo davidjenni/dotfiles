@@ -137,6 +137,9 @@ if has("gui")
     set columns=160
 endif
 
+" from Neil's VimDOJO class:
+vnoremap . :normal . <CR>
+
 "  treat both jump-to-mark the same (jump to line AND column)
 nnoremap ' `
 nnoremap ` '
