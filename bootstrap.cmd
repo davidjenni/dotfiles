@@ -152,6 +152,10 @@ exit /b 4
     del /q %_HOME%\_vsvimrc > nul 2>&1
     mklink %_HOME%\_vsvimrc %_HOME%\dotfiles\win\vsvimrc
 
+    copy %_HOME%\.viemurc %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\.viemurc > nul 2>&1
+    mklink %_HOME%\.viemurc %_HOME%\dotfiles\win\viemurc
+
     copy %_HOME%\_vimrc %_bootstrapBackupsDir% > nul 2>&1
     del /q %_HOME%\_vimrc > nul 2>&1
     mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc

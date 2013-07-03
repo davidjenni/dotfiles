@@ -1,0 +1,37 @@
+" ViEmu RC  david@davidjenni.com
+
+set number
+set cursorline
+
+set ignorecase
+set smartcase
+set incsearch
+set wrapscan
+
+set autoindent
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set cindent
+set showmatch
+set scrolloff=5
+
+set backspace=indent,eol,start
+
+" let mapleader = ","
+
+nmap <C-]> :vsc Edit.GoToDefinition<CR>
+nnoremap <esc> :nohlsearch<cr><esc>
+
+nmap <C-P> :vsc View.CommandWindow<CR>
+cnoremap ls :vsc Window.Windows
+" cnoremap bd :vsc Window.CloseDocumentWindow
+
+" easy on my left pinky
+imap jj <Esc>
+imap jk <Esc>
+imap kj <Esc>
+imap uu _
+imap hh =>
+imap aa @
+
