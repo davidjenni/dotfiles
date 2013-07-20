@@ -55,3 +55,6 @@
 [submodule "vimfiles/bundle/tern_for_vim"]
 	path = vimfiles/bundle/tern_for_vim
 	url = https://github.com/marijnh/tern_for_vim.git
+[submodule "vimfiles/bundle/vim-bufferline"]
+	path = vimfiles/bundle/vim-bufferline
+	url = https://github.com/bling/vim-bufferline.git
