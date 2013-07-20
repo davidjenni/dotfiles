@@ -10,6 +10,14 @@ set title
 " see also: http://items.sjbach.com/319/configuring-vim-right
 runtime macros/matchit.vim
 
+" tern plugin
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
+
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/]node_modules$',
+            \ }
+
 " wget --no-check-certificate https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim
 " to refresh pathogen and plugins:
 " cd ~/dotfiles
@@ -322,5 +330,4 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " tagbar
 nnoremap <silent> <F9> :TagbarToggle<CR>
 
-" tern plugin
-let g:tern_map_keys=1
+
