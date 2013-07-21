@@ -108,6 +108,7 @@ if has ("autocmd")
       autocmd BufNewFile,BufRead *.csproj setfiletype xml
       autocmd BufNewFile,BufRead *.targets setfiletype xml
       autocmd BufNewFile,BufRead *.settings setfiletype xml
+      autocmd filetype javascript setlocal tabstop=2 shiftwidth=2
   augroup END
 else
   set autoindent
