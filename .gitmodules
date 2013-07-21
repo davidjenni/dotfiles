@@ -58,3 +58,6 @@
 [submodule "vimfiles/bundle/vim-bufferline"]
 	path = vimfiles/bundle/vim-bufferline
 	url = https://github.com/bling/vim-bufferline.git
+[submodule "vimfiles/bundle/vim-jade"]
+	path = vimfiles/bundle/vim-jade
+	url = https://github.com/digitaltoad/vim-jade.git
