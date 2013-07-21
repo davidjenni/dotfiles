@@ -144,6 +144,10 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:/usr/local/bin:$PATH"
 fi
 
+if [ -d "$HOME/node_modules/.bin" ] ; then
+    PATH="$HOME/node_modules/.bin:$PATH"
+fi
+
 if [  -x "/opt/Sublime2/sublime_text" ]; then
     alias s2='/opt/Sublime2/sublime_text'
 fi
