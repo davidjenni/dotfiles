@@ -146,6 +146,7 @@ if has("gui")
     set guioptions-=m   " don't bother showing GUI menu
     set lines=50
     set columns=160
+    set guicursor=n:blinkon0
 endif
 
 " from Neil's VimDOJO class:
