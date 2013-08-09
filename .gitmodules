@@ -67,3 +67,6 @@
 [submodule "vimfiles/bundle/vim-ps1"]
 	path = vimfiles/bundle/vim-ps1
 	url = https://github.com/PProvost/vim-ps1.git
+[submodule "vimfiles/bundle/vim-node"]
+	path = vimfiles/bundle/vim-node
+	url = https://github.com/moll/vim-node.git
