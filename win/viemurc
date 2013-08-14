@@ -16,6 +16,8 @@ set cindent
 set showmatch
 set scrolloff=5
 
+set timeoutlen=500
+
 set backspace=indent,eol,start
 
 " let mapleader = ","
@@ -24,8 +26,8 @@ nmap <C-]> :vsc Edit.GoToDefinition<CR>
 nnoremap <esc> :nohlsearch<cr><esc>
 
 nmap <C-P> :vsc View.CommandWindow<CR>
-cnoremap ls :vsc Window.Windows
-" cnoremap bd :vsc Window.CloseDocumentWindow
+cnoremap ls vsc Window.Windows
+cnoremap bd vsc Window.CloseDocumentWindow
 
 " easy on my left pinky
 imap jj <Esc>
