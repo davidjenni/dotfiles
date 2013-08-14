@@ -70,6 +70,6 @@
 [submodule "vimfiles/bundle/vim-node"]
 	path = vimfiles/bundle/vim-node
 	url = https://github.com/moll/vim-node.git
-[submodule "vimfiles\\bundle\\DistractFree"]
-	path = vimfiles\\bundle\\DistractFree
+[submodule "vimfiles/bundle/DistractFree"]
+	path = vimfiles/bundle/DistractFree
 	url = https://github.com/chrisbra/DistractFree.git
