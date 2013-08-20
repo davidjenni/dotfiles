@@ -99,6 +99,7 @@ if has ("autocmd")
       autocmd filetype help set nonumber      " no line numbers when viewing help
       autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
       autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
+      autocmd FileType help wincmd L " show help in right vsplit
 
       autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
 
@@ -190,15 +191,21 @@ nnoremap <Esc>B :wincmd j<cr>
 nnoremap <Esc>C :bnext<CR>
 nnoremap <Esc>D :bprev<CR>
 
+" maps for plugins
+nnoremap <leader>b  :CtrlPBuffer<enter>
+nnoremap <leader>f  :CtrlPTag<enter>
+nnoremap <leader>g  :TagbarToggle<enter>
+nnoremap <leader>u  :UndotreeToggle<enter>
+
 " use - and + to resize horizontal splits
 map - <C-W>-
 map + <C-W>+
 " Switch between windows, maximizing the current window
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
-
-" undo-tree panel:
-nnoremap <F5> :UndotreeToggle<cr>
+" move cursor naturally through wrapped lines
+nnoremap j          gj
+nnoremap k          gk
 
 " src: http://files.werx.dk/wombat.vim
 " http://dengmao.wordpress.com/2007/01/22/vim-color-scheme-wombat/
@@ -330,8 +337,4 @@ endif
 " use Ack.vim for Ag:
 " Ag from: https://github.com/ggreer/the_silver_searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" tagbar
-nnoremap <silent> <F9> :TagbarToggle<CR>
-
 
