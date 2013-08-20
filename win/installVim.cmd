@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 
 set _vimOrigin=ftp://ftp.vim.org/pub/vim/pc
-set _vimVersion=73_46
+set _vimVersion=74
 
 if not exist "%ProgramFiles(x86)%\Git\bin\curl.exe" (echo ERROR: requires Git to be installed, script needs curl and unzip&&exit /b 1)
 echo Downloading VIM %_vimVersion% for Win32...

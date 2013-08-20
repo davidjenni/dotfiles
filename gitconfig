@@ -15,7 +15,7 @@
     changelog = log --pretty=format:\" * %s\"
     shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
     r = remote -v
-    st = status
+    st = status --short --branch
     # reset
     unstage = checkout --             # remove files from index (tracking) and revert to previous state
     uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
