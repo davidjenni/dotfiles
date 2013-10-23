@@ -58,9 +58,9 @@ set incsearch
 
 " persist undo across sessions
 if (v:version >= 703)
-    silent !mkdir ~/.vim/backups > /dev/null 2>&1
-    set undodir=~/.vim/backups
-    set undofile
+    " silent !mkdir ~/.vim/backups > /dev/null 2>&1
+    " set undodir=~/.vim/backups
+    " set undofile
 endif
 
 set smartcase
