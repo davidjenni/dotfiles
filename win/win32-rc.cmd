@@ -23,6 +23,7 @@ if exist "%ProgramFiles%\7-Zip\" set PATH=%PATH%;%ProgramFiles%\7-Zip
 set PATH=%PATH%;%MY_BIN%\NTTools
 if exist %MY_BIN%\ruby-1.9.1\bin\nul set PATH=%PATH%;%MY_BIN%\ruby-1.9.1\bin
 if exist %MY_BIN%\Python-2.7\nul set PATH=%PATH%;%MY_BIN%\Python-2.7
+if exist %MY_BIN%\node_modules\.bin\nul set PATH=%PATH%;%MY_BIN%\node_modules\.bin
 
 :setEnv
 set LESS=-i -M -N -q -x4
