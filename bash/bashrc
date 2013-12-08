@@ -40,10 +40,8 @@ alias ls='ls -GF'
 alias ll='ls -lGF'
 
 alias l='less'
-export LESS="-c -i -x4 -J -w -M"
+export LESS="-c -i -x4 -J -w -M -r"
 export VISUAL='vim'
-alias e='emacs --no-window-system'
-alias ee='emacs'
 alias v='vim'
 alias vv='mvim'
 alias s='/Applications/Sublime\ Text\ 2.app/Contents/MacOS/Sublime\ Text\ 2'
@@ -91,6 +89,11 @@ export PS1='(\t \u@\h) [\033[34m\w\033[00m]\n\$ '
 if [ -x /usr/bin/most ]; then
 	export MANPAGER="/usr/bin/most -s"
 fi
+
+export MANPAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+    vim -R -c 'set ft=man nomod nolist nonumber' -c 'map q :q<CR>' \
+    -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
 if [ -x ~/bin/contrib/vimpager/vimpager ]; then
     export PAGER=~/bin/contrib/vimpager/vimpager
 fi
