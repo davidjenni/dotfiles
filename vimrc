@@ -9,6 +9,8 @@ set title
 
 " see also: http://items.sjbach.com/319/configuring-vim-right
 runtime macros/matchit.vim
+" http://vimdoc.sourceforge.net/htmldoc/usr_12.html#find-manpage
+runtime! ftplugin/man.vim
 
 " tern plugin
 let g:tern_map_keys=1
@@ -94,13 +96,10 @@ if has ("autocmd")
       " Source the vimrc file after saving it
       " autocmd bufwritepost $MYVIMRC source $MYVIMRC
 
-      " Auto change the directory to the current file I'm working on
-      " autocmd BufEnter * lcd %:p:h
-
       autocmd filetype help set nonumber      " no line numbers when viewing help
       autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
       autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
-      autocmd FileType help wincmd L " show help in right vsplit
+      autocmd FileType help wincmd K " show help in top hsplit
 
       autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
 
