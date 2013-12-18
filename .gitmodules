@@ -73,3 +73,6 @@
 [submodule "vimfiles/bundle/DistractFree"]
 	path = vimfiles/bundle/DistractFree
 	url = https://github.com/chrisbra/DistractFree.git
+[submodule "vimfiles/bundle/vim-stylus"]
+	path = vimfiles/bundle/vim-stylus
+	url = https://github.com/wavded/vim-stylus.git
