@@ -197,9 +197,6 @@ nnoremap <leader>f  :CtrlPTag<enter>
 nnoremap <leader>g  :TagbarToggle<enter>
 nnoremap <leader>u  :UndotreeToggle<enter>
 
-" use - and + to resize horizontal splits
-map - <C-W>-
-map + <C-W>+
 " Switch between windows, maximizing the current window
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_

@@ -76,3 +76,6 @@
 [submodule "vimfiles/bundle/vim-stylus"]
 	path = vimfiles/bundle/vim-stylus
 	url = https://github.com/wavded/vim-stylus.git
+[submodule "vimfiles/bundle/vim-vinegar"]
+	path = vimfiles/bundle/vim-vinegar
+	url = https://github.com/tpope/vim-vinegar.git
