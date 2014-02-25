@@ -82,3 +82,6 @@
 [submodule "vimfiles/bundle/ag.vim"]
 	path = vimfiles/bundle/ag.vim
 	url = https://github.com/rking/ag.vim.git
+[submodule "vimfiles/bundle/vim-exchange"]
+	path = vimfiles/bundle/vim-exchange
+	url = https://github.com/tommcdo/vim-exchange.git
