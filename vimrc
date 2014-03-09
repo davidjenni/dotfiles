@@ -5,7 +5,7 @@ set nocompatible
 set runtimepath^=~/dotfiles/vimfiles
 
 behave xterm
-set title
+set notitle
 
 " see also: http://items.sjbach.com/319/configuring-vim-right
 runtime macros/matchit.vim
