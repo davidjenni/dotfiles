@@ -85,3 +85,12 @@
 [submodule "vimfiles/bundle/vim-exchange"]
 	path = vimfiles/bundle/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange.git
+[submodule "vimfiles/bundle/funcoo.vim"]
+	path = vimfiles/bundle/funcoo.vim
+	url = https://github.com/rizzatti/funcoo.vim.git
+[submodule "vimfiles/bundle/greper.vim"]
+	path = vimfiles/bundle/greper.vim
+	url = https://github.com/rizzatti/greper.vim.git
+[submodule "vimfiles/bundle/dash.vim"]
+	path = vimfiles/bundle/dash.vim
+	url = https://github.com/rizzatti/dash.vim.git
