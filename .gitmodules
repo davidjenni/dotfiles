@@ -91,3 +91,6 @@
 [submodule "vimfiles/bundle/dash.vim"]
 	path = vimfiles/bundle/dash.vim
 	url = https://github.com/rizzatti/dash.vim.git
+[submodule "vimfiles/bundle/vim-startify"]
+	path = vimfiles/bundle/vim-startify
+	url = https://github.com/mhinz/vim-startify.git
