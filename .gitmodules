@@ -94,3 +94,6 @@
 [submodule "vimfiles/bundle/vim-startify"]
 	path = vimfiles/bundle/vim-startify
 	url = https://github.com/mhinz/vim-startify.git
+[submodule "vimfiles/bundle/vim-dispatch"]
+	path = vimfiles/bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch.git
