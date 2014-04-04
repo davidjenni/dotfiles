@@ -91,3 +91,6 @@
 [submodule "vimfiles/bundle/vim-dispatch"]
 	path = vimfiles/bundle/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch.git
+[submodule "vimfiles/bundle/vim-airline"]
+	path = vimfiles/bundle/vim-airline
+	url = https://github.com/bling/vim-airline.git

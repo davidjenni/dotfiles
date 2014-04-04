@@ -342,3 +342,4 @@ vmap X <Plug>(Exchange)
 nmap cxc <Plug>(ExchangeClear)
 nmap cxx <Plug>(ExchangeLine)
 
+let g:airline#extensions#tabline#enabled = 1
