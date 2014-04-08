@@ -31,6 +31,7 @@ call pathogen#helptags()
 let mapleader = ","
 
 set backspace=indent,eol,start
+set encoding=utf-8
 
 " Allow switching edited buffers without saving
 set hidden
@@ -124,6 +125,7 @@ set tabstop=4
 set expandtab
 set cindent
 set showmatch
+set noshowmode      " no need to show mode with airline
 set number
 set scrolloff=5
 " set selectmode=cmd
@@ -145,6 +147,8 @@ if has("gui")
     set guioptions-=t   " exclude tearoff menu
     set guioptions-=c   " use console for simple questions
     set guioptions-=m   " don't bother showing GUI menu
+    set guioptions-=r   " no need for greyed menues
+    set guioptions-=L   " don't show left hand scrollbar
     set lines=50
     set columns=160
     set guicursor=n:blinkon0
