@@ -13,17 +13,18 @@ set _HERE=
 set HOME=%USERPROFILE%
 set MY_BIN=%HOME%
 
-set PATH=%PATH%;%MY_BIN%\dotfiles\win
-if exist %USERPROFILE%\SkyDrive\Bin\Win\nul set PATH=%PATH%;%USERPROFILE%\SkyDrive\Bin\Win
-set PATH=%PATH%;%MY_BIN%\PuTTY
-set PATH=%PATH%;%MY_BIN%\vim\vim74
-if exist "%ProgramFiles%\TortoiseHg\" set PATH=%PATH%;%ProgramFiles%\TortoiseHg
-set PATH=%PATH%;%ProgramFiles(x86)%\Git\bin
-if exist "%ProgramFiles%\7-Zip\" set PATH=%PATH%;%ProgramFiles%\7-Zip
-set PATH=%PATH%;%MY_BIN%\NTTools
-if exist %MY_BIN%\ruby-1.9.1\bin\nul set PATH=%PATH%;%MY_BIN%\ruby-1.9.1\bin
-if exist %MY_BIN%\Python-2.7\nul set PATH=%PATH%;%MY_BIN%\Python-2.7
-if exist %MY_BIN%\node_modules\.bin\nul set PATH=%PATH%;%MY_BIN%\node_modules\.bin
+call :addToPath "%MY_BIN%\dotfiles\win"
+call :addToPath "%USERPROFILE%\SkyDrive\Bin\Win"
+call :addToPath "%MY_BIN%\PuTTY"
+call :addToPath "%MY_BIN%\vim\vim74"
+call :addToPath "%MY_BIN%\emacs-24.3\bin"
+call :addToPath "%ProgramFiles%\TortoiseHg"
+call :addToPath "%ProgramFiles(x86)%\Git\bin"
+call :addToPath "%ProgramFiles%\7-Zip"
+call :addToPath "%MY_BIN%\NTTools"
+call :addToPath "%MY_BIN%\ruby-1.9.1\bin"
+call :addToPath "%MY_BIN%\Python-2.7"
+call :addToPath "%MY_BIN%\node_modules\.bin"
 
 :setEnv
 set LESS=-i -M -N -q -x4
@@ -45,9 +46,9 @@ set DIRCMD=/ogen
 
 call :loadDoskeyIfExists %HERE%\aliases.doskey
 if /i "%PROCESSOR_ARCHITECTURE%"=="amd64" (
-	call :loadDoskeyIfExists %HERE%\aliases-x64.doskey
+    call :loaddoskeyifexists %here%\aliases-x64.doskey
 ) else (
-	call :loadDoskeyIfExists %HERE%\aliases-x86.doskey
+    call :loadDoskeyIfExists %HERE%\aliases-x86.doskey
 )
 
 REM set prompt to the following:
@@ -58,9 +59,14 @@ color 1e
 goto :eof
 
 :loadDoskeyIfExists
-	:: param1 path to doskey macro file
-	if exist "%1" call doskey.exe /macrofile="%1"
-	exit /b 0
+    :: param1 path to doskey macro file
+    if exist "%1" call doskey.exe /macrofile="%1"
+    exit /b 0
+
+:addToPath
+    :: param1 path to add if it exists
+    if exist "%~f1" PATH=%PATH%;%~f1
+    exit /b 0
 
 :eof
 set HERE=
