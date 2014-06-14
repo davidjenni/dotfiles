@@ -52,12 +52,6 @@
 [submodule "vimfiles/bundle/tern_for_vim"]
 	path = vimfiles/bundle/tern_for_vim
 	url = https://github.com/marijnh/tern_for_vim.git
-[submodule "vimfiles/bundle/vim-jade"]
-	path = vimfiles/bundle/vim-jade
-	url = https://github.com/digitaltoad/vim-jade.git
-[submodule "vimfiles/bundle/vim-coffee-script"]
-	path = vimfiles/bundle/vim-coffee-script
-	url = https://github.com/kchmck/vim-coffee-script.git
 [submodule "vimfiles/bundle/vim-ps1"]
 	path = vimfiles/bundle/vim-ps1
 	url = https://github.com/PProvost/vim-ps1.git
@@ -67,9 +61,6 @@
 [submodule "vimfiles/bundle/DistractFree"]
 	path = vimfiles/bundle/DistractFree
 	url = https://github.com/chrisbra/DistractFree.git
-[submodule "vimfiles/bundle/vim-stylus"]
-	path = vimfiles/bundle/vim-stylus
-	url = https://github.com/wavded/vim-stylus.git
 [submodule "vimfiles/bundle/vim-vinegar"]
 	path = vimfiles/bundle/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar.git
@@ -97,3 +88,6 @@
 [submodule "vimfiles/bundle/vim-multiple-cursors"]
 	path = vimfiles/bundle/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "vimfiles/bundle/vim-polyglot"]
+	path = vimfiles/bundle/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot.git
