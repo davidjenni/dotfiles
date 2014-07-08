@@ -91,3 +91,9 @@
 [submodule "vimfiles/bundle/vim-polyglot"]
 	path = vimfiles/bundle/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot.git
+[submodule "vimfiles/bundle/limelight.vim"]
+	path = vimfiles/bundle/limelight.vim
+	url = https://github.com/junegunn/limelight.vim.git
+[submodule "vimfiles/bundle/goyo.vim"]
+	path = vimfiles/bundle/goyo.vim
+	url = https://github.com/junegunn/goyo.vim.git

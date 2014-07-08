@@ -347,3 +347,23 @@ nmap cxc <Plug>(ExchangeClear)
 nmap cxx <Plug>(ExchangeLine)
 
 let g:airline#extensions#tabline#enabled = 1
+
+" goyo/limelight:
+function! GoyoBefore()
+  if exists('$TMUX')
+    silent !tmux set status off
+  endif
+  set noshowcmd
+  Limelight
+endfunction
+
+function! GoyoAfter()
+  if exists('$TMUX')
+    silent !tmux set status on
+  endif
+  set showcmd
+  Limelight!
+endfunction
+let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
+nnoremap <Leader><Space> :Goyo<CR>
+
