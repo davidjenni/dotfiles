@@ -94,3 +94,6 @@
 [submodule "vimfiles/bundle/goyo.vim"]
 	path = vimfiles/bundle/goyo.vim
 	url = https://github.com/junegunn/goyo.vim.git
+[submodule "vimfiles/bundle/YouCompleteMe"]
+	path = vimfiles/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
