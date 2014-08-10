@@ -367,3 +367,26 @@ endfunction
 let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
 nnoremap <Leader><Space> :Goyo<CR>
 
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+function! StripTrailingWhitespace()
+  call Preserve("%s/\\s\\+$//e")
+endfunction
+
+autocmd BufWritePre *.py,*.js, *.json, *.cs, *.c, *.cpp, *.cxx, *.h, *.xml, *proj, *.props, *.targets :call StripTrailingWhitespace()
+nmap _$ :call StripTrailingWhitespace()<CR>
+nmap _= :call Preserve("normal gg=G")<CR>
+
+" http://vimdoc.sourceforge.net/htmldoc/syntax.html#:TOhtml
+let g:html_use_css=1
+
