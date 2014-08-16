@@ -53,10 +53,10 @@ behave xterm
 set modeline
 set modelines=2
 
-" sounds
-set noerrorbells
-set novisualbell
-set t_vb=0
+" sounds counterintuitive: http://vim.wikia.com/wiki/Disable_beeping
+set noerrorbells visualbell
+set t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 
 " GUI
 if has("gui")
