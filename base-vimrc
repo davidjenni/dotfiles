@@ -37,8 +37,14 @@ set statusline+=\ [%{&ff}/%Y]            " Filetype
 set statusline+=\ [%{getcwd()}]          " Current dir
 set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 set ruler
-set cursorline
 set nowrap
+
+set cursorline
+augroup singleCursorline
+    au!
+    au WinLeave,InsertEnter * set nocursorline
+    au WinEnter,InsertLeave * set cursorline
+augroup END
 
 set scrolloff=2
 set sidescroll=1
