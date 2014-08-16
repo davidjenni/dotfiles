@@ -55,8 +55,7 @@ set modelines=2
 
 " sounds
 set noerrorbells
-" counterintuitive, see http://vim.wikia.com/wiki/Disable_beeping
-set visualbell
+set novisualbell
 set t_vb=0
 
 " GUI
@@ -72,7 +71,6 @@ if has("gui")
   set guicursor=n:blinkon0
 endif
 
-
 " spaces, tabs & formatting
 set expandtab
 set tabstop=4
@@ -86,6 +84,9 @@ set listchars=tab:>.,trail:#,extends:>,precedes:<
 set list
 
 set backspace=indent,eol,start
+
+" http://vimdoc.sourceforge.net/htmldoc/syntax.html#:TOhtml
+let g:html_use_css=1
 
 " files, buffers
 set encoding=utf-8
