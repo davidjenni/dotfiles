@@ -1,9 +1,11 @@
-" base vimrc without any external plugins
+" vim: set ft=vim ts=2 sts=2 sw=2 expandtab :
+" base vimrc without loading any external plugins
+" this vimrc can be loaded by itself: vim -u base-vimrc
 set nocompatible
 " bail if not on a recent VIM version
 if (v:version < 703)
-    echoerr "Sorry, this vimrc requires a recent VIM version (>= 7.3)"
-    finish
+  echoerr "Sorry, this vimrc requires a recent VIM version (>= 7.3)"
+  finish
 endif
 
 if has('syntax') && !exists('g:syntax_on')
@@ -16,6 +18,7 @@ endif
 " completion
 set wildmenu
 set wildmode=list:longest,list:full
+set wildignorecase
 set complete-=i
 set smarttab
 set ttimeout
@@ -46,24 +49,29 @@ set mouse=a
 set mousehide
 behave xterm
 
+" consider: https://github.com/ciaranm/securemodelines
+set modeline
+set modelines=2
+
 " sounds
 set noerrorbells
-set novisualbell
+" counterintuitive, see http://vim.wikia.com/wiki/Disable_beeping
+set visualbell
 set t_vb=0
 
 " GUI
 if has("gui")
-     set guioptions-=T   " no toolbar
-     set guioptions-=t   " exclude tearoff menu
-     set guioptions+=c   " use console for simple questions
-     set guioptions-=m   " don't bother showing GUI menu
-     set guioptions-=r   " no need for greyed menues
-     set guioptions-=L   " don't show left hand scrollbar
-     set lines=50
-     set columns=160
-     set guicursor=n:blinkon0
- endif
- 
+  set guioptions-=T   " no toolbar
+  set guioptions-=t   " exclude tearoff menu
+  set guioptions+=c   " use console for simple questions
+  set guioptions-=m   " don't bother showing GUI menu
+  set guioptions-=r   " no need for greyed menues
+  set guioptions-=L   " don't show left hand scrollbar
+  set lines=50
+  set columns=160
+  set guicursor=n:blinkon0
+endif
+
 
 " spaces, tabs & formatting
 set expandtab
@@ -108,7 +116,7 @@ let mapleader="\<Space>"
 
 " mappings
 if maparg('<C-L>', 'n') ==# ''
-    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 endif
 
 " custom motions
@@ -148,78 +156,78 @@ nnoremap <silent> p p`]
 " autocmd
 
 if has ("autocmd")
-    augroup textFiles
-        au!
-        autocmd FileType text setlocal textwidth=78
-    augroup END
+  augroup textFiles
+    au!
+    autocmd FileType text setlocal textwidth=78
+  augroup END
 
-    augroup helpFiles
-        au!
-        autocmd filetype help set nonumber
-        autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
-        autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
-        autocmd FileType help wincmd K " show help in top hsplit
-    augroup END
+  augroup helpFiles
+    au!
+    autocmd filetype help set nonumber
+    autocmd filetype help nnoremap <buffer><cr> <c-]>   " Enter selects subject
+    autocmd filetype help nnoremap <buffer><bs> <c-T>   " Backspace to go back
+    autocmd FileType help wincmd K " show help in top hsplit
+  augroup END
 
-    augroup makeFiles
-        au!
-        autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
-    augroup END
+  augroup makeFiles
+    au!
+    autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+  augroup END
 
-    augroup xmlFiles
-        au!
-        autocmd BufNewFile,BufRead *.rss setfiletype xml
-        autocmd BufNewFile,BufRead *.proj setfiletype xml
-        autocmd BufNewFile,BufRead *.csproj setfiletype xml
-        autocmd BufNewFile,BufRead *.targets setfiletype xml
-        autocmd BufNewFile,BufRead *.settings setfiletype xml
-    augroup END
+  augroup xmlFiles
+    au!
+    autocmd BufNewFile,BufRead *.rss setfiletype xml
+    autocmd BufNewFile,BufRead *.proj setfiletype xml
+    autocmd BufNewFile,BufRead *.csproj setfiletype xml
+    autocmd BufNewFile,BufRead *.targets setfiletype xml
+    autocmd BufNewFile,BufRead *.settings setfiletype xml
+  augroup END
 
-    augroup jsFiles
-        au!
-        autocmd filetype javascript setlocal tabstop=2 shiftwidth=2
-        autocmd filetype jade setlocal tabstop=2 shiftwidth=2
-        autocmd BufNewFile,BufRead *.coffee setlocal tabstop=2 shiftwidth=2
-    augroup END
+  augroup jsFiles
+    au!
+    autocmd filetype javascript setlocal tabstop=2 shiftwidth=2
+    autocmd filetype jade setlocal tabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.coffee setlocal tabstop=2 shiftwidth=2
+  augroup END
 endif
 
 " OS specifics
 silent function! OSX()
-    return has('macunix')
+return has('macunix')
 endfunction
 silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
+return has('unix') && !has('macunix') && !has('win32unix')
 endfunction
 silent function! WINDOWS()
-    return  (has('win16') || has('win32') || has('win64'))
+return  (has('win16') || has('win32') || has('win64'))
 endfunction
 
 if WINDOWS()
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-    set wildignore+=*.obj,*.dll,*.exe
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+  set wildignore+=*.obj,*.dll,*.exe
 else
-    set wildignore+=.git\*,.hg\*,.svn\*
+  set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
 if has('gui_running')
-    set background=dark
-    colorscheme evening
+  set background=dark
+  colorscheme evening
 
-    if WINDOWS()
-        set guifont=Consolas:h10
-    elseif OSX()
-        set guifont=Monaco:h12
-        " <C-v>u21aa
-        set showbreak=↪
-    elseif LINUX()
-        set guifont=Dejavu\ Sans\ Mono\ 10
-    endif
+  if WINDOWS()
+    set guifont=Consolas:h10
+  elseif OSX()
+    set guifont=Monaco:h12
+    " <C-v>u21aa
+    set showbreak=↪
+  elseif LINUX()
+    set guifont=Dejavu\ Sans\ Mono\ 10
+  endif
 else
-    set background=dark
-    colorscheme desert
-    if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
-        set t_Co=256
-    endif
+  set background=dark
+  colorscheme desert
+  if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
+    set t_Co=256
+  endif
 endif
 
 runtime macros/matchit.vim
