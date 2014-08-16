@@ -1,15 +1,16 @@
 " base vimrc without any external plugins
 set nocompatible
+" bail if not on a recent VIM version
+if (v:version < 703)
+    echoerr "Sorry, this vimrc requires a recent VIM version (>= 7.3)"
+    finish
+endif
+
 if has('syntax') && !exists('g:syntax_on')
   syntax enable
 endif
 if has('autocmd')
   filetype plugin indent on
-endif
-" bail if not on a recent VIM version
-if (v:version < 703)
-    echoerr "Sorry, this vimrc requires a recent VIM version (>= 7.3)"
-    finish
 endif
 
 " completion
