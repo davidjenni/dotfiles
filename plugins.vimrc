@@ -42,6 +42,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 "" Color
 NeoBundle 'tomasr/molokai'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'chriskempson/base16-vim'
 
 " essentials
 NeoBundle 'bling/vim-airline'
