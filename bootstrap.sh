@@ -70,6 +70,7 @@ EndOfSecrets
     saveLink $dotPath/gitconfig $HOME/.gitconfig
     saveLink $dotPath/hgrc $HOME/.hgrc
     saveLink $dotPath/vimrc $HOME/.vimrc
+    saveLink $dotPath/gvimrc $HOME/.gvimrc
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc

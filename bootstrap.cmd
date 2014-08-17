@@ -47,7 +47,7 @@ exit /b 4
     echo.
     set _gitSecretsFile=%_HOME%\.gitSecrets.cmd
     echo Enter email address to be used with Git (empty string will skip creating %_gitSecretsFile%).
-    set /P _gitEmail=.  email: 
+    set /P _gitEmail=.  email:
     if ERRORLEVEL 1 goto :setConsoleDefaults
         set _defaultGitUser=%USERNAME%@%COMPUTERNAME%
         echo Enter user name to be used with Git (default is %_defaultGitUser%).
@@ -160,6 +160,10 @@ exit /b 4
     del /q %_HOME%\_vimrc > nul 2>&1
     mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc
 
+    copy %_HOME%\_gvimrc %_bootstrapBackupsDir% > nul 2>&1
+    del /q %_HOME%\_gvimrc > nul 2>&1
+    mklink %_HOME%\_gvimrc %_HOME%\dotfiles\gvimrc
+
 :: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
 :: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
 
@@ -173,7 +177,7 @@ exit /b 4
     REM http://msdn.microsoft.com/en-us/windows/hardware/gg463447.aspx
     reg add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /d 0000000000000000020000001D003A0000000000 /t REG_BINARY /f > nul
     echo CapsLock remapped, will be effective after next system reboot.
- 
+
     echo.
     echo Bootstrapping with elevation complete.
 pause
