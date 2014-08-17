@@ -51,7 +51,7 @@ set noshowmode
 NeoBundle 'Shougo/unite.vim'
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-" nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  -start-insert buffer bookmark<cr>
 nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
@@ -117,14 +117,15 @@ nnoremap <Leader>G :Goyo<CR>
 
 call neobundle#end()
 
-" direct calls are only valid after plugins have been loaded by above neobundle#end call
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-colorscheme molokai
-
 " Required:
 filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+
+" direct calls are only valid after plugins have been loaded by above NeoBundleCheck
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+colorscheme molokai
+
 
