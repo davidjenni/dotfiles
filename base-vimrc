@@ -1,7 +1,9 @@
 " vim: set ft=vim ts=2 sts=2 sw=2 expandtab :
 " base vimrc without loading any external plugins
 " this vimrc can be loaded by itself: vim -u base-vimrc
-set nocompatible
+if &compatible
+  set nocompatible
+endif
 " bail if not on a recent VIM version
 if (v:version < 703)
   echoerr "Sorry, this vimrc requires a recent VIM version (>= 7.3)"
