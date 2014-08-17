@@ -54,9 +54,11 @@ NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-vinegar'
-NeoBundle 'rking/ag.vim'
+NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-fugitive'
 let g:airline#extensions#branch#enabled = 1
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'rking/ag.vim'
 
 "" development, languages
 NeoBundle 'scrooloose/syntastic'
