@@ -1,7 +1,7 @@
 " vim: set ft=vim ts=2 sts=2 sw=2 expandtab :
 
 " standardize across OSes on one path for vim's local app data
-if WINDOWS()
+if IsWindows()
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
   let s:bundlePath='$USERPROFILE/.vim/bundle'
 else
@@ -21,7 +21,7 @@ let s:pluginMgr_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
 if !filereadable(s:pluginMgr_readme)
   echo "Installing NeoBundle..."
   echo ""
-  if WINDOWS()
+  if IsWindows()
     let s:oldPwd=getcwd()
     lcd $USERPROFILE
     silent !mkdir .vim/bundle
@@ -51,14 +51,24 @@ let g:airline#extensions#tabline#enabled = 1
 set noshowmode
 
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
 let g:unite_source_history_yank_enable = 1
-nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  -start-insert buffer bookmark<cr>
-nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer bookmark<cr>
+nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=localfiles  -start-insert file<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline   outline<cr>
 " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=register  register<cr>
+nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=yank      history/yank<cr>
+nnoremap <leader>ma :<C-u>Unite -no-split -buffer-name=mappings mapping<cr>
+nnoremap <space>/ :Unite grep:.<cr>
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 autocmd FileType unite call s:unite_mappings()
 function! s:unite_mappings()
@@ -91,6 +101,7 @@ NeoBundle 'tpope/vim-fugitive'
   nmap <leader>ci :Gcommit<CR>
   let g:airline#extensions#branch#enabled = 1
 NeoBundle 'tpope/vim-dispatch'
+" ag from: https://github.com/ggreer/the_silver_searcher
 NeoBundle 'rking/ag.vim'
 
 "" development, languages

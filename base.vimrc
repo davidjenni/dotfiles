@@ -64,20 +64,6 @@ set modelines=2
 " sounds counterintuitive: http://vim.wikia.com/wiki/Disable_beeping
 set noerrorbells visualbell
 set t_vb=
-autocmd GUIEnter * set visualbell t_vb=
-
-" GUI
-if has("gui")
-  set guioptions-=T   " no toolbar
-  set guioptions-=t   " exclude tearoff menu
-  set guioptions+=c   " use console for simple questions
-  set guioptions-=m   " don't bother showing GUI menu
-  set guioptions-=r   " no need for greyed menues
-  set guioptions-=L   " don't show left hand scrollbar
-  set lines=50
-  set columns=160
-  set guicursor=n:blinkon0
-endif
 
 " spaces, tabs & formatting
 set expandtab
@@ -212,45 +198,30 @@ if has ("autocmd")
 endif
 
 " OS specifics
-silent function! OSX()
-return has('macunix')
+silent function! IsOSX()
+  return has('macunix')
 endfunction
-silent function! LINUX()
-return has('unix') && !has('macunix') && !has('win32unix')
+silent function! IsLinux()
+  return has('unix') && !has('macunix') && !has('win32unix')
 endfunction
-silent function! WINDOWS()
-return  (has('win16') || has('win32') || has('win64'))
+silent function! IsWindows()
+  return  (has('win16') || has('win32') || has('win64'))
 endfunction
 
-if WINDOWS()
+if IsWindows()
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
   set wildignore+=*.obj,*.dll,*.exe
 else
   set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
-if has('gui_running')
-  set background=dark
-  colorscheme evening
-
-  if WINDOWS()
-    set guifont=Consolas:h10
-  elseif OSX()
-    set guifont=Monaco:h12
-    " <C-v>u21aa
-    set showbreak=↪
-  elseif LINUX()
-    set guifont=Dejavu\ Sans\ Mono\ 10
-  endif
-else
-  set background=dark
-  colorscheme desert
-  if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
-    set t_Co=256
-  endif
+set background=dark
+colorscheme desert
+if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
+  set t_Co=256
 endif
 
-if (WINDOWS() && executable('tf'))
+if (IsWindows() && executable('tf'))
     " TFS shortcuts: TODO: consider plugin similar to fugitive
     nmap <leader>ta :!tf add %<CR>
     nmap <leader>td :!tf diff /format:ss_unix %<CR>
