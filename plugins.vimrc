@@ -85,13 +85,17 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-fugitive'
-let g:airline#extensions#branch#enabled = 1
+  nmap <leader>gs :Gstatus<CR>
+  nmap <leader>gd :Gdiff<CR>
+  nmap <leader>gl :Glog<CR>
+  nmap <leader>ci :Gcommit<CR>
+  let g:airline#extensions#branch#enabled = 1
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'rking/ag.vim'
 
 "" development, languages
 NeoBundle 'scrooloose/syntastic'
-let g:airline#extensions#syntastic#enabled = 1
+  let g:airline#extensions#syntastic#enabled = 1
 
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'moll/vim-node'
