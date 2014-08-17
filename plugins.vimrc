@@ -48,6 +48,33 @@ NeoBundle 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled = 1
 set noshowmode
 
+NeoBundle 'Shougo/unite.vim'
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+" nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  -start-insert buffer bookmark<cr>
+nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+" nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+
+autocmd FileType unite call s:unite_mappings()
+function! s:unite_mappings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build' : {
+      \     'windows' : 'nmake -f make_msvc.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
@@ -90,6 +117,8 @@ nnoremap <Leader>G :Goyo<CR>
 
 call neobundle#end()
 
+" direct calls are only valid after plugins have been loaded by above neobundle#end call
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
 colorscheme molokai
 
 " Required:
