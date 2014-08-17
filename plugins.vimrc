@@ -3,9 +3,11 @@
 " standardize across OSes on one path for vim's local app data
 if WINDOWS()
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+  let s:bundlePath='$USERPROFILE/.vim/bundle'
+else
+  let s:bundlePath='~/.vim/bundle'
 endif
 
-" let s:bundlePath=~/.vim/bundle
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -19,12 +21,20 @@ let s:pluginMgr_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
 if !filereadable(s:pluginMgr_readme)
   echo "Installing NeoBundle..."
   echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim/
+  if WINDOWS()
+    let s:oldPwd=getcwd()
+    lcd $USERPROFILE
+    silent !mkdir .vim/bundle
+    silent !git clone https://github.com/Shougo/neobundle.vim .vim/bundle/neobundle.vim/
+    exec ":lcd " . s:oldPwd
+  else
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim/
+  endif
 endif
 
 " Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand(s:bundlePath))
 
 " Let NeoBundle manage NeoBundle
 " Required:
