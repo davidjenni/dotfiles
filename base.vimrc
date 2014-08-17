@@ -239,7 +239,30 @@ else
   endif
 endif
 
+" plugins shipping with VIM
 runtime macros/matchit.vim
 " http://vimdoc.sourceforge.net/htmldoc/usr_12.html#find-manpage
 runtime! ftplugin/man.vim
+
+" macros
+
+function! Preserve(command)
+   " Preparation: save last search, and cursor position.
+   let _s=@/
+   let l = line(".")
+   let c = col(".")
+   " Do the business:
+   execute a:command
+   " Clean up: restore previous search history, and cursor position
+   let @/=_s
+   call cursor(l, c)
+ endfunction
+
+ function! StripTrailingWhitespace()
+   call Preserve("%s/\\s\\+$//e")
+ endfunction
+
+ " autocmd BufWritePre *.py,*.js, *.json, *.cs, *.c, *.cpp, *.cxx, *.h, *.xml, *proj, *.props, *.targets :call StripTrailingWhitespace()
+ nmap _$ :call StripTrailingWhitespace()<CR>
+ nmap _= :call Preserve("normal gg=G")<CR>
 
