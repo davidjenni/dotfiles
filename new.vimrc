@@ -3,7 +3,7 @@ set nocompatible
 
 let s:thisDir=expand("<sfile>:p:h")
 
-exec ":source " . s:thisDir . "/base-vimrc"
+exec ":source " . s:thisDir . "/base.vimrc"
 exec ":source " . s:thisDir . "/plugins.vimrc"
 
 " Include user's local vim config
