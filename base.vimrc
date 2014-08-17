@@ -159,8 +159,19 @@ vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
 nmap <Leader>P "+P
-" jumpd to end of pasted text:
+" jump to end of pasted text:
 nnoremap <silent> p p`]
+
+" shortcut to toggle spelling
+nmap <leader>s :setlocal spell! spelllang=en_us<CR>
+
+" shortcuts to open/close the quickfix window
+nmap <leader>q :copen<CR>
+nmap <leader>qq :cclose<CR>
+
+nmap <leader>l :lopen<CR>
+nmap <leader>ll :lclose<CR>
+
 
 " autocmd
 
@@ -237,6 +248,16 @@ else
   if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
     set t_Co=256
   endif
+endif
+
+if (WINDOWS() && executable('tf'))
+    " TFS shortcuts: TODO: consider plugin similar to fugitive
+    nmap <leader>ta :!tf add %<CR>
+    nmap <leader>td :!tf diff /format:ss_unix %<CR>
+    nmap <leader>te :!tf edit %<CR>
+    nmap <leader>th :!tf hist /noprompt %<CR>
+    nmap <leader>ti :!tf properties %<CR>
+    nmap <leader>ts :!tf stat /format:brief<CR>
 endif
 
 " plugins shipping with VIM
