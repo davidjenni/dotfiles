@@ -158,6 +158,21 @@ nmap <leader>qq :cclose<CR>
 nmap <leader>l :lopen<CR>
 nmap <leader>ll :lclose<CR>
 
+" command line mappings
+" bash like home/end
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+
+" Ctrl-[hl]: Move left/right by word
+cnoremap <c-h> <s-left>
+cnoremap <c-l> <s-right>
+
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+cnoremap <c-f> <left>
+cnoremap <c-g> <right>
+" Ctrl-Space: Show history
+cnoremap <c-@> <c-f>
 
 " autocmd
 
