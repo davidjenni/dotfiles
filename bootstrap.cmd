@@ -121,6 +121,14 @@ exit /b 4
     exit /B 0
     goto :eof
 
+:saveLink
+    :: param1 src file
+    :: param2 target file
+    copy %2 %_bootstrapBackupsDir% > nul 2>&1
+    del /q %2 > nul 2>&1
+    mklink %2 %1
+    exit /B 0
+
 :elevatedSetup
     :: param1 home directory
     echo Continuing bootstrapping with elevated privileges...
@@ -131,38 +139,15 @@ exit /b 4
     set _bootstrapBackupsDir=%_HOME%\bootstrapBackups-%JULIANDATE%
     mkdir %_bootstrapBackupsDir%
 
-    :: TODO use for loop and create helper subroutine safeLink that does the copying & nklink dance
-    copy %_HOME%\.gitconfig %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\.gitconfig > nul 2>&1
-    mklink %_HOME%\.gitconfig %_HOME%\dotfiles\gitconfig
+    call :saveLink %_HOME%\dotfiles\gitconfig %_HOME%\.gitconfig
+    call :saveLink %_HOME%\dotfiles\hgrc %_HOME%\.hgrc
+    call :saveLink %_HOME%\dotfiles\vimrc %_HOME%\_vimrc
+    call :saveLink %_HOME%\dotfiles\gvimrc %_HOME%\_gvimrc
 
-    copy %_HOME%\.os.gitconfig %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\.os.gitconfig > nul 2>&1
-    mklink %_HOME%\.os.gitconfig %_HOME%\dotfiles\win\os.gitconfig
-
-    copy %_HOME%\.hgrc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\.hgrc > nul 2>&1
-    mklink %_HOME%\.hgrc %_HOME%\dotfiles\hgrc
-
-    copy %_HOME%\.os.hgrc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\.os.hgrc > nul 2>&1
-    mklink %_HOME%\.os.hgrc %_HOME%\dotfiles\win\os.hgrc
-
-    copy %_HOME%\_vsvimrc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\_vsvimrc > nul 2>&1
-    mklink %_HOME%\_vsvimrc %_HOME%\dotfiles\win\vsvimrc
-
-    copy %_HOME%\.viemurc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\.viemurc > nul 2>&1
-    mklink %_HOME%\.viemurc %_HOME%\dotfiles\win\viemurc
-
-    copy %_HOME%\_vimrc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\_vimrc > nul 2>&1
-    mklink %_HOME%\_vimrc %_HOME%\dotfiles\vimrc
-
-    copy %_HOME%\_gvimrc %_bootstrapBackupsDir% > nul 2>&1
-    del /q %_HOME%\_gvimrc > nul 2>&1
-    mklink %_HOME%\_gvimrc %_HOME%\dotfiles\gvimrc
+    call :saveLink %_HOME%\dotfiles\win\os.gitconfig %_HOME%\.os.gitconfig
+    call :saveLink %_HOME%\dotfiles\win\os.hgrc %_HOME%\.os.hgrc
+    call :saveLink %_HOME%\dotfiles\win\vsvimrc %_HOME%\_vsvimrc
+    call :saveLink %_HOME%\dotfiles\win\viemurc %_HOME%\.viemurc
 
 :: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
 :: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
