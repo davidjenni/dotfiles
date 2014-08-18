@@ -143,6 +143,8 @@ exit /b 4
     call :saveLink %_HOME%\dotfiles\hgrc %_HOME%\.hgrc
     call :saveLink %_HOME%\dotfiles\vimrc %_HOME%\_vimrc
     call :saveLink %_HOME%\dotfiles\gvimrc %_HOME%\_gvimrc
+    call :saveLink %_HOME%\dotfiles\base.vimrc %_HOME%\base.vimrc
+    call :saveLink %_HOME%\dotfiles\plugins.vimrc %_HOME%\plugins.vimrc
 
     call :saveLink %_HOME%\dotfiles\win\os.gitconfig %_HOME%\.os.gitconfig
     call :saveLink %_HOME%\dotfiles\win\os.hgrc %_HOME%\.os.hgrc

@@ -71,6 +71,8 @@ EndOfSecrets
     saveLink $dotPath/hgrc $HOME/.hgrc
     saveLink $dotPath/vimrc $HOME/.vimrc
     saveLink $dotPath/gvimrc $HOME/.gvimrc
+    saveLink $dotPath/base.vimrc $HOME/base.vimrc
+    saveLink $dotPath/plugins.vimrc $HOME/plugins.vimrc
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
