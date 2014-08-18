@@ -121,6 +121,8 @@ if executable('ag')
   " ag from: https://github.com/ggreer/the_silver_searcher
   NeoBundle 'rking/ag.vim'
 endif
+NeoBundle 'mbbill/undotree'
+nnoremap <F5> :UndotreeToggle<cr>
 
 "" development, languages
 NeoBundle 'scrooloose/syntastic'

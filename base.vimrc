@@ -96,10 +96,14 @@ set incsearch
 set hlsearch
 set showmatch
 
-" backups, swap file
+" backups, undo, swap file
 set nobackup
 set noswapfile
-set noundofile
+if has("persistent_undo")
+    set undodir='~/.vim/undodir/'
+    silent !mkdir ~/.vim/undodir/
+    set undofile
+endif
 
 " sessions, history
 set sessionoptions-=options
