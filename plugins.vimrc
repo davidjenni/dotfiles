@@ -53,16 +53,20 @@ set noshowmode
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 let g:unite_source_history_yank_enable = 1
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
-" nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
+if IsWindows()
+  " TODO: vimproc seems to have issues under Win and VS2012; don't use async yet
+  nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
+else
+  nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
+  nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
+endif
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer bookmark<cr>
-nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=localfiles  -start-insert file<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline   outline<cr>
 " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=register  register<cr>
-nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=yank      history/yank<cr>
 nnoremap <leader>ma :<C-u>Unite -no-split -buffer-name=mappings mapping<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank      history/yank<cr>
 nnoremap <space>/ :Unite grep:.<cr>
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
@@ -78,14 +82,18 @@ function! s:unite_mappings()
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
 
-NeoBundle 'Shougo/vimproc.vim', {
-      \ 'build' : {
-      \     'windows' : 'nmake -f make_msvc.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+if !IsWindows()
+  NeoBundle 'Shougo/vimproc.vim', {
+        \ 'build' : {
+        \     'windows' : 'nmake -f make_msvc.mak',
+        \     'cygwin' : 'make -f make_cygwin.mak',
+        \     'mac' : 'make -f make_mac.mak',
+        \     'unix' : 'make -f make_unix.mak',
+        \    },
+        \ }
+  NeoBundle 'Shougo/unite-help'
+  nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=help help<cr>
+endif
 
 NeoBundle 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode = 'ra'
@@ -109,8 +117,10 @@ NeoBundle 'tpope/vim-fugitive'
   nmap <leader>ci :Gcommit<CR>
   let g:airline#extensions#branch#enabled = 1
 NeoBundle 'tpope/vim-dispatch'
-" ag from: https://github.com/ggreer/the_silver_searcher
-NeoBundle 'rking/ag.vim'
+if executable('ag')
+  " ag from: https://github.com/ggreer/the_silver_searcher
+  NeoBundle 'rking/ag.vim'
+endif
 
 "" development, languages
 NeoBundle 'scrooloose/syntastic'
@@ -150,7 +160,7 @@ filetype plugin indent on
 NeoBundleCheck
 
 " direct calls are only valid after plugins have been loaded by above NeoBundleCheck
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-colorscheme molokai
+silent call unite#filters#matcher_default#use(['matcher_fuzzy'])
+silent colorscheme molokai
 
 
