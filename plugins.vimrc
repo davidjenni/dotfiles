@@ -44,6 +44,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'chriskempson/base16-vim'
+NeoBundle 'sjl/badwolf'
 
 " essentials
 NeoBundle 'bling/vim-airline'
@@ -163,6 +164,6 @@ NeoBundleCheck
 
 " direct calls are only valid after plugins have been loaded by above NeoBundleCheck
 silent call unite#filters#matcher_default#use(['matcher_fuzzy'])
-silent colorscheme molokai
+silent colorscheme badwolf
 
 
