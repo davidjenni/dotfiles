@@ -163,7 +163,7 @@ filetype plugin indent on
 NeoBundleCheck
 
 " direct calls are only valid after plugins have been loaded by above NeoBundleCheck
-!silent call unite#filters#matcher_default#use(['matcher_fuzzy'])
-!silent colorscheme badwolf
+silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
+silent! colorscheme badwolf
 
 
