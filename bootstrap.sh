@@ -80,6 +80,7 @@ EndOfSecrets
     saveLink $dotPath/bash/inputrc $HOME/.inputrc
     saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
     saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
+    saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
 }
 
 # main:

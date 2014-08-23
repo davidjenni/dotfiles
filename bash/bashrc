@@ -83,8 +83,13 @@ ccc() {
   fi
 }
 
-#export PS1='(\t) [\w]\n\$ '
-export PS1='(\t \u@\h) [\033[34m\w\033[00m]\n\$ '
+if [ -f ~/.liquidpromptrc ]; then
+    export LP_PS1_POSTFIX="\n$ "
+    . ~/.liquidpromptrc
+else
+    #export PS1='(\t) [\w]\n\$ '
+    export PS1='(\t \u@\h) [\033[34m\w\033[00m]\n\$ '
+fi
 
 if [ -x /usr/bin/most ]; then
 	export MANPAGER="/usr/bin/most -s"
