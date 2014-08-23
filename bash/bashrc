@@ -83,9 +83,9 @@ ccc() {
   fi
 }
 
-if [ -f ~/.liquidpromptrc ]; then
+if [ -f ~/liquidprompt/liquidprompt ]; then
     export LP_PS1_POSTFIX="\n$ "
-    . ~/.liquidpromptrc
+    . ~/liquidprompt/liquidprompt
 else
     #export PS1='(\t) [\w]\n\$ '
     export PS1='(\t \u@\h) [\033[34m\w\033[00m]\n\$ '
