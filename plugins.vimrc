@@ -56,9 +56,9 @@ NeoBundle 'Shougo/unite-outline'
 let g:unite_source_history_yank_enable = 1
 if IsWindows()
   " TODO: vimproc seems to have issues under Win and VS2012; don't use async yet
-  nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
+  nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
 else
-  nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
+  nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
   nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
 endif
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer bookmark<cr>
