@@ -103,6 +103,7 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
+NeoBundle 'spolu/dwm.vim'
 
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-surround'
