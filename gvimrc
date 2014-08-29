@@ -15,11 +15,9 @@ set lines=50
 set columns=160
 set guicursor=n:blinkon0
 
-set background=dark
-colorscheme evening
-
 if IsWindows()
   set guifont=Consolas:h10
+  set t_Co=256
 elseif IsOSX()
   set guifont=Monaco:h12
   " <C-v>u21aa
@@ -27,4 +25,7 @@ elseif IsOSX()
 elseif LINUX()
   set guifont=Dejavu\ Sans\ Mono\ 10
 endif
+
+set background=dark
+colorscheme hybrid
 

@@ -237,7 +237,6 @@ else
 endif
 
 set background=dark
-colorscheme desert
 if (&term=="xterm-256color" || (&term=="screen" && exists("$TMUX")))
   set t_Co=256
 endif
