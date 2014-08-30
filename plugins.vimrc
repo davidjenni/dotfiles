@@ -142,6 +142,49 @@ NeoBundle 'elzr/vim-json'
 " any filetype specific plugins (like vim-json) need to be listed
 " before vim-polyglot to avoid it dominating with its handlers
 NeoBundle 'sheerun/vim-polyglot'
+" git clone --recursive and install script not really working in OSX or Win
+" NeoBundle 'Valloric/YouCompleteMe', {
+"           \ 'build' : {
+"           \   'mac' : './install.sh --clang-completer',
+"           \   'unix' : './install.sh --clang-completer'
+"           \   }
+"           \ }
+
+NeoBundle 'Shougo/neocomplete.vim'
+  let g:acp_enableAtStartup = 0
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  inoremap <expr><C-g>     neocomplete#undo_completion()
+  inoremap <expr><C-l>     neocomplete#complete_common_string()
+  " Recommended key-mappings.
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+    return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  endfunction
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><C-y>  neocomplete#close_popup()
+  inoremap <expr><C-e>  neocomplete#cancel_popup()
+  " Close popup by <Space>.
+  inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+NeoBundle 'osyo-manga/vim-marching', {
+      \  'autoload' : { 'filetypes' : [ 'c ' , 'cpp', 'cxx' ] }
+  }
+  let g:marching_enable_neocomplete=1
+
 
 "" writing
 NeoBundle 'junegunn/limelight.vim'
