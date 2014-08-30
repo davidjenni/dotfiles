@@ -136,6 +136,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'moll/vim-node'
 
+NeoBundle 'ressu/hexman.vim'
 "" writing
 NeoBundle 'junegunn/limelight.vim'
 NeoBundle 'junegunn/goyo.vim'
