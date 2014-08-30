@@ -57,6 +57,8 @@ set noshowmode
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 let g:unite_source_history_yank_enable = 1
+let g:unite_enable_ignore_case  = 1
+let g:unite_enable_smart_case   = 1
 if IsWindows()
   " TODO: vimproc seems to have issues under Win and VS2012; don't use async yet
   nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec<cr>
@@ -64,7 +66,7 @@ else
   nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files     -start-insert file_rec/async:!<cr>
   nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
 endif
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer bookmark<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    -quick-match buffer bookmark<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=localfiles  -start-insert file<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline   outline<cr>
 " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
@@ -180,9 +182,9 @@ NeoBundle 'Shougo/neocomplete.vim'
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-NeoBundle 'osyo-manga/vim-marching', {
+NeoBundleLazy 'osyo-manga/vim-marching', {
       \  'autoload' : { 'filetypes' : [ 'c ' , 'cpp', 'cxx' ] }
-  }
+      \ }
   let g:marching_enable_neocomplete=1
 
 
