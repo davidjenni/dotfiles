@@ -128,6 +128,8 @@ if executable('ag')
 endif
 NeoBundle 'mbbill/undotree'
 nnoremap <F5> :UndotreeToggle<cr>
+  " additional text objects for e.g. parameters:
+NeoBundle 'wellle/targets.vim'
 
 "" development, languages
 NeoBundle 'scrooloose/syntastic'
