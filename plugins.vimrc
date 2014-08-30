@@ -133,10 +133,14 @@ nnoremap <F5> :UndotreeToggle<cr>
 NeoBundle 'scrooloose/syntastic'
   let g:airline#extensions#syntastic#enabled = 1
 
-NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'moll/vim-node'
-
 NeoBundle 'ressu/hexman.vim'
+NeoBundle 'moll/vim-node'
+NeoBundle 'elzr/vim-json'
+  let g:vim_json_syntax_conceal = 1
+" any filetype specific plugins (like vim-json) need to be listed
+" before vim-polyglot to avoid it dominating with its handlers
+NeoBundle 'sheerun/vim-polyglot'
+
 "" writing
 NeoBundle 'junegunn/limelight.vim'
 NeoBundle 'junegunn/goyo.vim'
