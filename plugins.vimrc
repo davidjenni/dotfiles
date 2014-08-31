@@ -186,6 +186,8 @@ NeoBundleLazy 'osyo-manga/vim-marching', {
       \  'autoload' : { 'filetypes' : [ 'c ' , 'cpp', 'cxx' ] }
       \ }
   let g:marching_enable_neocomplete=1
+NeoBundle 'majutsushi/tagbar'
+  nnoremap <leader>tb :TagbarToggle<CR>
 
 
 "" writing
