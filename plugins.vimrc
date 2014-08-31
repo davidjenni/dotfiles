@@ -152,6 +152,7 @@ NeoBundle 'sheerun/vim-polyglot'
 "           \   }
 "           \ }
 
+if has("lua")
 NeoBundle 'Shougo/neocomplete.vim'
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
@@ -186,6 +187,8 @@ NeoBundleLazy 'osyo-manga/vim-marching', {
       \  'autoload' : { 'filetypes' : [ 'c ' , 'cpp', 'cxx' ] }
       \ }
   let g:marching_enable_neocomplete=1
+endif
+
 NeoBundle 'majutsushi/tagbar'
   nnoremap <leader>tb :TagbarToggle<CR>
 
