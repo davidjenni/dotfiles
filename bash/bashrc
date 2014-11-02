@@ -175,6 +175,11 @@ if [ -d "/usr/local/opt/go/libexec/bin" ] ; then
     PATH="/usr/local/opt/go/libexec/bin:$PATH"
 fi
 
+if [ -d "$HOME/gocode" ] ; then
+    export GOPATH="$HOME/gocode"
+    PATH="$PATH:$GOPATH/bin"
+fi
+
 if [  -x "/opt/Sublime2/sublime_text" ]; then
     alias s2='/opt/Sublime2/sublime_text'
 fi
