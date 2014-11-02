@@ -144,6 +144,7 @@ NeoBundle 'elzr/vim-json'
 " any filetype specific plugins (like vim-json) need to be listed
 " before vim-polyglot to avoid it dominating with its handlers
 NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'fatih/vim-go.git'
 " git clone --recursive and install script not really working in OSX or Win
 " NeoBundle 'Valloric/YouCompleteMe', {
 "           \ 'build' : {

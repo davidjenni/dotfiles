@@ -171,6 +171,10 @@ if [ -d "$HOME/node_modules/.bin" ] ; then
     PATH="$HOME/node_modules/.bin:$PATH"
 fi
 
+if [ -d "/usr/local/opt/go/libexec/bin" ] ; then
+    PATH="/usr/local/opt/go/libexec/bin:$PATH"
+fi
+
 if [  -x "/opt/Sublime2/sublime_text" ]; then
     alias s2='/opt/Sublime2/sublime_text'
 fi
