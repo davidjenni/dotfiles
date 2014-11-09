@@ -87,7 +87,9 @@ set encoding=utf-8
 set writebackup
 set autoread
 set hidden
-set cryptmethod=blowfish
+if has("cryptv")
+  set cryptmethod=blowfish
+endif
 
 " searching
 set ignorecase

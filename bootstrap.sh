@@ -73,6 +73,8 @@ EndOfSecrets
     saveLink $dotPath/gvimrc $HOME/.gvimrc
     saveLink $dotPath/base.vimrc $HOME/base.vimrc
     saveLink $dotPath/plugins.vimrc $HOME/plugins.vimrc
+    # neovim
+    saveLink $dotPath/vimrc $HOME/.nvimrc
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
