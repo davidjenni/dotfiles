@@ -4,7 +4,9 @@
 source ~/base.vimrc
 
 nmap <C-]> :vsc Edit.GoToDefinition<CR>
-nnoremap <esc> :nohlsearch<cr><esc>
+nmap gcc :vsc Edit.CommentSelection<CR>
+nmap gcu :vsc Edit.UncommentSelection<CR>
+nnoremap <C-L> :nohlsearch<cr><esc>
 
 nmap <C-P> :vsc View.CommandWindow<CR>
 cmap ls :vsc Window.Windows
