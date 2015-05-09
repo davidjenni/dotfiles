@@ -99,6 +99,8 @@ if !IsWindows()
         \ }
   NeoBundle 'Shougo/unite-help'
   nnoremap <leader>h :<C-u>Unite -no-split -buffer-name=help help<cr>
+  " TypeScript autocomplete
+  NeoBundle 'Quramy/tsuquyomi'
 endif
 
 NeoBundle 'kien/ctrlp.vim'
@@ -141,6 +143,10 @@ NeoBundle 'ressu/hexman.vim'
 NeoBundle 'moll/vim-node'
 NeoBundle 'elzr/vim-json'
   let g:vim_json_syntax_conceal = 1
+  autocmd FileType json setlocal nofoldenable
+" TypeScript autocomplete: TODO re-enable here once vimproc works on windows as well
+" NeoBundle 'Quramy/tsuquyomi'
+
 " any filetype specific plugins (like vim-json) need to be listed
 " before vim-polyglot to avoid it dominating with its handlers
 NeoBundle 'sheerun/vim-polyglot'
