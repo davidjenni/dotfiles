@@ -67,18 +67,18 @@ else
   nnoremap <leader>g :<C-u>Unite -no-split -buffer-name=gitfiles  -start-insert file_rec/git:--cached:--others:--exclude-standard<cr>
 endif
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    -quick-match buffer bookmark<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=localfiles  -start-insert file<cr>
+" nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=localfiles  -start-insert file<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline   outline<cr>
 " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=register  register<cr>
 nnoremap <leader>ma :<C-u>Unite -no-split -buffer-name=mappings mapping<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank      history/yank<cr>
-nnoremap <space>/ :Unite grep:.<cr>
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
+" nnoremap <space>/ :Unite grep:.<cr>
+" if executable('ag')
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+"   let g:unite_source_grep_recursive_opt = ''
+" endif
 
 autocmd FileType unite call s:unite_mappings()
 function! s:unite_mappings()
@@ -102,6 +102,17 @@ if !IsWindows()
   " TypeScript autocomplete
   NeoBundle 'Quramy/tsuquyomi'
 endif
+
+" search with Ag and Sublime like contextual search results, editable
+NeoBundle 'dyng/ctrlsf.vim'
+  " let g:ctrlsf_default_root = 'project'
+  let g:ctrlsf_default_root = 'cwd'
+  vmap     <leader>* <Plug>CtrlSFVwordPath
+  nmap     <leader>/ <Plug>CtrlSFCwordPath
+  nmap     <leader>n <Plug>CtrlSFPwordPath
+  " nnoremap <C-F>o :CtrlSFToggle<CR>
+
+NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode = 'ra'
@@ -159,7 +170,8 @@ NeoBundle 'fatih/vim-go.git'
 "           \   }
 "           \ }
 
-if has("lua")
+" if has("lua")
+if has("never")
 NeoBundle 'Shougo/neocomplete.vim'
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
