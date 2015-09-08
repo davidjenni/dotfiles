@@ -205,11 +205,14 @@ if has ("autocmd")
 
   augroup xmlFiles
     au!
-    autocmd BufNewFile,BufRead *.rss setfiletype xml
-    autocmd BufNewFile,BufRead *.proj setfiletype xml
     autocmd BufNewFile,BufRead *.csproj setfiletype xml
-    autocmd BufNewFile,BufRead *.targets setfiletype xml
+    autocmd BufNewFile,BufRead *.config setfiletype xml
+    autocmd BufNewFile,BufRead *.proj setfiletype xml
+    autocmd BufNewFile,BufRead *.props setfiletype xml
+    autocmd BufNewFile,BufRead *.rss setfiletype xml
     autocmd BufNewFile,BufRead *.settings setfiletype xml
+    autocmd BufNewFile,BufRead *.targets setfiletype xml
+    autocmd filetype xml setlocal tabstop=2 shiftwidth=2
   augroup END
 
   augroup jsFiles
