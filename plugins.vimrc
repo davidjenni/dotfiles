@@ -233,6 +233,10 @@ function! GoyoAfter()
 let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
 nnoremap <Leader>G :Goyo<CR>
 
+" large file handling
+NeoBundle 'mhinz/vim-hugefile'
+let g:hugefile_trigger_size=2
+
 call neobundle#end()
 
 " Required:
