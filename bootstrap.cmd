@@ -150,6 +150,9 @@ exit /b 4
     call :saveLink %_HOME%\dotfiles\win\os.hgrc %_HOME%\.os.hgrc
     call :saveLink %_HOME%\dotfiles\win\vsvimrc %_HOME%\_vsvimrc
     call :saveLink %_HOME%\dotfiles\win\viemurc %_HOME%\.viemurc
+    set _emacsDir=%_HOME%\.emacs.d
+    if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
+    call :saveLink %_HOME%\dotfiles\init.el %_emacsDir%\init.el
 
 :: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
 :: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
