@@ -31,7 +31,7 @@ call :addToPath "%MY_BIN%\Python-2.7"
 call :addToPath "%MY_BIN%\node_modules\.bin"
 
 :setEnv
-set LESS=-i -M -N -q -x4
+set LESS=-i -M -N -q -x4 -R
 set LESSBINFMT=*d[%02x]
 
 set _gitSecrets=%HOME%\.gitSecrets.cmd
