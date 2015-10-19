@@ -38,7 +38,7 @@ Win32:
 * open cmd prompt and run:
 
 ````
-    "%ProgramFiles(x86)%\git\bin\curl.exe" -L -o "%temp%\bootstrap.cmd" https://github.com/davidjenni/dotfiles/raw/master/bootstrap.cmd
+    "%ProgramFiles%\git\usr\bin\curl.exe" -L -o "%temp%\bootstrap.cmd" https://github.com/davidjenni/dotfiles/raw/master/bootstrap.cmd
     "%temp%\bootstrap.cmd"
 ````
 
