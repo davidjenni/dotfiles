@@ -19,7 +19,8 @@ if IsWindows()
   set guifont=Consolas:h10
   set t_Co=256
 elseif IsOSX()
-  set guifont=Monaco:h12
+  " set guifont=Monaco:h12
+  set guifont=Hack:h12
   " <C-v>u21aa
   set showbreak=↪
 elseif LINUX()
