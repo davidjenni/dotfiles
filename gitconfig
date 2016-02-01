@@ -3,6 +3,8 @@
 [alias]
     ai = add --interactive
     one = show -s --pretty='format:%h (%s)'
+    b = branch
+    bv = branch --verbose
     ci = commit
     co = checkout
     d = diff
