@@ -4,3 +4,6 @@
 [credential]
     helper = manager
 
+[credential "datawrangling.visualstudio.com"]
+    authority = AAD
+
