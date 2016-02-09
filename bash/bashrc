@@ -44,7 +44,6 @@ export LESS="-c -i -x4 -J -w -M -r"
 export VISUAL='vim'
 alias v='vim'
 alias vv='mvim'
-alias s='/Applications/Sublime\ Text\ 2.app/Contents/MacOS/Sublime\ Text\ 2'
 
 alias ff='find . -type f -name'
 alias fff='grep --color=auto -n -R'
@@ -85,19 +84,19 @@ ccc() {
 
 if [ -f ~/liquidprompt/liquidprompt ]; then
     export LP_PS1_POSTFIX="\n$ "
-    . ~/liquidprompt/liquidprompt
+    # . ~/liquidprompt/liquidprompt
 else
     #export PS1='(\t) [\w]\n\$ '
     export PS1='(\t \u@\h) [\033[34m\w\033[00m]\n\$ '
 fi
 
-if [ -x /usr/bin/most ]; then
-	export MANPAGER="/usr/bin/most -s"
+if [ -x $(brew --prefix)/bin/most ]; then
+	export MANPAGER="$(brew --prefix)/bin/most -s"
+else
+    export MANPAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+        vim -R -c 'set ft=man nomod nolist nonumber' -c 'map q :q<CR>' \
+        -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 fi
-
-export MANPAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-    vim -R -c 'set ft=man nomod nolist nonumber' -c 'map q :q<CR>' \
-    -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 
 if [ -x ~/bin/contrib/vimpager/vimpager ]; then
     export PAGER=~/bin/contrib/vimpager/vimpager
@@ -125,6 +124,7 @@ fi
 
 case `uname` in
     'Darwin')
+    export CLICOLOR=yes
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
         . $(brew --prefix)/etc/bash_completion
     fi
@@ -172,8 +172,8 @@ extract()
 
 myip() { wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'; }
 
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:/usr/local/bin:$PATH"
+if [ -d "/usr/local/bin" ] ; then
+    PATH="/usr/local/bin:$PATH"
 fi
 
 if [ -d "$HOME/node_modules/.bin" ] ; then
@@ -187,10 +187,6 @@ fi
 if [ -d "$HOME/gocode" ] ; then
     export GOPATH="$HOME/gocode"
     PATH="$PATH:$GOPATH/bin"
-fi
-
-if [  -x "/opt/Sublime2/sublime_text" ]; then
-    alias s2='/opt/Sublime2/sublime_text'
 fi
 
 export PKG_CONFIG_PATH="/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/"
