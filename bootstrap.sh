@@ -78,6 +78,7 @@ EndOfSecrets
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
+    saveLink $dotPath/bash/profile $HOME/.profile
     saveLink $dotPath/bash/bashrc $HOME/.bashrc
     saveLink $dotPath/bash/inputrc $HOME/.inputrc
     saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
