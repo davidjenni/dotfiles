@@ -154,8 +154,9 @@ exit /b 4
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
     call :saveLink %_HOME%\dotfiles\init.el %_emacsDir%\init.el
 
-:: .. ren %_HOME%\vimfiles %_HOME%\vimfiles.o
-:: .. mklink /j %_HOME%\vimfiles %_HOME%\dotfiles\vimfiles
+    set _puttySshDir=%_HOME%\putty-ssh
+    if not exist "%_puttySshDir%" (mkdir "%_puttySshDir%")
+    call :saveLink %_HOME%\win\pageant.cmd %_puttySshDir%\pageant.cmd
 
     echo.
     echo Saved previously sym-linked files in directory: %_bootstrapBackupsDir%
