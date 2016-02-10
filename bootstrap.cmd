@@ -121,12 +121,21 @@ exit /b 4
     exit /B 0
     goto :eof
 
-:saveLink
+:softLink
     :: param1 src file
     :: param2 target file
     copy %2 %_bootstrapBackupsDir% > nul 2>&1
     del /q %2 > nul 2>&1
     mklink %2 %1
+    exit /B 0
+
+:hardLink
+    :: param1 src file
+    :: param2 target file
+    copy %2 %_bootstrapBackupsDir% > nul 2>&1
+    del /q %2 > nul 2>&1
+    echo mklink /h %2 %1
+    mklink /h %2 %1
     exit /B 0
 
 :elevatedSetup
@@ -139,24 +148,24 @@ exit /b 4
     set _bootstrapBackupsDir=%_HOME%\bootstrapBackups-%JULIANDATE%
     mkdir %_bootstrapBackupsDir%
 
-    call :saveLink %_HOME%\dotfiles\gitconfig %_HOME%\.gitconfig
-    call :saveLink %_HOME%\dotfiles\hgrc %_HOME%\.hgrc
-    call :saveLink %_HOME%\dotfiles\vimrc %_HOME%\_vimrc
-    call :saveLink %_HOME%\dotfiles\gvimrc %_HOME%\_gvimrc
-    call :saveLink %_HOME%\dotfiles\base.vimrc %_HOME%\base.vimrc
-    call :saveLink %_HOME%\dotfiles\plugins.vimrc %_HOME%\plugins.vimrc
+    call :softLink %dotPath%\gitconfig %_HOME%\.gitconfig
+    call :softLink %dotPath%\hgrc %_HOME%\.hgrc
+    call :softLink %dotPath%\vimrc %_HOME%\_vimrc
+    call :softLink %dotPath%\gvimrc %_HOME%\_gvimrc
+    call :softLink %dotPath%\base.vimrc %_HOME%\base.vimrc
+    call :softLink %dotPath%\plugins.vimrc %_HOME%\plugins.vimrc
 
-    call :saveLink %_HOME%\dotfiles\win\os.gitconfig %_HOME%\.os.gitconfig
-    call :saveLink %_HOME%\dotfiles\win\os.hgrc %_HOME%\.os.hgrc
-    call :saveLink %_HOME%\dotfiles\win\vsvimrc %_HOME%\_vsvimrc
-    call :saveLink %_HOME%\dotfiles\win\viemurc %_HOME%\.viemurc
+    call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
+    call :softLink %dotPath%\win\os.hgrc %_HOME%\.os.hgrc
+    call :softLink %dotPath%\win\vsvimrc %_HOME%\_vsvimrc
+    call :softLink %dotPath%\win\viemurc %_HOME%\.viemurc
     set _emacsDir=%_HOME%\.emacs.d
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
-    call :saveLink %_HOME%\dotfiles\init.el %_emacsDir%\init.el
+    call :softLink %dotPath%\init.el %_emacsDir%\init.el
 
     set _puttySshDir=%_HOME%\putty-ssh
     if not exist "%_puttySshDir%" (mkdir "%_puttySshDir%")
-    call :saveLink %_HOME%\win\pageant.cmd %_puttySshDir%\pageant.cmd
+    call :softLink %dotPath%\win\pageant.cmd %_puttySshDir%\pageant.cmd
 
     echo.
     echo Saved previously sym-linked files in directory: %_bootstrapBackupsDir%
