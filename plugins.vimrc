@@ -41,6 +41,7 @@ call neobundle#begin(expand(s:bundlePath))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 "" Color
+NeoBundle 'vim-scripts/cmd.vim--Z'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'chriskempson/base16-vim'
@@ -248,6 +249,11 @@ NeoBundleCheck
 
 " direct calls are only valid after plugins have been loaded by above NeoBundleCheck
 silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
-silent! colorscheme hybrid
+if IsWindows()
+  silent! colorscheme blue
+  " silent! colorscheme cmd
+else
+  silent! colorscheme hybrid
+endif
 
 
