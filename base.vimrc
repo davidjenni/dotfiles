@@ -28,6 +28,8 @@ set ttimeoutlen=100
 
 " chrome and UI
 set title
+set titleold=""
+set titlestring=vim:\ %F
 set shortmess=atI
 set laststatus=2
 set number
