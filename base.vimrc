@@ -104,6 +104,9 @@ set showmatch
 set nobackup
 set noswapfile
 if has("persistent_undo")
+    if !isdirectory(expand("~/.vim/"))
+      :call mkdir(expand("~/.vim/", "p"))
+    endif
     set undodir='~/.vim/undodir/'
     if !isdirectory(expand("~/.vim/undodir/"))
       :call mkdir(expand("~/.vim/undodir/", "p"))
