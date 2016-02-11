@@ -83,6 +83,9 @@ NeoBundle 'ctrlpvim/ctrlp.vim'
     \ 'file': '\v\.(exe|so|dll)$',
     \ 'link': 'some_bad_symbolic_links',
     \ }
+  if executable("ag")
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
   " ignore files in .gitignore
   "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
   " NeoBundle 'spolu/dwm.vim'
