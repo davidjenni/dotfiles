@@ -23,7 +23,7 @@ if !filereadable(s:pluginMgr_readme)
   if IsWindows()
     let s:oldPwd=getcwd()
     lcd $USERPROFILE
-    silent !mkdir .vim/bundle
+    silent !mkdir .vim\bundle
     silent !git clone https://github.com/Shougo/neobundle.vim .vim/bundle/neobundle.vim/
     exec ":lcd " . s:oldPwd
   else
