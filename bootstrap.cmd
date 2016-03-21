@@ -163,9 +163,9 @@ exit /b 4
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
     call :softLink %dotPath%\init.el %_emacsDir%\init.el
 
-    set _puttySshDir=%_HOME%\putty-ssh
-    if not exist "%_puttySshDir%" (mkdir "%_puttySshDir%")
-    call :softLink %dotPath%\win\pageant.cmd %_puttySshDir%\pageant.cmd
+    set _sshDir=%_HOME%\.ssh
+    if not exist "%_sshDir%" (mkdir "%_sshDir%")
+    call :softLink %dotPath%\win\pageant.cmd %_sshDir%\pageant.cmd
 
     echo.
     echo Saved previously sym-linked files in directory: %_bootstrapBackupsDir%
