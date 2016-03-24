@@ -15,6 +15,9 @@
     changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     r = remote -v
     st = status --short --branch
+    s = stash
+    sl = !git --no-pager stash list
+    ss = stash save --no-keep-index --include-untracked
     # reset
     unstage = checkout --             # remove files from index (tracking) and revert to previous state
     uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
