@@ -8,7 +8,7 @@
     co = checkout
     d = diff
     dc = diff --cached
-    ff = pull -ff                     # still need to specify remote and branch names
+    ff = pull -ff origin master
     l = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     lnc = log --pretty=format:\"%h %cr %cn %s\"   # same as git l but no colors
     ll = log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
