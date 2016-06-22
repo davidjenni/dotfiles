@@ -8,7 +8,7 @@ if test -x (brew --prefix)/bin/lesspipe.sh
     set -x LESSOPEN "|lesspipe.sh %s"
 end
 
-if test -f ~/.gitSecrets.fish
+if test -f ~/.gitSecrets.sh
     # fish uses different export variable syntax than sh
     cat ~/.gitSecrets.sh | sed 's/export/set -x/' | sed 's/=/ /' | source -
 end
