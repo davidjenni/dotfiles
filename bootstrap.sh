@@ -27,9 +27,8 @@ saveLink() {
     local targetFile=$2
     if [ -s $targetFile ]
     then
-        #echo "Saving $targetFile ..."
         # don't just move, do copy to break any previous soft link
-        cp $targetFile $bkpDir/
+        cp -vL $targetFile $bkpDir/
         rm -f $targetFile
     fi
     ln -sf $srcFile $targetFile
@@ -37,15 +36,21 @@ saveLink() {
 
 saveLinkRecursive() {
     local srcFile=$1
-    local targetDir=$2
+    local targetDirParent=$2
+    local targetDir="${targetDirParent}/$3"
     if [ -d $targetDir ]
     then
-        #echo "Saving $targetDir ..."
         # don't just move, do copy to break any previous soft link
-        cp -R $targetDir $bkpDir/
-        rm -rf $targetDir
+        cp -vLR $targetDir $bkpDir/
+        if [ -L $targetDir ]
+        then
+            # don't rm recursively since the symbolic link is only a file level link
+            rm -f $targetDir
+        else
+            rm -rf $targetDir
+        fi
     fi
-    ln -sf $srcFile $targetDir
+    ln -sf $srcFile $targetDirParent
 }
 
 doSetup() {
@@ -104,7 +109,7 @@ EndOfSecrets
         mkdir -p $fishConfigDir
     fi
     saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
-    saveLinkRecursive $dotPath/fish/functions $fishConfigDir/functions
+    saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
 }
 
 # main:
