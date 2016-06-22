@@ -117,6 +117,7 @@ NeoBundle 'wellle/targets.vim'
 NeoBundle 'scrooloose/syntastic'
   let g:airline#extensions#syntastic#enabled = 1
 
+NeoBundle 'dag/vim-fish'
 NeoBundle 'ressu/hexman.vim'
 NeoBundle 'moll/vim-node'
 NeoBundle 'elzr/vim-json'
