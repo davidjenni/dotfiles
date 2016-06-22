@@ -35,6 +35,19 @@ saveLink() {
     ln -sf $srcFile $targetFile
 }
 
+saveLinkRecursive() {
+    local srcFile=$1
+    local targetDir=$2
+    if [ -d $targetDir ]
+    then
+        #echo "Saving $targetDir ..."
+        # don't just move, do copy to break any previous soft link
+        cp -R $targetDir $bkpDir/
+        rm -rf $targetDir
+    fi
+    ln -sf $srcFile $targetDir
+}
+
 doSetup() {
     # generate git secrets file:
     local _gitSecretsFile=$HOME/.gitSecrets.sh
@@ -49,13 +62,13 @@ doSetup() {
         echo "    name: \c"
         read _gitUser
         if [ "$_gitUser" = "" ]; then
-            echo "defualt user"
+            echo "default user"
             _gitUser=$_defaultGitUser
         fi
 
         cat << EndOfSecrets > $_gitSecretsFile
-export GIT_AUTHOR_NAME='$_gitUser'
-export GIT_AUTHOR_EMAIL='$_gitEmail'
+export GIT_AUTHOR_NAME="$_gitUser"
+export GIT_AUTHOR_EMAIL="$_gitEmail"
 export GIT_COMMITTER_NAME=\$GIT_AUTHOR_NAME
 export GIT_COMMITTER_EMAIL=\$GIT_AUTHOR_EMAIL
 EndOfSecrets
@@ -84,6 +97,14 @@ EndOfSecrets
     saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
     saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
     saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
+
+    # fish:
+    local fishConfigDir=~/.config/fish
+    if [ ! -d "$fishConfigDir" ] ; then
+        mkdir -p $fishConfigDir
+    fi
+    saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
+    saveLinkRecursive $dotPath/fish/functions $fishConfigDir/functions
 }
 
 # main:
