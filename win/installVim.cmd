@@ -1,6 +1,8 @@
 @if "%_echo%"=="" echo off
 setlocal EnableDelayedExpansion
 
+rem TODO: alternate download loc with more recent 7.4 builds:
+rem https://sourceforge.net/projects/cream/files/Vim/7.4.1641/
 set _vimOrigin=ftp://ftp.vim.org/pub/vim/pc
 set _vimVersion=74
 
