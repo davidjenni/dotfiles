@@ -16,10 +16,14 @@ set MY_BIN=%HOME%
 call :addToPath "%MY_BIN%\dotfiles\win"
 call :addToPath "%USERPROFILE%\SkyDrive\Bin\Win"
 call :addToPath "%MY_BIN%\PuTTY"
-if exist "%ProgramFiles(x86)%\vim\vim74" (
-    call :addToPath "%ProgramFiles(x86)%\vim\vim74"
+if exist "%ProgramFiles%\vim\vim74" (
+    call :addToPath "%ProgramFiles%\vim\vim74"
 ) else (
-    call :addToPath "%MY_BIN%\vim\vim74"
+    if exist "%ProgramFiles(x86)%\vim\vim74" (
+        call :addToPath "%ProgramFiles(x86)%\vim\vim74"
+    ) else (
+        call :addToPath "%MY_BIN%\vim\vim74"
+    )
 )
 :: install emacs from: http://emacsbinw64.sourceforge.net/
 call :addToPath "%MY_BIN%\emacs\bin"
