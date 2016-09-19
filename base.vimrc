@@ -278,13 +278,16 @@ function! Preserve(command)
    " Clean up: restore previous search history, and cursor position
    let @/=_s
    call cursor(l, c)
- endfunction
+endfunction
 
- function! StripTrailingWhitespace()
+function! StripTrailingWhitespace()
    call Preserve("%s/\\s\\+$//e")
- endfunction
+endfunction
 
- " autocmd BufWritePre *.py,*.js, *.json, *.cs, *.c, *.cpp, *.cxx, *.h, *.xml, *proj, *.props, *.targets :call StripTrailingWhitespace()
- nmap _$ :call StripTrailingWhitespace()<CR>
- nmap _= :call Preserve("normal gg=G")<CR>
+" autocmd BufWritePre *.py,*.js, *.json, *.cs, *.c, *.cpp, *.cxx, *.h, *.xml, *proj, *.props, *.targets :call StripTrailingWhitespace()
+nmap _$ :call StripTrailingWhitespace()<CR>
+nmap _= :call Preserve("normal gg=G")<CR>
+
+" will be overriden in gvimrc or plugins.vimrc (if loaded)
+silent! colorscheme blue
 

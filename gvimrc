@@ -28,5 +28,5 @@ elseif LINUX()
 endif
 
 set background=dark
-colorscheme hybrid
+colorscheme evening
 
