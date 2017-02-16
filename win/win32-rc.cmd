@@ -63,6 +63,11 @@ if /i "%PROCESSOR_ARCHITECTURE%"=="amd64" (
     call :loadDoskeyIfExists %HERE%\aliases-x86.doskey
 )
 
+if exist %MY_BIN%\go (
+    set GOPATH=%MY_BIN%\go
+)
+call :addToPath "%MY_BIN%\go\bin"
+
 REM set prompt to the following:
 REM (20:51:41.60) [D:\]
 REM >

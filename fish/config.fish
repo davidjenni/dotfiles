@@ -14,9 +14,16 @@ if test -f ~/.gitSecrets.sh
 end
 
 if test -d "$HOME/node_modules/.bin"
-    set PATH $HOME/node_modules/.bin $PATH
+    set -x PATH $HOME/node_modules/.bin $PATH
 end
 
+if test -d "$HOME/go/bin"
+    set -x GOPATH ~/go
+end
+
+if test -d "$HOME/go/bin"
+    set PATH $HOME/go/bin $PATH
+end
 
 fish_vi_key_bindings
 
