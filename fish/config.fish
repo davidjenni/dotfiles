@@ -25,5 +25,9 @@ if test -d "$HOME/go/bin"
     set PATH $HOME/go/bin $PATH
 end
 
+if test -d "$HOME/.cargo/bin"
+    set PATH $HOME/.cargo/bin $PATH
+end
+
 fish_vi_key_bindings
 
