@@ -8,10 +8,12 @@
     co = checkout
     d = diff
     dc = diff --cached
-    ff = pull -ff origin master
+    pf = pull -ff origin master
+    ff = fetch -p --progress origin
     l = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     lnc = log --pretty=format:\"%h %cr %cn %s\"   # same as git l but no colors
     ll = log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    scorch = clean -fdx -e /node_modules/
     changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     r = remote -v
     st = status --short --branch
@@ -19,8 +21,7 @@
     sl = !git --no-pager stash list
     ss = stash save --no-keep-index --include-untracked
     # reset
-    unstage = checkout --             # remove files from index (tracking) and revert to previous state
-    uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
+    unstage = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
     filehist = log -u                 # show change history to a file
     mt = mergetool                    # fire up the merge tool
 	last = log -1 --stat
@@ -69,3 +70,4 @@
 
 [push]
 	default = matching
+
