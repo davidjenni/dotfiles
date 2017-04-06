@@ -35,8 +35,8 @@ call :addToPath "%ProgramFiles%\Git\usr\bin"
 call :addToPath "%ProgramFiles%\7-Zip"
 call :addToPath "%MY_BIN%\NTTools"
 call :addToPath "%MY_BIN%\ruby-1.9.1\bin"
-call :addToPath "%MY_BIN%\Python-2.7"
 call :addToPath "%MY_BIN%\node_modules\.bin"
+call :addToPath "%APPDATA%\Python\Python35\Scripts"
 
 :setEnv
 set LESS=-i -M -N -q -x4 -R
