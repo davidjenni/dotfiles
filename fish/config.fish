@@ -31,3 +31,5 @@ end
 
 fish_vi_key_bindings
 
+# ensure openssl installed via brew is found before the system version (which is outdated)
+set -g fish_user_paths "/usr/local/opt/openssl/bin" $fish_user_paths
