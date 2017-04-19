@@ -25,13 +25,13 @@ getRepository() {
 saveLink() {
     local srcFile=$1
     local targetFile=$2
-    if [ -s $targetFile ]
+    if [ -s "$targetFile" ]
     then
         # don't just move, do copy to break any previous soft link
-        cp -vL $targetFile $bkpDir/
-        rm -f $targetFile
+        cp -vL "$targetFile" $bkpDir/
+        rm -f "$targetFile"
     fi
-    ln -sf $srcFile $targetFile
+    ln -sf $srcFile "$targetFile"
 }
 
 saveLinkRecursive() {
@@ -93,7 +93,7 @@ EndOfSecrets
     saveLink $dotPath/plugins.vimrc $HOME/plugins.vimrc
     # neovim
     saveLink $dotPath/vimrc $HOME/.nvimrc
-    saveLink $dotPath/code.user.settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+    saveLink $dotPath/code.user.settings.json "$HOME/Library/Application Support/Code/User/settings.json"
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
