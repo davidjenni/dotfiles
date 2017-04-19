@@ -1,0 +1,59 @@
+// Place your settings in this file to overwrite the default settings
+// macOS: ~/Library/Application Support/Code/User/settings.json
+{
+    "editor.fontFamily": "Hack",
+    "editor.insertSpaces": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.cursorStyle": "block",
+    "files.trimTrailingWhitespace": true,
+    "editor.cursorBlinking": "solid",
+    "workbench.colorTheme": "Monokai",
+    "vim.leader": "<space>",
+    "vim.incsearch": true,
+    "vim.hlsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.useSolidBlockCursor": true,
+    "vim.easymotion": true,
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors" : {
+        "normal": "#005f5f",
+        "insert": "#5f0000",
+        "visual": "#5f00af",
+        "visualline": "#005f87",
+        "visualblock": "#86592d",
+        "replace": "#000000"
+    },
+    "vim.insertModeKeyBindings": [
+       {
+           "before": ["j", "j"],
+           "after": ["<Esc>"]
+       }
+    ],
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+           "before":["<C-l>"],
+           "after":[],
+            "commands": [ { "command": ":nohl", "args":[] } ]
+        },
+        {
+            "before": ["leader", "w"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        }
+    ],
+    "vim.otherModesKeyBindings": [
+        {
+            "before": [ "g", "c" ],
+            "after": [ "g", "b" ]
+        },
+        {
+            "before": [ "g", "C" ],
+            "after": [ "g", "B" ]
+        }
+    ]
+}
