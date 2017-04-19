@@ -93,6 +93,7 @@ EndOfSecrets
     saveLink $dotPath/plugins.vimrc $HOME/plugins.vimrc
     # neovim
     saveLink $dotPath/vimrc $HOME/.nvimrc
+    saveLink $dotPath/code.user.settings.json $HOME/Library/Application\ Support/Code/User/settings.json
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc

@@ -154,6 +154,7 @@ exit /b 4
     call :softLink %dotPath%\gvimrc %_HOME%\_gvimrc
     call :softLink %dotPath%\base.vimrc %_HOME%\base.vimrc
     call :softLink %dotPath%\plugins.vimrc %_HOME%\plugins.vimrc
+    call :softLink %dotPath%\code.user.settings.json %APPDATA%\Code\User\settings.json
 
     call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
     call :softLink %dotPath%\win\os.hgrc %_HOME%\.os.hgrc

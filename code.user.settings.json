@@ -1,7 +1,8 @@
 // Place your settings in this file to overwrite the default settings
 // macOS: ~/Library/Application Support/Code/User/settings.json
+// win: %APPDATA%\Code\User\settings.json
 {
-    "editor.fontFamily": "Hack",
+    "editor.fontFamily": "Hack, Consolas, 'Courier New', monospace",
     "editor.insertSpaces": true,
     "editor.renderWhitespace": "boundary",
     "editor.cursorStyle": "block",
