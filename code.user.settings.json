@@ -57,16 +57,12 @@
             "after": [ "g", "B" ]
         }
     ],
-    "[cpp]": {
-        "editor.quickSuggestions": false
-    },
-    "[c]": {
-        "editor.quickSuggestions": false
-    },
     "window.zoomLevel": 0,
     "workbench.colorCustomizations": {
         "statusBar.background": "#005f5f",
         "statusBar.noFolderBackground": "#005f5f",
         "statusBar.debuggingBackground": "#005f5f"
-    }
+    },
+    "vim.disableAnnoyingNeovimMessage": true,
+    "typescript.check.tscVersion": false
 }
