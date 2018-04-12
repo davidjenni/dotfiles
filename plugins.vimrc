@@ -159,7 +159,7 @@ nnoremap <Leader>G :Goyo<CR>
 NeoBundle 'mhinz/vim-hugefile'
 let g:hugefile_trigger_size=2
 
-NeoBundle 'Valloric/YouCompleteMe'
+" NeoBundle 'Valloric/YouCompleteMe'
 
 call neobundle#end()
 
