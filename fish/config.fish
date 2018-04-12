@@ -27,7 +27,7 @@ end
 
 if test -d "$HOME/miniconda3/bin/"
     set PATH $HOME/miniconda3/bin/ $PATH
-fi
+end
 
 if test -d "$HOME/.cargo/bin"
     set PATH $HOME/.cargo/bin $PATH
