@@ -8,7 +8,7 @@
     co = checkout
     d = diff
     dc = diff --cached
-    pf = pull -ff origin master
+    pf = pull --ff origin master
     ff = fetch -p --progress origin
     l = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     lnc = log --pretty=format:\"%h %cr %cn %s\"   # same as git l but no colors
@@ -24,11 +24,10 @@
     unstage = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
     filehist = log -u                 # show change history to a file
     mt = mergetool                    # fire up the merge tool
-	last = log -1 --stat
-	cp = cherry-pick
-	cl = clone
-	br = branch
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+    last = log -1 --stat
+    cp = cherry-pick
+    cl = clone
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
 [user]
     # user information is set via GIT_* environment variables, see ~/.gitSecrets.cmd or .sh
 
@@ -46,9 +45,9 @@
     new = green bold
 [core]
     excludesfile = ~/.gitignore
-	trustctime = false
-	editor = vim
-	filemode = false
+    trustctime = false
+    editor = vim
+    filemode = false
 [diff]
     mmemonicprefix = true
 [difftool]
@@ -56,18 +55,18 @@
 [merge]
     log = true
     summary = true
-	tool = vimdiff
+    tool = vimdiff
 [mergetool]
     tool = vimdiff
-	keeptemporaries = false
-	keepbackups = false
-	prompt = false
-	trustexitcode = false
+    keeptemporaries = false
+    keepbackups = false
+    prompt = false
+    trustexitcode = false
 
 # per-OS configuration
 [include]
     path = ~/.os.gitconfig
 
 [push]
-	default = matching
+    default = matching
 
