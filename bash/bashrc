@@ -184,6 +184,10 @@ if [ -d "/usr/local/opt/go/libexec/bin" ] ; then
     PATH="/usr/local/opt/go/libexec/bin:$PATH"
 fi
 
+if [ -d "$HOME/miniconda3/bin/" ] ; then
+    PATH="$HOME/miniconda3/bin/:$PATH"
+fi
+
 if [ -d "$HOME/gocode" ] ; then
     export GOPATH="$HOME/gocode"
     PATH="$PATH:$GOPATH/bin"
@@ -193,3 +197,6 @@ export PKG_CONFIG_PATH="/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/"
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+export PATH=$PATH:/Users/davidjen/bin
+

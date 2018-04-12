@@ -25,6 +25,10 @@ if test -d "$HOME/go/bin"
     set PATH $HOME/go/bin $PATH
 end
 
+if test -d "$HOME/miniconda3/bin/"
+    set PATH $HOME/miniconda3/bin/ $PATH
+fi
+
 if test -d "$HOME/.cargo/bin"
     set PATH $HOME/.cargo/bin $PATH
 end
@@ -33,3 +37,4 @@ fish_vi_key_bindings
 
 # ensure openssl installed via brew is found before the system version (which is outdated)
 set -g fish_user_paths "/usr/local/opt/openssl/bin" $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/node@6/bin" $fish_user_paths
