@@ -2,19 +2,24 @@
 // macOS: ~/Library/Application Support/Code/User/settings.json
 // win: %APPDATA%\Code\User\settings.json
 {
-    "editor.fontFamily": "Hack, Consolas, 'Courier New', monospace",
+    "editor.fontFamily": "Hack, Menlo, Consolas, 'Courier New', monospace",
     "editor.insertSpaces": true,
     "editor.renderWhitespace": "boundary",
     "editor.cursorStyle": "block",
+    "editor.wordWrap": "on",
+    "editor.trimAutoWhitespace": true,
     "files.trimTrailingWhitespace": true,
     "editor.cursorBlinking": "solid",
     "workbench.colorTheme": "Monokai",
+    "workbench.startupEditor": "none",
+    "vim.cmdLineInitialColon": true,
     "vim.leader": "<space>",
     "vim.incsearch": true,
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
-    "vim.useSolidBlockCursor": true,
     "vim.easymotion": true,
+    "vim.easymotionMarkerFontFamily": "Hack, Menlo, Consolas",
+    "vim.visualstar": true,
     "vim.statusBarColorControl": true,
     "vim.statusBarColors" : {
         "normal": "#005f5f",
@@ -68,5 +73,16 @@
         "statusBar.background": "#005f5f",
         "statusBar.noFolderBackground": "#005f5f",
         "statusBar.debuggingBackground": "#005f5f"
-    }
+    },
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true
+    },
+    "team.showWelcomeMessage": false
 }
