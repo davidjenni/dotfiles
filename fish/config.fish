@@ -25,8 +25,10 @@ if test -d "$HOME/go/bin"
     set PATH $HOME/go/bin $PATH
 end
 
-if test -d "$HOME/miniconda3/bin/"
-    set PATH $HOME/miniconda3/bin/ $PATH
+set condaLoc $HOME/miniconda3
+if test -d "$condaLoc"
+    set PATH $condaLoc/bin $PATH
+    source $condaLoc/etc/fish/conf.d/conda.fish
 end
 
 if test -d "$HOME/.cargo/bin"
