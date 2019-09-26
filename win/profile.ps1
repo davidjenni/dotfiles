@@ -21,6 +21,7 @@ function addToPath {
     }
 }
 
+# Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 # for more modules, see also: https://github.com/janikvonrotz/awesome-powershell
 
 # http://psget.net/     cannot co-exist with PS gallery's Install-Module
@@ -47,6 +48,7 @@ ensureModule ZLocation
 # https://github.com/jrjurman/powerls
 # Install-Module -Name PowerLS
 # Set-Alias -Name ls -Value PowerLS -Option AllScope
+# Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
 
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
