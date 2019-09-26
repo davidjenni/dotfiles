@@ -30,6 +30,7 @@ ie=start "" "%ProgramFiles%\Internet Explorer\IEXPLORE.EXE" $*
 s="%ProgramFiles%\Sublime Text 2\sublime_text.exe" $*
 subl="%ProgramFiles%\Sublime Text 2\sublime_text.exe" -w -n $*
 pageant=%USERPROFILE%\.ssh\pageant.cmd
+ps=powershell $*
 gd=git --no-pager diff --color $*
 gdc=git --no-pager diff --color --cached $*
 gdl=git --no-pager diff $* | less
