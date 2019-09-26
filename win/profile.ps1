@@ -23,6 +23,7 @@ function addToPath {
 
 # Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 # for more modules, see also: https://github.com/janikvonrotz/awesome-powershell
+# https://hodgkins.io/ultimate-powershell-prompt-and-git-setup
 
 # http://psget.net/     cannot co-exist with PS gallery's Install-Module
 # ensureModule PsGet
@@ -38,6 +39,8 @@ ensureModule posh-git
 $GitPromptSettings.DefaultPromptPrefix = '($((get-date).tostring("HH:mm:ss"))) '
 $GitPromptSettings.DefaultPromptSuffix = '`n$(''>'' * ($nestedPromptLevel + 1)) '
 $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
+# Start-SshAgent
+
 # https://github.com/posh-projects/Tree
 # requires: https://chocolatey.org/packages/tree/
 ensureModule Tree
@@ -64,7 +67,7 @@ addToPath "$env:ProgramFiles\Git\usr\bin"
 
 $env:LESS="-i -M -N -q -x4 -R"
 $env:LESSBINFMT="*d[%02x]"
-$env:VISUAL="gvim.exe"
+# $env:VISUAL="gvim.exe"
 
 # replay cmd git secrets env variables into PS:
 Get-Content "$env:HOME/.gitSecrets.cmd" | .{process{
