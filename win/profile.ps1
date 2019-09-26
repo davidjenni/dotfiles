@@ -6,12 +6,13 @@ function ensureModule {
 
     if (-not (Get-Module -ListAvailable -Name $name)) {
         Write-Host "Installing $name..."
-        Find-Module -Name $name | Install-Module -AllowClobber
+        Find-Module -Name $name | Install-Module -AllowClobber -Scope CurrentUser
     }
     if (-not $loadForHost -or ($loadForHost -eq $host.Name)) {
         Import-Module -Name $name
     }
 }
+
 function addToPath {
     param ( [string]$directory )
 
@@ -20,6 +21,8 @@ function addToPath {
     }
 }
 
+# for more modules, see also: https://github.com/janikvonrotz/awesome-powershell
+
 # http://psget.net/     cannot co-exist with PS gallery's Install-Module
 # ensureModule PsGet
 
@@ -27,17 +30,29 @@ function addToPath {
 ensureModule PowerShellGet
 # https://github.com/PowerShell/PSReadLine*
 ensureModule PSReadLine 'ConsoleHost'
+# https://github.com/mmims/PSConsoleTheme
+ensureModule PSConsoleTheme
 # https://github.com/dahlbyk/posh-git
 ensureModule posh-git
 $GitPromptSettings.DefaultPromptPrefix = '($((get-date).tostring("HH:mm:ss"))) '
 $GitPromptSettings.DefaultPromptSuffix = '`n$(''>'' * ($nestedPromptLevel + 1)) '
 $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
+# https://github.com/posh-projects/Tree
+# requires: https://chocolatey.org/packages/tree/
+ensureModule Tree
+
+# https://github.com/vors/ZLocation
+ensureModule ZLocation
 
 # https://github.com/jrjurman/powerls
 # Install-Module -Name PowerLS
 # Set-Alias -Name ls -Value PowerLS -Option AllScope
 
-# see also: https://github.com/janikvonrotz/awesome-powershell
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
 
 addToPath "$env:HOME\dotfiles\win"
 addToPath "$env:HOME\PuTTY"
@@ -68,4 +83,3 @@ function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
 function ff { param ([string] $pattern) Get-ChildItem -Path . -Filter "$pattern" -Recurse -ErrorAction SilentlyContinue -Force |Select-Object -Property FullName }
 function which { param ([string] $cmd) Get-Command $cmd }
-
