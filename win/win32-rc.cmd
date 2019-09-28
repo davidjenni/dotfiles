@@ -72,7 +72,7 @@ REM set prompt to the following:
 REM (20:51:41.60) [D:\]
 REM >
 prompt $C$T$F $M[$+$P]$_$G$S
-color 1e
+:: color 1e
 goto :eof
 
 :loadDoskeyIfExists
