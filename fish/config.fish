@@ -4,8 +4,14 @@ set -x CLICOLOR "yes"
 set -x LESS "-c -i -x4 -J -w -M -r"
 set -x VISUAL "vim"
 
-if test -x (brew --prefix)/bin/lesspipe.sh
-    set -x LESSOPEN "|lesspipe.sh %s"
+switch (uname)
+    case Linux
+    case Darwin
+        if test -x (brew --prefix)/bin/lesspipe.sh
+            set -x LESSOPEN "|lesspipe.sh %s"
+        end
+        # ensure openssl installed via brew is found before the system version (which is outdated)
+        set -g fish_user_paths "/usr/local/opt/openssl/bin" $fish_user_paths
 end
 
 if test -f ~/.gitSecrets.sh
@@ -37,6 +43,3 @@ if test -d "$HOME/.cargo/bin"
 end
 
 fish_vi_key_bindings
-
-# ensure openssl installed via brew is found before the system version (which is outdated)
-set -g fish_user_paths "/usr/local/opt/openssl/bin" $fish_user_paths
