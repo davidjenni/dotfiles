@@ -1,11 +1,7 @@
 # Windows-specific .gitconfig
 # see also http://git-scm.com/docs/git-config
 [core]
-	editor = gvim
+	editor = code --wait
 
 [credential]
     helper = manager
-
-[credential "datawrangling.visualstudio.com"]
-    authority = AAD
-

@@ -48,11 +48,7 @@ set _gitSecrets=
 :: setup putty/plink to work properly with git: remotes
 if exist %MY_BIN%\putty set GIT_SSH=%MY_BIN%\putty\plink.exe
 
-:: set VISUAL=gvim.exe
-:: interacts badly with SD and windiff -lo
-::set PAGER=vim.exe -R
-
-set HGEDITOR=%VISUAL%
+set VISUAL=code --wait
 
 set DIRCMD=/ogen
 

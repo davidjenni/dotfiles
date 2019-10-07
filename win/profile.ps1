@@ -67,7 +67,7 @@ addToPath "$env:ProgramFiles\Git\usr\bin"
 
 $env:LESS="-i -M -N -q -x4 -R"
 $env:LESSBINFMT="*d[%02x]"
-# $env:VISUAL="gvim.exe"
+$env:VISUAL="code --wait"
 
 # replay cmd git secrets env variables into PS:
 Get-Content "$env:HOME/.gitSecrets.cmd" | .{process{
