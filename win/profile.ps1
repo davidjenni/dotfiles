@@ -36,10 +36,15 @@ ensureModule PSReadLine 'ConsoleHost'
 ensureModule PSConsoleTheme
 # https://github.com/dahlbyk/posh-git
 ensureModule posh-git
+# NOTE: if git's ssh-agent was run, posh-git will read SSH_AGENT_PID from: %TEMP%\.ssh
 $GitPromptSettings.DefaultPromptPrefix = '($((get-date).tostring("HH:mm:ss"))) '
 $GitPromptSettings.DefaultPromptSuffix = '`n$(''>'' * ($nestedPromptLevel + 1)) '
 $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
+# Set-Alias ssh-agent "$env:ProgramFiles\git\usr\bin\ssh-agent.exe"
+# Set-Alias ssh-add "$env:ProgramFiles\git\usr\bin\ssh-add.exe"
+# Set-Alias ssh "$env:ProgramFiles\git\usr\bin\ssh.exe"
 # Start-SshAgent
+$env:GIT_SSH = $((Get-Command ssh).Source)
 
 # https://github.com/posh-projects/Tree
 # requires: https://chocolatey.org/packages/tree/
