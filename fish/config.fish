@@ -23,8 +23,8 @@ if test -d "$HOME/node_modules/.bin"
     set -x PATH $HOME/node_modules/.bin $PATH
 end
 
-if test -d "/usr/local/opt/node@8/bin"
-    set -x PATH /usr/local/opt/node@8/bin $PATH
+if test -d "/usr/local/opt/node@12/bin"
+    set -x PATH /usr/local/opt/node@12/bin $PATH
 end
 
 if test -d "$HOME/go/bin"
