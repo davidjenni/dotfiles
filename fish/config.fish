@@ -42,4 +42,7 @@ if test -d "$HOME/.cargo/bin"
     set PATH $HOME/.cargo/bin $PATH
 end
 
+# brew install autojump
+[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
+
 fish_vi_key_bindings
