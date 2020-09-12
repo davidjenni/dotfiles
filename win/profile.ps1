@@ -95,3 +95,17 @@ function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
 function ff { param ([string] $pattern) Get-ChildItem -Path . -Filter "$pattern" -Recurse -ErrorAction SilentlyContinue -Force |Select-Object -Property FullName }
 function which { param ([string] $cmd) Get-Command $cmd }
+function xx { exit }
+
+function OnViModeChange {
+    if ($args[0] -eq 'Command') {
+        # Set the cursor to a blinking block.
+        Write-Host -NoNewLine "`e[1 q"
+    } else {
+        # Set the cursor to a blinking line.
+        Write-Host -NoNewLine "`e[5 q"
+    }
+}
+Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+Set-PSReadlineOption -EditMode vi
+Set-PSReadLineOption -BellStyle None
