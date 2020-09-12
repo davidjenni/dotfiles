@@ -8,7 +8,7 @@ la=ls.exe -a --color=auto -hF --sort=extension $*
 ls=ls.exe --color=auto -hF --sort=extension $*
 ll=ls.exe -l --almost-all --color=auto -hF --sort=extension $*
 ld=dir /b /ad $*
-msb="%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
+msb=msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
 a=attrib $*
 c=cd $*
 cc=pushd $*
