@@ -83,7 +83,9 @@ Get-Content "$env:HOME/.gitSecrets.cmd" | .{process{
     }
 }}
 
-Remove-Item alias:\curl
+if ((Get-Alias -Name curl -ErrorAction SilentlyContinue) -ne $null) {
+    Remove-Item alias:\curl -Force
+}
 Set-Alias -Name "l" less
 
 function .. { Set-Location .. }

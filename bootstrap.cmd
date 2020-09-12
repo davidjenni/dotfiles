@@ -161,6 +161,7 @@ exit /b 4
     call :softLink %dotPath%\win\vsvimrc %_HOME%\_vsvimrc
     call :softLink %dotPath%\win\viemurc %_HOME%\.viemurc
     mkdir %_HOME%\Documents\WindowsPowerShell > nul 2>&1
+    call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\PowerShell\profile.ps1
     call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\WindowsPowerShell\profile.ps1
     set _emacsDir=%_HOME%\.emacs.d
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
