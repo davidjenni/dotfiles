@@ -109,3 +109,20 @@ function OnViModeChange {
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
 Set-PSReadlineOption -EditMode vi
 Set-PSReadLineOption -BellStyle None
+
+
+# auto-complete for dotnet:
+Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    &dotnet complete "$($commandAst.ToString())" | ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+}
+
+# auto-complete for PowerApps CLI (pac):
+Register-ArgumentCompleter -Native -CommandName pac -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    &pac complete -s "$($commandAst.ToString())" | ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+}
