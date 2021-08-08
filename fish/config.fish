@@ -6,12 +6,18 @@ set -x VISUAL "vim"
 
 switch (uname)
     case Linux
+        if test -x /usr/bin/lesspipe.sh
+            set -x LESSOPEN "|lesspipe.sh %s"
+        end
+         [ -f /usr/share/autojump/autojump.fish ]; and source /usr/share/autojump/autojump.fish
     case Darwin
+        set -g fish_user_paths "/opt/homebrew/bin" $fish_user_paths
         if test -x (brew --prefix)/bin/lesspipe.sh
             set -x LESSOPEN "|lesspipe.sh %s"
         end
         # ensure openssl installed via brew is found before the system version (which is outdated)
         set -g fish_user_paths "/usr/local/opt/openssl/bin" $fish_user_paths
+         [ -f (brew --prefix)/share/autojump/autojump.fish ]; and source (brew --prefix)/share/autojump/autojump.fish
 end
 
 if test -f ~/.gitSecrets.sh
