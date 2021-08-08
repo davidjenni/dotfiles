@@ -52,3 +52,5 @@ end
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
 
 fish_vi_key_bindings
+fish_ssh_agent
+
