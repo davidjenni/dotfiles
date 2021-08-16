@@ -46,7 +46,7 @@
 [core]
     excludesfile = ~/.gitignore
     trustctime = false
-    editor = vim
+	editor = nvim
     filemode = false
 [diff]
     mmemonicprefix = true

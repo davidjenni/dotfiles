@@ -149,19 +149,17 @@ exit /b 4
     mkdir %_bootstrapBackupsDir%
 
     call :softLink %dotPath%\gitconfig %_HOME%\.gitconfig
-    call :softLink %dotPath%\hgrc %_HOME%\.hgrc
-    call :softLink %dotPath%\vimrc %_HOME%\_vimrc
-    call :softLink %dotPath%\gvimrc %_HOME%\_gvimrc
-    call :softLink %dotPath%\base.vimrc %_HOME%\base.vimrc
-    call :softLink %dotPath%\plugins.vimrc %_HOME%\plugins.vimrc
+    set _nvimDir=%LocalAppData%\nvim
+    mkdir %_nvimDir% > nul 2>&1
+    call :softLink %dotPath%\init.lua %_nvimDir%\init.lua
     call :softLink %dotPath%\code.user.settings.json %APPDATA%\Code\User\settings.json
 
     call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
     call :softLink %dotPath%\win\os.hgrc %_HOME%\.os.hgrc
     call :softLink %dotPath%\win\vsvimrc %_HOME%\_vsvimrc
     call :softLink %dotPath%\win\viemurc %_HOME%\.viemurc
-    mkdir %_HOME%\Documents\WindowsPowerShell > nul 2>&1
     call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\PowerShell\profile.ps1
+    mkdir %_HOME%\Documents\WindowsPowerShell > nul 2>&1
     call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\WindowsPowerShell\profile.ps1
     call :softLink $dotPath%\win\settings.json %LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
     set _emacsDir=%_HOME%\.emacs.d

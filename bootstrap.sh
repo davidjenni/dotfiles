@@ -86,14 +86,16 @@ EndOfSecrets
     echo
 
     saveLink $dotPath/gitconfig $HOME/.gitconfig
-    saveLink $dotPath/hgrc $HOME/.hgrc
-    saveLink $dotPath/vimrc $HOME/.vimrc
-    saveLink $dotPath/gvimrc $HOME/.gvimrc
-    saveLink $dotPath/base.vimrc $HOME/base.vimrc
-    saveLink $dotPath/plugins.vimrc $HOME/plugins.vimrc
     # neovim
-    saveLink $dotPath/vimrc $HOME/.nvimrc
-    saveLink $dotPath/code.user.settings.json "$HOME/Library/Application Support/Code/User/settings.json"
+    local nvimDir=$HOME/.config/nvim
+    if [ ! -d "$nvimDir" ] ; then
+        mkdir -p $nvimDir
+    fi
+    saveLink $dotPath/init.lua $nvimDir/init.lua
+    local vscodeDir="$HOME/Library/Application Support/Code/User"
+    if [ -d "$vscodeDir" ] ; then
+        saveLink $dotPath/code.user.settings.json "$HOME/settings.json"
+    fi
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc

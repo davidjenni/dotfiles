@@ -31,7 +31,7 @@
     {
         "defaults":
         {
-            "fontFace": "Hack",
+            "fontFace": "Hack NF",
             "fontSize": 10,
             "useAcrylic": true,
             "acrylicOpacity": 0.80
