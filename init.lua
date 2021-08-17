@@ -15,17 +15,20 @@ if fn.empty(fn.glob(paq_path)) > 0 then
   must_run_paq_install = true
 end
 
--- opt.wildmode = { "list:longest", "list:full" }
-opt.wildmode = { "list:full" }
+-- opt.wildmode = { 'list:longest', 'list:full' }
+opt.wildmode = { 'list', 'full' }
+-- opt.wildmode = { 'list:full' }
 opt.wildignorecase = true
 opt.wildoptions = "pum"
+opt.pumheight = 12
 
 opt.showmode = true
 opt.showcmd = true
 opt.showmatch = true
 
 opt.number = true
---opt.shortmess = opt.shortMess . "atI"
+opt.signcolumn = 'yes'
+opt.shortmess = 'atToOFc'
 opt.splitright = true
 opt.splitbelow = true
 
@@ -41,6 +44,7 @@ opt.shiftround = true
 opt.cindent = true
 opt.virtualedit = "onemore"
 opt.joinspaces = false
+opt.formatoptions = 'crqnj'
 
 opt.incsearch = true
 opt.ignorecase = true
@@ -58,9 +62,13 @@ opt.belloff = "all"
 opt.clipboard = 'unnamed'
 opt.writebackup = false
 opt.swapfile = false
+opt.hidden = true
 opt.switchbuf = 'useopen'
 if not must_run_paq_install then
-    opt.termguicolors = true
+    if not fn.has('mac') then
+        -- terminal on macOS has awful colors with termguicolors on
+        opt.termguicolors = true
+    end
     cmd[[colorscheme gruvbox]]
 end
 
@@ -121,6 +129,7 @@ require "paq" {
     'rking/ag.vim';
     'mbbill/undotree';
     'wellle/targets.vim';
+    'mhinz/vim-hugefile';
 
     {'junegunn/fzf', run = fn['fzf#install']};
     'junegunn/fzf.vim';
@@ -148,6 +157,7 @@ end
 map('n', '<C-l>', '<cmd>noh<CR>')    -- Clear highlights
 map('i', 'jk', '<ESC>')
 map('n', '<leader>t', '<cmd>terminal<CR>')
+map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 
 -- <Tab> to navigate the completion menu
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
@@ -169,7 +179,10 @@ map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>;', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
-map('n', 's', '<cmd>Buffers<CR>')
+map('n', '<leader>b', '<cmd>Buffers<CR>')
+
+-- hugefile
+g['hugefile_trigger_size'] = 2
 
 -- requiring plugins that haven't been loaded will fail, skip until :PaqInstall could finish
 if not must_run_paq_install then
