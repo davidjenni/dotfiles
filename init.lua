@@ -19,7 +19,7 @@ end
 opt.wildmode = { 'list', 'full' }
 -- opt.wildmode = { 'list:full' }
 opt.wildignorecase = true
-opt.wildoptions = "pum"
+opt.wildoptions = 'pum'
 opt.pumheight = 12
 
 opt.showmode = true
@@ -42,9 +42,11 @@ opt.autoindent = true
 opt.smartindent = true
 opt.shiftround = true
 opt.cindent = true
-opt.virtualedit = "onemore"
+opt.virtualedit = 'onemore'
 opt.joinspaces = false
 opt.formatoptions = 'crqnj'
+
+opt.completeopt = 'menuone,noselect'
 
 opt.incsearch = true
 opt.ignorecase = true
@@ -57,8 +59,8 @@ opt.sidescrolloff = 2
 opt.listchars = { tab = '>.', trail = '#', extends = '>', precedes = '<' }
 opt.list = true
 
-opt.mouse = "a"
-opt.belloff = "all"
+opt.mouse = 'a'
+opt.belloff = 'all'
 opt.clipboard = 'unnamed'
 opt.writebackup = false
 opt.swapfile = false
@@ -91,8 +93,8 @@ end
 g.mapleader = ' '
 
 
-require "paq" {
-    "savq/paq-nvim";                  -- Let Paq manage itself
+require 'paq' {
+    'savq/paq-nvim';                  -- Let Paq manage itself
     'tomasr/molokai';
     'dracula/vim';
     'altercation/vim-colors-solarized';
@@ -102,7 +104,9 @@ require "paq" {
     'jnurmine/Zenburn';
     'w0ng/vim-hybrid';
 
-    "neovim/nvim-lspconfig";
+    'neovim/nvim-lspconfig';
+    'hrsh7th/nvim-compe';
+
     'tpope/vim-unimpaired';
     'tpope/vim-surround';
     'tpope/vim-commentary';
@@ -166,6 +170,13 @@ map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 -- airline
 g['airline#extensions#tabline#enabled'] = 1
 
+-- compe
+map('i', '<silent><expr> <C-Space>', 'compe#complete()')
+map('i', '<silent><expr> <CR>', 'compe#confirm("<CR>")')
+map('i', '<silent><expr> <C-e>', 'compe#close("<C-e>")')
+map('i', '<silent><expr> <C-f>', 'compe#scroll({ "delta": +4 })')
+map('i', '<silent><expr> <C-d>', 'compe#scroll({ "delta": -4 })')
+
 -- git/fugitive
 local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
 map('n', '<leader>g<space>', ':Git ')
@@ -199,4 +210,41 @@ if not must_run_paq_install then
         buftype_exclude = {"terminal"}
     }
     require('bufbar').setup {show_bufname = 'visible', show_flags = false}
+
+    -- needs: npm install -g typescript typescript-language-server
+    require('lspconfig').tsserver.setup{}
+
+    require'compe'.setup {
+        enabled = true;
+        autocomplete = true;
+        debug = false;
+        min_length = 1;
+        preselect = 'enable';
+        throttle_time = 80;
+        source_timeout = 200;
+        resolve_timeout = 800;
+        incomplete_delay = 400;
+        max_abbr_width = 100;
+        max_kind_width = 100;
+        max_menu_width = 100;
+        documentation = {
+            border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+            winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+            max_width = 120,
+            min_width = 60,
+            max_height = math.floor(vim.o.lines * 0.3),
+            min_height = 1,
+        };
+
+        source = {
+            path = true;
+            buffer = true;
+            calc = true;
+            nvim_lsp = true;
+            nvim_lua = true;
+            vsnip = true;
+            ultisnips = true;
+            luasnip = true;
+        };
+    }
 end
