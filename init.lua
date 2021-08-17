@@ -160,7 +160,7 @@ end
 
 map('n', '<C-l>', '<cmd>noh<CR>')    -- Clear highlights
 map('i', 'jk', '<ESC>')
-map('n', '<leader>t', '<cmd>terminal<CR>')
+map('n', '<leader>t', '<cmd>split | terminal<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 
 -- <Tab> to navigate the completion menu
