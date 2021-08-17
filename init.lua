@@ -28,7 +28,7 @@ opt.showmatch = true
 
 opt.number = true
 opt.signcolumn = 'yes'
-opt.shortmess = 'atToOFc'
+opt.shortmess = 'atToOcI'
 opt.splitright = true
 opt.splitbelow = true
 
