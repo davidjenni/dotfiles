@@ -3,6 +3,7 @@
 [alias]
     ai = add --interactive
     b = branch
+    bl = !git --no-pager branch
     bv = branch --verbose
     ci = commit
     co = checkout

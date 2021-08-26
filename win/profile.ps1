@@ -96,6 +96,14 @@ function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else
 function ff { param ([string] $pattern) Get-ChildItem -Path . -Filter "$pattern" -Recurse -ErrorAction SilentlyContinue -Force |Select-Object -Property FullName }
 function which { param ([string] $cmd) Get-Command $cmd }
 function xx { exit }
+function msb { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
+    & dotnet msbuild "-p:TreatWarningsAsErrors=true" "-nr:false" "-m" `
+        "-clp:verbosity=minimal" `
+        "-flp:Verbosity=normal;LogFile=$env:TMP\msbuild.log" `
+        "-flp3:PerformanceSummary;Verbosity=diag;LogFile=$env:TMP\msbuild.diagnostics.log" `
+        $rest
+        Write-Host 'logs at: $env:TMP\msbuild.log & $env:TMP\msbuild.diagnostics.log'
+}
 
 function OnViModeChange {
     if ($args[0] -eq 'Command') {
