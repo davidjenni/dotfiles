@@ -64,10 +64,10 @@ if (Test-Path($ChocolateyProfile)) {
 }
 
 
-addToPath "$env:HOME\dotfiles\win"
-addToPath "$env:HOME\PuTTY"
+addToPath "$env:USERPROFILE\dotfiles\win"
+addToPath "$env:USERPROFILE\PuTTY"
 addToPath "$env:ProgramFiles\7-Zip"
-addToPath "$env:HOME\NTTools"
+addToPath "$env:USERPROFILE\NTTools"
 addToPath "$env:ProgramFiles\Git\usr\bin"
 
 $env:LESS="-i -M -N -q -x4 -R"
@@ -75,7 +75,7 @@ $env:LESSBINFMT="*d[%02x]"
 $env:VISUAL="code --wait"
 
 # replay cmd git secrets env variables into PS:
-Get-Content "$env:HOME/.gitSecrets.cmd" | .{process{
+Get-Content "$env:USERPROFILE/.gitSecrets.cmd" | .{process{
     if ($_ -match '^set ([^=]+)=(.*)') {
         $gitVar = $matches[1]
         $gitValue = $matches[2]
@@ -90,7 +90,7 @@ Set-Alias -Name "l" less
 
 function .. { Set-Location .. }
 function ... { Set-Location ..\.. }
-function bb { Push-Location $env:HOME }
+function bb { Push-Location $env:USERPROFILE }
 function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
 function ff { param ([string] $pattern) Get-ChildItem -Path . -Filter "$pattern" -Recurse -ErrorAction SilentlyContinue -Force |Select-Object -Property FullName }
