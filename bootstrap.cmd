@@ -54,8 +54,8 @@ exit /b 4
         set /P _gitUser=.  name : || set _gitUser=%_defaultGitUser%
         echo set GIT_AUTHOR_NAME=%_gitUser%> %_gitSecretsFile%
         echo set GIT_AUTHOR_EMAIL=%_gitEmail%>> %_gitSecretsFile%
-        echo set GIT_COMMITTER_NAME=%%GIT_AUTHOR_NAME%%>> %_gitSecretsFile%
-        echo set GIT_COMMITTER_EMAIL=%%GIT_AUTHOR_EMAIL%%>> %_gitSecretsFile%
+        echo set GIT_COMMITTER_NAME=%_gitUser%>> %_gitSecretsFile%
+        echo set GIT_COMMITTER_EMAIL=%_gitEmail%>> %_gitSecretsFile%
         echo.
         echo Git secrets file created: %_gitSecretsFile%
 

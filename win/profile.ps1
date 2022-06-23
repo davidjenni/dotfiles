@@ -30,7 +30,9 @@ function addToPath {
 
 # Install-Module as recommended by https://powershellgallery.com
 ensureModule PowerShellGet
-# https://github.com/PowerShell/PSReadLine*
+# https://github.com/PowerShell/PSReadLine
+# upgrading if needed: https://github.com/PowerShell/PSReadLine#upgrading
+# elevated cmd: {pwsh | powershell} -noprofile -command "Install-Module PSReadLine -Force -SkipPublisherCheck"
 ensureModule PSReadLine 'ConsoleHost'
 # https://github.com/mmims/PSConsoleTheme
 ensureModule PSConsoleTheme
