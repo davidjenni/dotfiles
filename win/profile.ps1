@@ -4,13 +4,33 @@ function ensureModule {
         [Parameter()] [string] $loadForHost
     )
 
-    if (-not (Get-Module -ListAvailable -Name $name)) {
-        Write-Host "Installing $name..."
-        Find-Module -Name $name | Install-Module -AllowClobber -Scope CurrentUser
-    }
-    if (-not $loadForHost -or ($loadForHost -eq $host.Name)) {
-        Import-Module -Name $name
-    }
+    $retryImport = $false
+    do {
+        if (-not $loadForHost -or ($loadForHost -eq $host.Name)) {
+            $foundModule = Import-Module -Name $name -PassThru -ErrorAction SilentlyContinue
+            if ($null -ne $foundModule) {
+                Write-Verbose "loaded module $name"
+                return
+            }
+        } else {
+            Write-Verbose "skipping import of module $name, selected host $loadForHost is not matching current host: $($host.Name)"
+            return
+        }
+
+        $retryImport = $true
+        Write-Host "Module $name not locally present, check if known..."
+        if (-not (Get-Module -ListAvailable -Name $name)) {
+            Write-Verbose "Installing $name..."
+            $info = Find-Module -Name $name -ErrorAction SilentlyContinue
+            if ($null -eq $info) {
+                Write-Host "Cannot find module $name in gallery, cannot install."
+                return
+            }
+            Install-Module -Name $name -AllowClobber -Scope CurrentUser
+        }
+    } while (
+        $retryImport
+    )
 }
 
 function addToPath {
@@ -85,7 +105,7 @@ Get-Content "$env:USERPROFILE/.gitSecrets.cmd" | .{process{
     }
 }}
 
-if ((Get-Alias -Name curl -ErrorAction SilentlyContinue) -ne $null) {
+if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -Force
 }
 Set-Alias -Name "l" less
