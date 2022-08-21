@@ -152,7 +152,7 @@ exit /b 4
     set _nvimDir=%LocalAppData%\nvim
     mkdir %_nvimDir% > nul 2>&1
     call :softLink %dotPath%\init.lua %_nvimDir%\init.lua
-    call :softLink %dotPath%\code.user.settings.json %APPDATA%\Code\User\settings.json
+    @REM call :softLink %dotPath%\code.user.settings.json %APPDATA%\Code\User\settings.json
 
     call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
     call :softLink %dotPath%\win\os.hgrc %_HOME%\.os.hgrc

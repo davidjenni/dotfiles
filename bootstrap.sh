@@ -92,10 +92,10 @@ EndOfSecrets
         mkdir -p $nvimDir
     fi
     saveLink $dotPath/init.lua $nvimDir/init.lua
-    local vscodeDir="$HOME/Library/Application Support/Code/User"
-    if [ -d "$vscodeDir" ] ; then
-        saveLink $dotPath/code.user.settings.json "$HOME/settings.json"
-    fi
+    # local vscodeDir="$HOME/Library/Application Support/Code/User"
+    # if [ -d "$vscodeDir" ] ; then
+    #     saveLink $dotPath/code.user.settings.json "$HOME/settings.json"
+    # fi
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
     saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
