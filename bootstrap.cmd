@@ -166,6 +166,11 @@ exit /b 4
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
     call :softLink %dotPath%\init.el %_emacsDir%\init.el
 
+    :: starship.rs:
+    set _configDir=%_HOME%\.config
+    if not exist "%_configDir%" (mkdir "%_configDir%")
+    call :softLink %dotPath%\starship.toml %_configDir%\starship.toml
+
     set _sshDir=%_HOME%\.ssh
     if not exist "%_sshDir%" (mkdir "%_sshDir%")
     call :softLink %dotPath%\win\pageant.cmd %_sshDir%\pageant.cmd

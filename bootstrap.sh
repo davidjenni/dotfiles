@@ -86,8 +86,12 @@ EndOfSecrets
     echo
 
     saveLink $dotPath/gitconfig $HOME/.gitconfig
+    local configDir=$HOME/.config
+    if [ ! -d "$configDir" ] ; then
+        mkdir -p $configDir
+    fi
     # neovim
-    local nvimDir=$HOME/.config/nvim
+    local nvimDir=$configDir/nvim
     if [ ! -d "$nvimDir" ] ; then
         mkdir -p $nvimDir
     fi
@@ -107,12 +111,15 @@ EndOfSecrets
     saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
 
     # fish:
-    local fishConfigDir=~/.config/fish
+    local fishConfigDir=$configDir/fish
     if [ ! -d "$fishConfigDir" ] ; then
         mkdir -p $fishConfigDir
     fi
     saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
     saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
+
+    # starship.rs:
+    saveLink $dotPath/starship.toml $configDir/starship.toml
 }
 
 # main:

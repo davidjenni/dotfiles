@@ -1,3 +1,6 @@
+# https://thirty25.com/posts/2021/12/optimizing-your-powershell-load-times
+[console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+
 function ensureModule {
     param (
         [Parameter()] [string] $name,
@@ -7,9 +10,10 @@ function ensureModule {
     $retryImport = $false
     do {
         if (-not $loadForHost -or ($loadForHost -eq $host.Name)) {
+            Write-Host  -NoNewline "Loading $($name.PadRight(40))"
             $foundModule = Import-Module -Name $name -PassThru -ErrorAction SilentlyContinue
             if ($null -ne $foundModule) {
-                Write-Verbose "loaded module $name"
+                Write-Host "`u{2705}" # checkmark emoji
                 return
             }
         } else {
@@ -26,6 +30,11 @@ function ensureModule {
                 Write-Host "Cannot find module $name in gallery, cannot install."
                 return
             }
+
+            # Install-Module as recommended by https://powershellgallery.com
+            ensureModule PowerShellGet $loadForHost
+
+            Write-Host  -NoNewline "Installing... "
             Install-Module -Name $name -AllowClobber -Scope CurrentUser
         }
     } while (
@@ -48,8 +57,6 @@ function addToPath {
 # http://psget.net/     cannot co-exist with PS gallery's Install-Module
 # ensureModule PsGet
 
-# Install-Module as recommended by https://powershellgallery.com
-ensureModule PowerShellGet
 # https://github.com/PowerShell/PSReadLine
 # upgrading if needed: https://github.com/PowerShell/PSReadLine#upgrading
 # elevated cmd: {pwsh | powershell} -noprofile -command "Install-Module PSReadLine -Force -SkipPublisherCheck"
@@ -72,19 +79,32 @@ $env:GIT_SSH = $((Get-Command ssh).Source)
 # requires: https://chocolatey.org/packages/tree/
 ensureModule Tree
 
+# https://starship.rs/
+function Invoke-Starship-PreCommand {
+    $gitDir = (Get-GitDirectory)
+    if ($null -ne $gitDir) {
+        $currDir = "git: " + [System.IO.Path]::GetFileName([System.IO.Path]::GetDirectoryName((Get-GitDirectory)))
+    } else {
+        $currDir = $pwd
+    }
+#   $host.ui.Write("`e]0; $currDir `a")
+  $host.ui.RawUI.WindowTitle = $currDir
+}
+Invoke-Expression (&starship init powershell)
+
 # https://github.com/vors/ZLocation
 ensureModule ZLocation
 
-# https://github.com/jrjurman/powerls
-# Install-Module -Name PowerLS
-# Set-Alias -Name ls -Value PowerLS -Option AllScope
+# https://scoop.sh/
+# https://www.nerdfonts.com/font-downloads
+# https://github.com/dduan/tre
+
 # Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
 
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
-
+# $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+# if (Test-Path($ChocolateyProfile)) {
+#   Import-Module "$ChocolateyProfile"
+# }
 
 addToPath "$env:USERPROFILE\dotfiles\win"
 addToPath "$env:USERPROFILE\PuTTY"
