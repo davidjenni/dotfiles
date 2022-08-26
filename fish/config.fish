@@ -54,3 +54,5 @@ end
 fish_vi_key_bindings
 fish_ssh_agent
 
+starship init fish | source
+

@@ -110,6 +110,9 @@ EndOfSecrets
     saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
     saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
 
+    # starship.rs:
+    saveLink $dotPath/starship.toml $configDir/starship.toml
+
     # fish:
     local fishConfigDir=$configDir/fish
     if [ ! -d "$fishConfigDir" ] ; then
@@ -117,9 +120,6 @@ EndOfSecrets
     fi
     saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
     saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
-
-    # starship.rs:
-    saveLink $dotPath/starship.toml $configDir/starship.toml
 }
 
 # main:
