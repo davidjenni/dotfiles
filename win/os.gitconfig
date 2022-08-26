@@ -4,4 +4,7 @@
 	editor = nvim
 
 [credential]
-    helper = manager
+	helper =
+    # https://github.com/GitCredentialManager/git-credential-manager
+	helper = ~/david/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
+	# helper = C:/Users/david/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
