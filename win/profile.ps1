@@ -94,6 +94,7 @@ Invoke-Expression (&starship init powershell)
 
 # https://github.com/vors/ZLocation
 ensureModule ZLocation
+# alternative: https://github.com/badmotorfinger/z
 
 # https://scoop.sh/
 # https://www.nerdfonts.com/font-downloads
@@ -128,7 +129,15 @@ Get-Content "$env:USERPROFILE/.gitSecrets.cmd" | .{process{
 if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -Force
 }
+
 Set-Alias -Name "l" less
+
+# scoop install lsd
+# https://github.com/Peltoche/lsd
+# https://the.exa.website/
+Remove-Item alias:\ls -force
+function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) lsd -F --group-directories-first --extensionsort $rest }
+function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) & ls -l $rest }
 
 function .. { Set-Location .. }
 function ... { Set-Location ..\.. }
@@ -156,9 +165,19 @@ function OnViModeChange {
         Write-Host -NoNewLine "`e[5 q"
     }
 }
+# https://github.com/PowerShell/PSReadLine
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
 Set-PSReadlineOption -EditMode vi
 Set-PSReadLineOption -BellStyle None
+Set-PSReadLineOption -ShowToolTips
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+# https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
+# fancy PSReadline profile settings:
+# https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
 
 
 # auto-complete for dotnet:

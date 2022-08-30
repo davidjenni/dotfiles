@@ -1,15 +1,32 @@
-# VsVim RC  david@davidjenni.com
-# see: https://github.com/jaredpar/VsVim
+" VsVim RC  david@davidjenni.com
+" see: https://github.com/jaredpar/VsVim
+" https://github.com/VsVim/VsVim/wiki/Settings-Reference
 
-source ~/base.vimrc
+set cursorline
+set vsvimcaret=60
+set novisualbell
+
+" shift/tab etc. is set via .editorconfig
+set vsvim_useeditordefaults
+
+set scrolloff=2
+set virtualedit=onemore
+set nojoinspaces
+
+" searching
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set wrapscan
+
+set history=1000
 
 nmap <C-]> :vsc Edit.GoToDefinition<CR>
 nmap gcc :vsc Edit.CommentSelection<CR>
 nmap gcu :vsc Edit.UncommentSelection<CR>
 nnoremap <C-L> :nohlsearch<cr><esc>
 
-nmap <C-P> :vsc View.CommandWindow<CR>
+nmap <C-P> :vsc Edit.GoToAll<CR>
 cmap ls :vsc Window.Windows
 cnoremap bd :vsc Window.CloseDocumentWindow
-
-
