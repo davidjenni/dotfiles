@@ -1,14 +1,14 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "paste",
             "keys": "ctrl+v"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -20,7 +20,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -29,33 +29,36 @@
             "keys": "alt+shift+d"
         }
     ],
-    "alwaysShowTabs": false,
+    "alwaysShowTabs": true,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "focusFollowMouse": true,
     "initialCols": 200,
     "initialRows": 60,
-    "profiles": 
+    "confirmCloseAllTabs":  false,
+    "largePasteWarning": true,
+    "multiLinePasteWarning": false,
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "antialiasingMode": "cleartype",
             "backgroundImage": null,
             "backgroundImageOpacity": 0.19,
             "bellStyle": "none",
             "colorScheme": "One Half Dark",
-            "font": 
+            "font":
             {
                 "face": "Hack Nerd Font",
                 "size": 10
             },
             "intenseTextStyle": "all",
-            "opacity": 84,
+            "opacity": 80,
             "padding": "8",
             "useAcrylic": true
         },
-        "list": 
+        "list":
         [
             {
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -87,7 +90,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
@@ -297,7 +300,7 @@
             "yellow": "#808000"
         }
     ],
-    "showTabsInTitlebar": false,
+    "showTabsInTitlebar": true,
     "tabSwitcherMode": "mru",
     "useAcrylicInTabRow": true
 }

@@ -165,20 +165,25 @@ function OnViModeChange {
         Write-Host -NoNewLine "`e[5 q"
     }
 }
-# https://github.com/PowerShell/PSReadLine
-Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
-Set-PSReadlineOption -EditMode vi
-Set-PSReadLineOption -BellStyle None
-Set-PSReadLineOption -ShowToolTips
-Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-# https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -PredictionViewStyle ListView
-# fancy PSReadline profile settings:
-# https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
 
+if ($host.Name -eq 'ConsoleHost') {
+    # https://github.com/PowerShell/PSReadLine
+    if ($PSVersionTable.PSEdition -ne 'Desktop') {
+        Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+    }
+    Set-PSReadlineOption -EditMode vi
+    Set-PSReadLineOption -BellStyle None
+    Set-PSReadLineOption -ShowToolTips
+    Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+    Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+    Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+    # https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/
+    Set-PSReadLineOption -PredictionSource History
+    Set-PSReadLineOption -PredictionViewStyle ListView
+    Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+    # fancy PSReadline profile settings:
+    # https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
+}
 
 # auto-complete for dotnet:
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
@@ -191,7 +196,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
 # auto-complete for PowerApps CLI (pac):
 Register-ArgumentCompleter -Native -CommandName pac -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
-    &pac complete -s "$($commandAst.ToString())" | ForEach-Object {
+    &pac complete -s "$($commandAst.ToString()) " | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }
