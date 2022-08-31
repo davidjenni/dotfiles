@@ -155,13 +155,11 @@ exit /b 4
     @REM call :softLink %dotPath%\code.user.settings.json %APPDATA%\Code\User\settings.json
 
     call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
-    call :softLink %dotPath%\win\os.hgrc %_HOME%\.os.hgrc
     call :softLink %dotPath%\win\vsvimrc %_HOME%\_vsvimrc
-    call :softLink %dotPath%\win\viemurc %_HOME%\.viemurc
     call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\PowerShell\profile.ps1
     mkdir %_HOME%\Documents\WindowsPowerShell > nul 2>&1
     call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\WindowsPowerShell\profile.ps1
-    call :softLink $dotPath%\win\settings.json %LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+    call :softLink %dotPath%\win\settings.json %LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
     set _emacsDir=%_HOME%\.emacs.d
     if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
     call :softLink %dotPath%\init.el %_emacsDir%\init.el

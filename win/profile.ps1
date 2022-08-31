@@ -135,9 +135,25 @@ Set-Alias -Name "l" less
 # scoop install lsd
 # https://github.com/Peltoche/lsd
 # https://the.exa.website/
+
 Remove-Item alias:\ls -force
-function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) lsd -F --group-directories-first --extensionsort $rest }
-function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) & ls -l $rest }
+# lsd doesn't work properly on domain joined machines:
+$inDomain = $false
+try {
+    $inDomain = [System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -ne $null
+}
+catch {
+}
+if ($inDomain) {
+    function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) Get-ChildItem -Name $rest }
+    function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) Get-ChildItem $rest }
+} else {
+    # https://github.com/Peltoche/lsd/pull/297
+    # https://github.com/Peltoche/lsd/pull/475#issuecomment-777101864
+    function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) lsd -F --group-directories-first --extensionsort $rest }
+    function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) & ls -l $rest }
+}
+
 
 function .. { Set-Location .. }
 function ... { Set-Location ..\.. }
