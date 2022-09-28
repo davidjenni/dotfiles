@@ -140,7 +140,8 @@ Remove-Item alias:\ls -force
 # lsd doesn't work properly on domain joined machines:
 $inDomain = $false
 try {
-    $inDomain = [System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -ne $null
+    # $inDomain = [System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -ne $null
+    $inDomain = ($env:USERDNSDOMAIN.ToLower().Contains('.com'))
 }
 catch {
 }
