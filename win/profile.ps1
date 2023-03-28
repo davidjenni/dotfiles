@@ -113,10 +113,6 @@ Invoke-Expression (&starship init powershell)
 ensureModule ZLocation
 # alternative: https://github.com/badmotorfinger/z
 
-addToPath "$env:USERPROFILE\dotfiles\win"
-addToPath "$env:USERPROFILE\PuTTY"
-addToPath "$env:ProgramFiles\7-Zip"
-addToPath "$env:USERPROFILE\NTTools"
 addToPath "$env:ProgramFiles\Git\usr\bin"
 
 $env:LESS="-i -M -q -x4 -R"
