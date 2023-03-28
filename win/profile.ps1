@@ -120,13 +120,16 @@ $env:LESSBINFMT="*d[%02x]"
 $env:VISUAL="code --wait"
 
 # replay cmd git secrets env variables into PS:
-Get-Content "$env:USERPROFILE/.gitSecrets.cmd" | .{process{
-    if ($_ -match '^set ([^=]+)=(.*)') {
-        $gitVar = $matches[1]
-        $gitValue = $matches[2]
-        Set-Item -Path "Env:$gitVar" -Value "$gitValue"
-    }
-}}
+$gitSecretsFile = "$env:USERPROFILE/.gitSecrets.cmd"
+if (Test-Path $gitSecretsFile) {
+    Get-Content $gitSecretsFile| .{process{
+        if ($_ -match '^set ([^=]+)=(.*)') {
+            $gitVar = $matches[1]
+            $gitValue = $matches[2]
+            Set-Item -Path "Env:$gitVar" -Value "$gitValue"
+        }
+    }}
+}
 
 if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -Force
