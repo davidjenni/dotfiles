@@ -12,6 +12,7 @@ if fn.empty(fn.glob(paq_path)) > 0 then
   opt.cmdheight = 10    -- ensure bootstrap messages are better visible
   print('Bootstrapping paq_nvim into: ' .. paq_path .. '...')
   fn.system({'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_path})
+  opt.rtp:prepend(paq_path)
   must_run_paq_install = true
 end
 
@@ -89,10 +90,11 @@ function goto_last_pos()
   end
 end
 
-
 g.mapleader = ' '
 
-
+--
+-- packages:
+--
 require 'paq' {
     'savq/paq-nvim';                  -- Let Paq manage itself
     'tomasr/molokai';
