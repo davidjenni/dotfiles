@@ -1,9 +1,0 @@
-# keep OS-specific settings in its own *.hgrc
-%include ~/.os.hgrc
-
-# see reference under http://www.selenic.com/mercurial/hgrc.5.html
-[ui]
-
-[extensions]
-graphlog=
-hgk = 
