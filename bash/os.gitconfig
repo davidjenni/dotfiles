@@ -1,12 +1,5 @@
 # OSX/Linux-specific .gitconfig
 # see also http://git-scm.com/docs/git-config
 
- [difftool "sourcetree"]
-     cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-     path =
- [mergetool "sourcetree"]
-     cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-     trustExitCode = true
-[credential]
-    # helper = !/Library/Java/JavaVirtualMachines/openjdk-11.0.1.jdk/Contents/Home/bin/java -Ddebug=false -Djava.net.useSystemProxies=true -jar /usr/local/Cellar/git-credential-manager/2.0.4/libexec/git-credential-manager-2.0.4.jar
-
+[core]
+	editor = nvim
