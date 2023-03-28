@@ -156,13 +156,12 @@ exit /b 4
 
     call :softLink %dotPath%\win\os.gitconfig %_HOME%\.os.gitconfig
     call :softLink %dotPath%\win\vsvimrc %_HOME%\_vsvimrc
-    call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\PowerShell\profile.ps1
-    mkdir %_HOME%\Documents\WindowsPowerShell > nul 2>&1
-    call :softLink %dotPath%\win\profile.ps1 %_HOME%\Documents\WindowsPowerShell\profile.ps1
-    call :softLink %dotPath%\win\settings.json %LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
-    set _emacsDir=%_HOME%\.emacs.d
-    if not exist "%_emacsDir%" (mkdir "%_emacsDir%")
-    call :softLink %dotPath%\init.el %_emacsDir%\init.el
+    :: set profile for PS Core:
+    :: accounts for e.g. OneDrive managing Documents folder:
+    for /f "delims=" %%a in ('pwsh -noprofile -command $PROFILE.CurrentUserAllHosts') do @set _PSCORE_PROFILE=%%a
+    echo "PS Core profile: %_PSCORE_PROFILE%"
+    call :softLink %dotPath%\win\profile.ps1 %_PSCORE_PROFILE%
+    @REM call :softLink %dotPath%\win\settings.json %LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 
     :: starship.rs:
     set _configDir=%_HOME%\.config
@@ -171,7 +170,6 @@ exit /b 4
 
     set _sshDir=%_HOME%\.ssh
     if not exist "%_sshDir%" (mkdir "%_sshDir%")
-    call :softLink %dotPath%\win\pageant.cmd %_sshDir%\pageant.cmd
 
     echo.
     echo Saved previously sym-linked files in directory: %_bootstrapBackupsDir%
