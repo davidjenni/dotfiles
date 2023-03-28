@@ -1,3 +1,21 @@
+# this profile assumes PowerShell Core (pwsh)
+#
+# ===== Prerequisits that need one-off installation:
+#
+# 1) install scoop:
+# see https://scoop.sh/
+#
+# 2) then install starship.rs (https://starship.rs/):
+# > scoop install starship
+#
+# 3) install a NerdFont from https://www.nerdfonts.com/, e.g. Hack Nerd Font, Inconsolata Nerd Font
+# 4) Configure Windows Terminal and/or VS Code terminal to use the installed nerd font
+#
+# 5) ensure PSReadLine is current (at least >= 2.2.2)
+# https://github.com/PowerShell/PSReadLine
+# upgrading if needed: https://github.com/PowerShell/PSReadLine#upgrading
+# elevated cmd: {pwsh | powershell} -noprofile -command "Install-Module PSReadLine -Force -SkipPublisherCheck"
+
 # https://thirty25.com/posts/2021/12/optimizing-your-powershell-load-times
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
@@ -50,16 +68,19 @@ function addToPath {
     }
 }
 
-# Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-# for more modules, see also: https://github.com/janikvonrotz/awesome-powershell
-# https://hodgkins.io/ultimate-powershell-prompt-and-git-setup
+$psgallery = Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue
+if ($null -eq $psgallery -or $psgallery.InstallationPolicy -ne 'Trusted') {
+    Write-Host "Registering PSGallery..."
+    Register-PSRepository -Default -ErrorAction SilentlyContinue
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+}
+$psreadline = Get-Module -Name "PSReadLine"
+$minVersionPSRL = [Version]'2.2.6'
+if ($psreadline.Version -lt $minVersionPSRL) {
+    Write-Host "Upgrading PSReadLine..."
+    Install-Module -Name PSReadLine -Force -SkipPublisherCheck -Scope CurrentUser
+}
 
-# http://psget.net/     cannot co-exist with PS gallery's Install-Module
-# ensureModule PsGet
-
-# https://github.com/PowerShell/PSReadLine
-# upgrading if needed: https://github.com/PowerShell/PSReadLine#upgrading
-# elevated cmd: {pwsh | powershell} -noprofile -command "Install-Module PSReadLine -Force -SkipPublisherCheck"
 ensureModule PSReadLine 'ConsoleHost'
 # https://github.com/mmims/PSConsoleTheme
 ensureModule PSConsoleTheme
@@ -74,10 +95,6 @@ $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
 # Set-Alias ssh "$env:ProgramFiles\git\usr\bin\ssh.exe"
 # Start-SshAgent
 $env:GIT_SSH = $((Get-Command ssh).Source)
-
-# https://github.com/posh-projects/Tree
-# requires: https://chocolatey.org/packages/tree/
-ensureModule Tree
 
 # https://starship.rs/
 function Invoke-Starship-PreCommand {
@@ -95,17 +112,6 @@ Invoke-Expression (&starship init powershell)
 # https://github.com/vors/ZLocation
 ensureModule ZLocation
 # alternative: https://github.com/badmotorfinger/z
-
-# https://scoop.sh/
-# https://www.nerdfonts.com/font-downloads
-# https://github.com/dduan/tre
-
-# Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
-
-# $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-# if (Test-Path($ChocolateyProfile)) {
-#   Import-Module "$ChocolateyProfile"
-# }
 
 addToPath "$env:USERPROFILE\dotfiles\win"
 addToPath "$env:USERPROFILE\PuTTY"
