@@ -30,7 +30,9 @@
     cl = clone
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
 [user]
-    # user information is set via GIT_* environment variables, see ~/.gitSecrets.cmd or .sh
+    name = David Jenni
+    # https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address
+	email = 3200210+davidjenni@users.noreply.github.com
 
 [color]
     ui = auto
