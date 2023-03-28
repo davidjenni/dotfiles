@@ -2,9 +2,3 @@
 # see also http://git-scm.com/docs/git-config
 [core]
 	editor = nvim
-
-[credential]
-	helper =
-    # https://github.com/GitCredentialManager/git-credential-manager
-	# helper = ~/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
-	helper = C:/Users/david/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe

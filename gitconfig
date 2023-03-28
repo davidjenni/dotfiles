@@ -79,6 +79,7 @@
 	clean = git-lfs clean -- %f
 [init]
 	defaultBranch = main
+
 [credential]
-	helper =
-	helper = C:/Users/davidjen/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
+    # set up credential manager with:
+    # git credential-manager configure --system
