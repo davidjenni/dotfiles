@@ -1,22 +1,15 @@
 # this profile assumes PowerShell Core (pwsh)
 #
-# ===== Prerequisits that need one-off installation:
+# ===== Prerequisits that need one-off installation handled by bootstrap.ps1:
 #
 # 1) install scoop:
-# see https://scoop.sh/
-#
 # 2) then install starship.rs (https://starship.rs/):
 # > scoop install starship
-#
 # 3) install a NerdFont from https://www.nerdfonts.com/, e.g. Hack Nerd Font, Inconsolata Nerd Font
 # 4) Configure Windows Terminal and/or VS Code terminal to use the installed nerd font
 #
-# 5) ensure PSReadLine is current (at least >= 2.2.2)
-# https://github.com/PowerShell/PSReadLine
-# upgrading if needed: https://github.com/PowerShell/PSReadLine#upgrading
-# elevated cmd: {pwsh | powershell} -noprofile -command "Install-Module PSReadLine -Force -SkipPublisherCheck"
-
 # https://thirty25.com/posts/2021/12/optimizing-your-powershell-load-times
+
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 function ensureModule {
@@ -49,9 +42,6 @@ function ensureModule {
                 return
             }
 
-            # Install-Module as recommended by https://powershellgallery.com
-            ensureModule PowerShellGet $loadForHost
-
             Write-Host  -NoNewline "Installing... "
             Install-Module -Name $name -AllowClobber -Scope CurrentUser
         }
@@ -68,19 +58,8 @@ function addToPath {
     }
 }
 
-$psgallery = Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue
-if ($null -eq $psgallery -or $psgallery.InstallationPolicy -ne 'Trusted') {
-    Write-Host "Registering PSGallery..."
-    Register-PSRepository -Default -ErrorAction SilentlyContinue
-    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-}
-$psreadline = Get-Module -Name "PSReadLine"
-$minVersionPSRL = [Version]'2.2.6'
-if ($psreadline.Version -lt $minVersionPSRL) {
-    Write-Host "Upgrading PSReadLine..."
-    Install-Module -Name PSReadLine -Force -SkipPublisherCheck -Scope CurrentUser
-}
 
+# https://github.com/PowerShell/PSReadLine
 ensureModule PSReadLine 'ConsoleHost'
 # https://github.com/mmims/PSConsoleTheme
 ensureModule PSConsoleTheme
@@ -119,18 +98,6 @@ $env:LESS="-i -M -q -x4 -R"
 $env:LESSBINFMT="*d[%02x]"
 $env:VISUAL="code --wait"
 
-# replay cmd git secrets env variables into PS:
-$gitSecretsFile = "$env:USERPROFILE/.gitSecrets.cmd"
-if (Test-Path $gitSecretsFile) {
-    Get-Content $gitSecretsFile| .{process{
-        if ($_ -match '^set ([^=]+)=(.*)') {
-            $gitVar = $matches[1]
-            $gitValue = $matches[2]
-            Set-Item -Path "Env:$gitVar" -Value "$gitValue"
-        }
-    }}
-}
-
 if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -Force
 }
@@ -166,7 +133,6 @@ function ... { Set-Location ..\.. }
 function bb { Push-Location $env:USERPROFILE }
 function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
-function ff { param ([string] $pattern) Get-ChildItem -Path . -Filter "$pattern" -Recurse -ErrorAction SilentlyContinue -Force |Select-Object -Property FullName }
 function which { param ([string] $cmd) Get-Command $cmd }
 function xx { exit }
 function msb { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )

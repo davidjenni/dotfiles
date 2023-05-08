@@ -4,9 +4,9 @@
 dir=dir /ogen $*
 L=less -i -M $*
 xx=exit
-la=lsd -a --sort extension $*
-ls=lsd --sort extension $*
-ll=lsd -l --sort extension $*
+la=lsd -a --group-directories-first --extensionsort $*
+ll=lsd -l --group-directories-first --extensionsort $*
+ls=lsd --group-directories-first --extensionsort $*
 ld=dir /b /ad $*
 msb=msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
 a=attrib $*
