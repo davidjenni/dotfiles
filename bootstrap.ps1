@@ -193,6 +193,23 @@ function mklink {
     New-Item -ItemType SymbolicLink -Path $link -value $target
 }
 
+function copyFile {
+    param (
+        [Parameter(Mandatory = $true)] [string] $sourceRelPath,
+        [Parameter(Mandatory = $true)] [string] $target
+    )
+    if (Test-Path $target) {
+        # TODO: add backup story
+        Remove-Item -Path $target
+    }
+    $targetDir = (Split-Path $target)
+    New-Item -ItemType Directory -Path $targetDir -ErrorAction SilentlyContinue | Out-Null
+
+    Write-Verbose "Copying $sourceRelPath -> $target"
+    $source = (Join-Path $dotPath $sourceRelPath)
+    Copy-Item -Path $source -Destination $target -force
+}
+
 function installScoopApps {
     Write-Host "Installing apps via scoop..."
     & scoop install 7zip bat delta fd fzf helix less lsd neovim nuget nvm ripgrep starship tre-command
@@ -207,8 +224,9 @@ function installWinGetApps {
     # requires elevation:
     # TODO: https://stackoverflow.com/questions/60209449/how-to-elevate-a-powershell-script-from-within-a-script
     & winget install Git.Git --accept-source-agreements --disable-interactivity
-    # TODO: need to figure out how this interacts with a soft-linked gitconfig from this repo
-    # TODO: one option: loop over simple git setting file and make 'git config --global key value' calls
+
+    # TODO: set up git credential manager (installed via scoop); requires elevation:
+    # git credential-manager configure --system
 
     # requires elevation:
     & winget install Microsoft.Powershell --accept-source-agreements --disable-interactivity
@@ -227,6 +245,34 @@ function bootstrap {
 function installApps {
     installScoopApps
     installWinGetApps
+}
+
+function writeGitConfig {
+    param (
+        [Parameter(Mandatory = $true)] [string] $configIniFile
+    )
+
+    # do a one-off save for the formerly symlinked .gitconfig:
+    if ((Test-Path (Join-Path $env:USERPROFILE '.gitconfig')) -and -not (Test-Path (Join-Path $env:USERPROFILE '.gitconfig.bak'))) {
+        $userName = (& git config --global --get user.name)
+        $email = (& git config --global --get user.email)
+
+        Move-Item -Path (Join-Path $env:USERPROFILE '.gitconfig') -Destination (Join-Path $env:USERPROFILE '.gitconfig.bak')
+
+        if ($userName -and $userName -ne '') {
+            & git.exe config --global user.name $userName
+        }
+        if ($email -and $email -ne '') {
+            & git.exe config --global user.email $email
+        }
+    }
+
+    Get-Content $configIniFile | ForEach-Object {
+        if ($_.TrimStart().StartsWith('#')) { return }
+        $key, $value = $_.Split('=', 2)
+        Write-Verbose "git config --global $key $value"
+        & git.exe config --global $key "$value"
+    }
 }
 
 function setupShellEnvs {
@@ -253,6 +299,26 @@ function setupShellEnvs {
 
     # TODO: initialize Terminal, but its .json file won't exist until after the first launch
     # $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+
+    Write-Host "setting up PowerShell profiles:"
+    $pscoreProfile = (& pwsh -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
+    copyFile (Join-Path 'win' 'profile.ps1') $pscoreProfile
+    $psProfile = (& powershell -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
+    copyFile (Join-Path 'win' 'profile.ps1') $psProfile
+
+    Write-Host "configuring user home dir..."
+    $configDir = (Join-Path $env:USERPROFILE '.config')
+    New-Item -ItemType Directory -Path $configDir -ErrorAction SilentlyContinue | Out-Null
+
+    copyFile 'starship.toml' (Join-Path $configDir 'starship.toml')
+    copyFile (Join-Path 'win' 'vsvimrc') (Join-Path $env:USERPROFILE '_vsvimrc')
+
+    writeGitConfig (Join-Path $dotPath 'gitconfig.ini')
+
+    Write-Host "setting up neovim:"
+    $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
+    New-Item -ItemType Directory -Path $nvimConfigDir -ErrorAction SilentlyContinue | Out-Null
+    copyFile 'init.lua' (Join-Path $nvimConfigDir 'init.lua')
 }
 
 function main {
@@ -298,7 +364,6 @@ function main {
         'env' { setupShellEnvs }
     }
 
-    # TODO: either symlink or copy gitconfig, profile.ps1, init.lua etc to $env:USERPROFILE
     Write-Host "Done."
 }
 
