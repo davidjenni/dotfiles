@@ -9,11 +9,11 @@
 #>
 [CmdletBinding()]
 param (
-    [ValidateSet('clone', 'bootstrap', 'apps', 'env', IgnoreCase = $true)]
+    [ValidateSet('clone', 'setup', 'apps', 'env', IgnoreCase = $true)]
     [Parameter(Position = 0)] [string]
     # verb that indicates stage:
     #  clone:       clone the dotfiles repo and continue with 'bootstrap' etc.
-    #  bootstrap:   setup PS, package managers, git. Includes 'apps' and 'env'.
+    #  setup:       setup PS, package managers, git. Includes 'apps' and 'env'.
     #  apps:        install apps via winget and scoop
     #  env:         setups consoles and configurations for git, neovim, PowerShell etc.
     $verb = 'clone',
@@ -236,7 +236,7 @@ function installWinGetApps {
     & winget install Microsoft.VisualStudioCode --accept-source-agreements --disable-interactivity
 }
 
-function bootstrap {
+function setup {
     modernizeWinPowerShell
     ensureWinGet
     ensureScoop
@@ -333,7 +333,7 @@ function main {
             if (Test-Path (Join-Path $dotPath '.git')) {
                 Write-Host "local git repo already exists, skipping."
                 # continue in-proc:
-                main bootstrap
+                main setup
                 return
             }
 
@@ -346,16 +346,16 @@ function main {
             # still stick with desktop PS since PSCore is not necessarily installed yet
             $script= (Join-Path $dotPath 'bootstrap.ps1')
             Write-Host "Continue $script in child process"
-            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -File $script bootstrap" |
+            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -File $script setup" |
                 Wait-Process
         }
 
-        'bootstrap' {
-            Write-Host "Bootstrapping..."
-            bootstrap
+        'setup' {
+            Write-Host "Setting up..."
+            setup
             installApps
             setupShellEnvs
-            Write-Host "Done (bootstrap)."
+            Write-Host "Done (setup)."
             exit
         }
 
