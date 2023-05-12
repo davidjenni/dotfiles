@@ -214,7 +214,7 @@ function installScoopApps {
     Write-Host "Installing apps via scoop..."
     & scoop install 7zip bat delta fd fzf helix less lsd neovim nuget nvm ripgrep starship tre-command
     & scoop bucket add nerd-fonts
-    & scoop install hack-nf-mono hack-nf
+    & scoop install hack-nf-mono hack-nf JetBrainsMono-NF JetBrainsMono-NF-mono
     & scoop bucket add extras
     & scoop install alacritty git-credential-manager ilspy vcredist2022
 }
