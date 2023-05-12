@@ -5,7 +5,7 @@
 # 1) install scoop:
 # 2) then install starship.rs (https://starship.rs/):
 # > scoop install starship
-# 3) install a NerdFont from https://www.nerdfonts.com/, e.g. Hack Nerd Font, Inconsolata Nerd Font
+# 3) install a NerdFont from https://www.nerdfonts.com/, e.g. Hack Nerd Font, JetBrainsMono Nerd Font
 # 4) Configure Windows Terminal and/or VS Code terminal to use the installed nerd font
 #
 # https://thirty25.com/posts/2021/12/optimizing-your-powershell-load-times
@@ -33,7 +33,7 @@ function ensureModule {
         }
 
         $retryImport = $true
-        Write-Host "Module $name not locally present, check if known..."
+        Write-Verbose "Module $name not locally present, check if known..."
         if (-not (Get-Module -ListAvailable -Name $name)) {
             Write-Verbose "Installing $name..."
             $info = Find-Module -Name $name -ErrorAction SilentlyContinue
@@ -102,11 +102,21 @@ if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -Force
 }
 
-Set-Alias -Name "l" less
+Remove-Item alias:\rm -Force    # favor git's rm.exe
+
+# nudge WinPS and pwsh to use bat/less instead of more:
+Set-Alias -Name 'more' -Value 'less'
+$env:PAGER='bat'
+
+Remove-Item alias:\cat -Force
+Set-Alias -Name 'cat' bat
+Set-Alias -Name 'l' bat
+Set-Alias -Name 'vi' nvim
+Set-Alias -Name 'vim' nvim
 
 # scoop install lsd
 # https://github.com/Peltoche/lsd
-# https://the.exa.website/
+# https://github.com/ogham/exa not yet for Windows
 
 Remove-Item alias:\ls -force
 # lsd doesn't work properly on domain joined machines:
