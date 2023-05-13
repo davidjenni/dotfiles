@@ -230,6 +230,14 @@ function installWinGetApps {
 
     # requires elevation:
     & winget install Microsoft.Powershell --accept-source-agreements --disable-interactivity
+    # ensure pwsh is on path if it was just installed:
+    if (-not (Get-Command "pwsh.exe" -ErrorAction SilentlyContinue)) {
+        $pwshPath = (Join-Path $env:ProgramFiles (Join-Path 'PowerShell' '7'))
+        if (Test-Path (Join-Path $pwshPath 'pwsh.exe')) {
+            Write-Verbose "Adding pwsh temporarily to path"
+            $env:Path += ";$pwshPath"
+        }
+    }
 
     # per user, no elevation required:
     & winget install Microsoft.WindowsTerminal --accept-source-agreements --disable-interactivity
