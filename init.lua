@@ -72,7 +72,7 @@ if not must_run_paq_install then
         -- terminal on macOS has awful colors with termguicolors on
         opt.termguicolors = true
     end
-    cmd[[colorscheme gruvbox]]
+    cmd[[colorscheme nord]]
 end
 
 -- Don't show status line on vim terminals
@@ -124,8 +124,12 @@ require 'paq' {
 
     'nvim-lua/plenary.nvim';
     'lewis6991/gitsigns.nvim';
-    'vim-airline/vim-airline';
-    'vim-airline/vim-airline-themes';
+    'nvim-lualine/lualine.nvim';
+    -- 'itchyny/lightline.vim';
+    'arcticicestudio/nord-vim';
+    'nordtheme/vim';
+    -- 'vim-airline/vim-airline';
+    -- 'vim-airline/vim-airline-themes';
     -- 'hoob3rt/lualine.nvim';
     -- requires nerd-fonts:
     -- brew tap homebrew/cask-fonts
@@ -199,7 +203,11 @@ g['hugefile_trigger_size'] = 2
 
 -- requiring plugins that haven't been loaded will fail, skip until :PaqInstall could finish
 if not must_run_paq_install then
-    -- require('lualine').setup({theme = 'gruvbox'})
+    require('lualine').setup {
+        options = {
+            theme = 'nord'
+        }
+    }
     require('gitsigns').setup {
     signs = {
         add = {text = '+'},
