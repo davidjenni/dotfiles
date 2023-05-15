@@ -1,5 +1,7 @@
 # see: https://github.com/alacritty/alacritty/blob/master/alacritty.yml
 
+live_config_reload: true
+
 window:
   dynamic_title: true
 #   decorations: transparent  # macOS only
