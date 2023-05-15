@@ -2,13 +2,13 @@
 
 window:
   dynamic_title: true
-  decorations: transparent
+  decorations: none
   position:
     x: 100
-    y: 250
+    y: 150
   dimensions:
     columns: 180
-    lines: 60
+    lines: 50
 
   padding:
     x: 5

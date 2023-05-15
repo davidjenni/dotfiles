@@ -72,7 +72,7 @@ if not must_run_paq_install then
         -- terminal on macOS has awful colors with termguicolors on
         opt.termguicolors = true
     end
-    cmd[[colorscheme nord]]
+    local ok, _ = pcall(cmd, "colorscheme nord")
 end
 
 -- Don't show status line on vim terminals
