@@ -2,6 +2,7 @@
 
 window:
   dynamic_title: true
+#   decorations: transparent  # macOS only
   decorations: none
   position:
     x: 100
@@ -21,7 +22,7 @@ font:
     # family: Hack Nerd Font Mono
     family: JetBrainsMono Nerd Font
     style: Light
-  size: 16
+  size: 11
 
 selection:
   save_to_clipboard: true
