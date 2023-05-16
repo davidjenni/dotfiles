@@ -1,3 +1,4 @@
 function la
-    command ls -AGF $argv
+    command ls -a $argv
+    # command lsd -a --group-directories-first $argv
 end

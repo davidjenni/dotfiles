@@ -1,4 +1,4 @@
 function ls
-    command ls -GF $argv
+    command lsd --group-directories-first $argv
 end
 

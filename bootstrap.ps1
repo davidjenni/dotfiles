@@ -325,8 +325,11 @@ function setupShellEnvs {
 
     Write-Host "setting up neovim:"
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
-    New-Item -ItemType Directory -Path $nvimConfigDir -ErrorAction SilentlyContinue | Out-Null
     copyFile 'init.lua' (Join-Path $nvimConfigDir 'init.lua')
+
+    Write-Host "setting up alacritty:"
+    $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
+    copyFile 'alacritty.yml' (Join-Path $alacrittyConfigDir 'alacritty.yml')
 }
 
 function main {

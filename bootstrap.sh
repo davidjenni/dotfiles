@@ -96,19 +96,25 @@ EndOfSecrets
         mkdir -p $nvimDir
     fi
     saveLink $dotPath/init.lua $nvimDir/init.lua
+    # alacritty
+    local alacrittyDir=$configDir/alacritty
+    if [ ! -d "$alacrittyDir" ] ; then
+        mkdir -p $alacrittyDir
+    fi
+    saveLink $dotPath/alacritty.yml $alacrittyDir/alacritty.yml
     # local vscodeDir="$HOME/Library/Application Support/Code/User"
     # if [ -d "$vscodeDir" ] ; then
     #     saveLink $dotPath/code.user.settings.json "$HOME/settings.json"
     # fi
 
     saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
-    saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
+    # saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
     saveLink $dotPath/bash/profile $HOME/.profile
     saveLink $dotPath/bash/bashrc $HOME/.bashrc
     saveLink $dotPath/bash/inputrc $HOME/.inputrc
     saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
     saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
-    saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
+    # saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
 
     # starship.rs:
     saveLink $dotPath/starship.toml $configDir/starship.toml
@@ -119,7 +125,10 @@ EndOfSecrets
         mkdir -p $fishConfigDir
     fi
     saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
-    saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
+    saveLink $dotPath/fish/functions/la $fishConfigDir/functions
+    saveLink $dotPath/fish/functions/ll $fishConfigDir/functions
+    saveLink $dotPath/fish/functions/ls $fishConfigDir/functions
+    # saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
 }
 
 # main:
