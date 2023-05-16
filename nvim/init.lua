@@ -10,8 +10,8 @@ require('dotfiles.core.options')
 require('dotfiles.core.keymaps')
 require('dotfiles.lazy-nvim')
 
-require('lualine').setup()
+cmd[[ colorscheme tokyonight]]
+-- cmd[[ colorscheme nord]]
 
--- cmd[[ colorscheme tokyonight]]
-cmd[[ colorscheme nord]]
+require('dotfiles.plugin-config')
 

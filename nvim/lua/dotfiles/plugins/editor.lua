@@ -3,6 +3,7 @@
 -- github.com/davidjenni/dotfiles
 
 return {
+  -- gitsigns:
   {
     'lewis6991/gitsigns.nvim',
     event = { "BufReadPre", "BufNewFile" },
@@ -18,9 +19,11 @@ return {
     },
   },
 
+  -- telescope:
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    lazy = false,
     cmd = 'Telescope',
     keys = {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
@@ -53,8 +56,18 @@ return {
     }
   },
 
+  -- treesitter:
+  {
+      'nvim-treesitter/nvim-treesitter',
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+      },
+      build = ":TSUpdate",
+  },
+
+  -- devicons:
   {
     'nvim-tree/nvim-web-devicons',
     lazy = true,
-  }
+  },
 }
