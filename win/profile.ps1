@@ -86,7 +86,14 @@ function Invoke-Starship-PreCommand {
 #   $host.ui.Write("`e]0; $currDir `a")
   $host.ui.RawUI.WindowTitle = $currDir
 }
+
+# https://starship.rs/advanced-config/#transientprompt-in-powershell
+function Invoke-Starship-TransientFunction {
+  &starship module character
+}
+
 Invoke-Expression (&starship init powershell)
+Enable-TransientPrompt
 
 # https://github.com/vors/ZLocation
 ensureModule ZLocation
