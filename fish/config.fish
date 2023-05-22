@@ -36,5 +36,14 @@ fish_vi_key_bindings
 # fish_ssh_agent
 fish_add_path /opt/homebrew/sbin
 
+# https://starship.rs/advanced-config/#transientprompt-in-powershell
+function starship_transient_prompt_func
+    starship module character
+end
+function starship_transient_rprompt_func
+    starship module time
+end
 starship init fish | source
+enable_transcience
+
 zoxide init fish | source
