@@ -75,19 +75,6 @@ $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
 # Start-SshAgent
 $env:GIT_SSH = $((Get-Command ssh).Source)
 
-# https://starship.rs/
-function Invoke-Starship-PreCommand {
-    $gitDir = (Get-GitDirectory)
-    if ($null -ne $gitDir) {
-        $currDir = "git: " + [System.IO.Path]::GetFileName([System.IO.Path]::GetDirectoryName((Get-GitDirectory)))
-    } else {
-        $currDir = $pwd
-    }
-#   $host.ui.Write("`e]0; $currDir `a")
-  $host.ui.RawUI.WindowTitle = $currDir
-}
-Invoke-Expression (&starship init powershell)
-
 # https://github.com/vors/ZLocation
 ensureModule ZLocation
 # alternative: https://github.com/badmotorfinger/z
@@ -198,3 +185,24 @@ Register-ArgumentCompleter -Native -CommandName pac -ScriptBlock {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }
+
+# https://starship.rs/
+function Invoke-Starship-PreCommand {
+    $gitDir = (Get-GitDirectory)
+    if ($null -ne $gitDir) {
+        $currDir = "git: " + [System.IO.Path]::GetFileName([System.IO.Path]::GetDirectoryName((Get-GitDirectory)))
+    } else {
+        $currDir = $pwd
+    }
+#   $host.ui.Write("`e]0; $currDir `a")
+  $host.ui.RawUI.WindowTitle = $currDir
+}
+
+# https://starship.rs/advanced-config/#transientprompt-in-powershell
+function Invoke-Starship-TransientFunction {
+  &starship module character
+}
+
+Invoke-Expression (&starship init powershell)
+# needs to be late in profile script
+Enable-TransientPrompt

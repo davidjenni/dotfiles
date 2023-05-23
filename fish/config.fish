@@ -5,6 +5,8 @@ set -x LESS "-c -i -x4 -J -w -M -r"
 set -x VISUAL "nvim"
 set -x EDITOR "nvim"
 
+set fish_greeting ""
+
 switch (uname)
     case Linux
         if test -x /usr/bin/lesspipe.sh
@@ -36,5 +38,16 @@ fish_vi_key_bindings
 # fish_ssh_agent
 fish_add_path /opt/homebrew/sbin
 
-starship init fish | source
 zoxide init fish | source
+
+# https://starship.rs/advanced-config/#transientprompt-and-transientrightprompt-in-fish
+function starship_transient_prompt_func
+    starship module character
+end
+function starship_transient_rprompt_func
+    starship module time
+end
+starship init fish | source
+# contents of enable_trancience function, which is not callable yet after above source
+bind --user \r transient_execute
+bind --user -M insert \r transient_execute
