@@ -22,7 +22,10 @@ param (
     $userName = $null,
     [Parameter()] [string]
     # email address for git commits, defaults to existing git config or prompts for input
-    $email = $null
+    $email = $null,
+    [Parameter()] [switch]
+    # in most cases, do not run this script elevated; mostly needed in automation like PR loop
+    $runAsAdmin = $false
 )
 
 $ErrorActionPreference = 'Stop'
@@ -172,11 +175,14 @@ function ensureScoop {
 
     # https://scoop.sh/
     Write-Host "Installing scoop..."
-    Invoke-RestMethod 'get.scoop.sh' | Invoke-Expression
-    # TODO: check if elevated and run as admin if needed:
     # https://stackoverflow.com/questions/60209449/how-to-elevate-a-powershell-script-from-within-a-script
     # by default, scoop does not like to run elevated:
-    # Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+    if (-not $runAsAdmin) {
+        Invoke-RestMethod 'get.scoop.sh' | Invoke-Expression
+    } else {
+        Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+    }
+    # TODO: check if elevated and run as admin if needed
     $scoopPath = (Join-Path $env:USERPROFILE (Join-Path 'scoop' 'shims'))
     $env:Path += ";$scoopPath"
 }
