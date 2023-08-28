@@ -145,13 +145,27 @@ function modernizeWinPowerShell {
 }
 
 function ensureWinGet {
-    if (Get-Command "winget.exe" -ErrorAction SilentlyContinue) {
-        Write-Host "winget already installed, found: $(& winget -v)."
-        Get-AppxPackage -Name Microsoft.DesktopAppInstaller | Remove-AppxPackage
-    }
+    # https://github.com/microsoft/winget-cli/releases
+    $wgTargetVersion = '1.5.1572'    # Note: upload origin path for license file as it changes with each release
+    $wgVersion = "v$wgTargetVersion"
+
     if ($PSVersionTable.PSEdition -ne "Desktop") {
         Write-Host "Installing winget requires Desktop PowerShell, aborting."
         return
+    }
+
+    if (Get-Command "winget.exe" -ErrorAction SilentlyContinue) {
+        $foundVersion = (& winget -v)
+        Write-Host "winget already installed, found: $foundVersion."
+        if (-not ($foundVersion -match 'v([0-9\.]+)')) {
+            Write-Warning "Cannot parse winget version: $foundVersion"
+            return
+        }
+        if ([Version]$wgTargetVersion -le [System.Version]::Parse($Matches.1)) {
+            Write-Host "local installed winget already up-to-date or newer."
+            return
+        }
+        Get-AppxPackage -Name Microsoft.DesktopAppInstaller | Remove-AppxPackage
     }
 
     Write-Host "Installing winget..."
@@ -169,8 +183,6 @@ function ensureWinGet {
         Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
     }
 
-    # https://github.com/microsoft/winget-cli/releases
-    $wgVersion = 'v1.5.1572'    # Note: upload origin path for license file as it changes with each release
     Write-Host "  - Installing winget $wgVersion..."
     $wgPkg = (Join-Path $env:TEMP "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle")
     $wgLic = (Join-Path $env:TEMP "winget-license.xml")
