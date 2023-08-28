@@ -156,24 +156,34 @@ function ensureWinGet {
 
     Write-Host "Installing winget..."
     # https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/cpp/libraries/c-runtime-packages-desktop-bridge#how-to-install-and-update-desktop-framework-packages
-    $vc14 = (Join-Path $env:TEMP "vc14.appx")
-    (New-Object Net.WebClient).DownloadFile('https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx', $vc14)
-    Add-AppxPackage -Path $vc14
-
-    $uixaml = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.7.3 -force
-    Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
+    # installing winget pre-reqs:
+    if ((Get-AppxPackage -Name Microsoft.VCLibs.140.00.UWPDesktop -ErrorAction SilentlyContinue) -eq $null) {
+        Write-Host "  - Installing dependency: VC++ runtime UWPDesktop..."
+        $vc14 = (Join-Path $env:TEMP "vc14.appx")
+        (New-Object Net.WebClient).DownloadFile('https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx', $vc14)
+        Add-AppxPackage -Path $vc14
+    }
+    if ((Get-AppxPackage -Name Microsoft.UI.Xaml.2.7 -ErrorAction SilentlyContinue) -eq $null) {
+        Write-Host "  - Installing dependency: Microsoft.UI.Xaml..."
+        $uixaml = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.7.3 -force
+        Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
+    }
 
     # https://github.com/microsoft/winget-cli/releases
     $wgVersion = 'v1.5.1572'    # Note: upload origin path for license file as it changes with each release
+    Write-Host "  - Installing winget $wgVersion..."
     $wgPkg = (Join-Path $env:TEMP "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle")
     $wgLic = (Join-Path $env:TEMP "winget-license.xml")
     (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle", $wgPkg)
     if ($runAsAdmin) {
         (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/d925da7ed2bb4baabc481e13ed01e6f7_License1.xml", $wgLic)
         Add-AppxProvisionedPackage -Online -PackagePath $wgPkg -LicensePath $wgLic
-    } else {
-        Add-AppxPackage -Path $wgPkg
     }
+    # ensure package is installed for current user:
+    Add-AppxPackage -Path $wgPkg
+    # ensure winget is on path w/o reloading shell:
+    $env:Path += ";$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    # Get-Command "winget.exe" -ErrorAction SilentlyContinue
 }
 
 function ensureScoop {

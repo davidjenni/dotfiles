@@ -203,6 +203,8 @@ function Invoke-Starship-TransientFunction {
   &starship module character
 }
 
-Invoke-Expression (&starship init powershell)
-# needs to be late in profile script
-Enable-TransientPrompt
+if ((Get-Command 'starship' -ErrorAction SilentlyContinue)) {
+    Invoke-Expression (&starship init powershell)
+    # needs to be late in profile script
+    Enable-TransientPrompt
+}
