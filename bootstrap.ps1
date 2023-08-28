@@ -165,7 +165,7 @@ function ensureWinGet {
             Write-Host "local installed winget already up-to-date or newer."
             return
         }
-        Get-AppxPackage -Name Microsoft.DesktopAppInstaller | Remove-AppxPackage
+        Get-AppxPackage -Name Microsoft.DesktopAppInstaller | Remove-AppxPackage -ErrorAction SilentlyContinue
     }
 
     Write-Host "Installing winget..."
