@@ -171,9 +171,13 @@ function ensureWinGet {
     if ($runAsAdmin) {
         (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/d925da7ed2bb4baabc481e13ed01e6f7_License1.xml", $wgLic)
         Add-AppxProvisionedPackage -Online -PackagePath $wgPkg -LicensePath $wgLic
+        Add-AppxPackage -Path $wgPkg
     } else {
         Add-AppxPackage -Path $wgPkg
     }
+    Write-Host "winget installed: $(Get-Command 'winget.exe' -ErrorAction SilentlyContinue)"
+    Get-Command 'winget.exe' -ErrorAction SilentlyContinue
+    Write-Host "winget: $(& winget --version)"
 }
 
 function ensureScoop {
