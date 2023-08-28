@@ -164,7 +164,16 @@ function ensureWinGet {
     Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
 
     # https://github.com/microsoft/winget-cli/releases
-    Add-AppxPackage -Path https://github.com/microsoft/winget-cli/releases/download/v1.5.441-preview/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    $wgVersion = 'v1.5.1572'    # Note: upload origin path for license file as it changes with each release
+    $wgPkg = (Join-Path $env:TEMP "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle")
+    $wgLic = (Join-Path $env:TEMP "winget-license.xml")
+    (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle", $wgPkg)
+    if ($runAsAdmin) {
+        (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/d925da7ed2bb4baabc481e13ed01e6f7_License1.xml", $wgLic)
+        Add-AppxProvisionedPackage -Online -PackagePath $wgPkg -LicensePath $wgLic
+    } else {
+        Add-AppxPackage -Path $wgPkg
+    }
 }
 
 function ensureScoop {
@@ -212,7 +221,8 @@ function copyFile {
     New-Item -ItemType Directory -Path $targetDir -ErrorAction SilentlyContinue | Out-Null
 
     Write-Verbose "Copying $sourceRelPath -> $target"
-    $source = (Join-Path $dotPath $sourceRelPath)
+    $source = (Join-Path $PSScriptRoot $sourceRelPath)
+    Write-Host "  $(Split-Path $source -Leaf) -> $target"
     Copy-Item -Path $source -Destination $target -force
 }
 
@@ -229,13 +239,13 @@ function installWinGetApps {
     Write-Host "Installing apps via winget..."
     # requires elevation:
     # TODO: https://stackoverflow.com/questions/60209449/how-to-elevate-a-powershell-script-from-within-a-script
-    & winget install Git.Git --accept-source-agreements --disable-interactivity
+    & winget install Git.Git --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
 
     # TODO: set up git credential manager (installed via scoop); requires elevation:
     # git credential-manager configure --system
 
     # requires elevation:
-    & winget install Microsoft.Powershell --accept-source-agreements --disable-interactivity
+    & winget install Microsoft.Powershell --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
     # ensure pwsh is on path if it was just installed:
     if (-not (Get-Command "pwsh.exe" -ErrorAction SilentlyContinue)) {
         $pwshPath = (Join-Path $env:ProgramFiles (Join-Path 'PowerShell' '7'))
@@ -246,8 +256,8 @@ function installWinGetApps {
     }
 
     # per user, no elevation required:
-    & winget install Microsoft.WindowsTerminal --accept-source-agreements --disable-interactivity
-    & winget install Microsoft.VisualStudioCode --accept-source-agreements --disable-interactivity
+    & winget install Microsoft.WindowsTerminal --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
+    & winget install Microsoft.VisualStudioCode --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
 }
 
 function setup {
@@ -300,7 +310,7 @@ function setupShellEnvs {
     & reg add $consolePath /v FaceName          /d "Hack Nerd Font Mono" /t REG_SZ  /f | Out-Null
     & reg add $consolePath /v FontSize          /d 0x00100000       /t REG_DWORD /f | Out-Null
 
-    $win32rc=(Join-Path $dotPath (Join-Path 'win' 'win32-rc.cmd'))
+    $win32rc=(Join-Path $PSScriptRoot (Join-Path 'win' 'win32-rc.cmd'))
     Write-Host "setting up cmd autorun: $win32rc"
     & reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d $win32rc /f | Out-Null
 
@@ -327,7 +337,7 @@ function setupShellEnvs {
     copyFile 'starship.toml' (Join-Path $configDir 'starship.toml')
     copyFile (Join-Path 'win' 'vsvimrc') (Join-Path $env:USERPROFILE '_vsvimrc')
 
-    writeGitConfig (Join-Path $dotPath 'gitconfig.ini')
+    writeGitConfig (Join-Path $PSScriptRoot 'gitconfig.ini')
 
     Write-Host "setting up neovim:"
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
