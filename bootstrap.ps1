@@ -146,8 +146,8 @@ function modernizeWinPowerShell {
 
 function ensureWinGet {
     if (Get-Command "winget.exe" -ErrorAction SilentlyContinue) {
-        Write-Host "winget already installed."
-        return
+        Write-Host "winget already installed, found: $(& winget -v)."
+        Get-AppxPackage -Name Microsoft.DesktopAppInstaller | Remove-AppxPackage
     }
     if ($PSVersionTable.PSEdition -ne "Desktop") {
         Write-Host "Installing winget requires Desktop PowerShell, aborting."
