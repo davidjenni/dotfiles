@@ -1,0 +1,24 @@
+name: PullRequest
+
+on:
+#   push:
+#     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ windows-latest ]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run bootstrap script from PR branch;
+      shell: powershell
+      run: |
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+        Write-Host "skip bootstrap's repo 'clone' stage (already have correct script), start with 'setup'"
+        ./bootstrap.ps1 setup -runAsAdmin
