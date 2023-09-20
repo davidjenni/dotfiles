@@ -76,8 +76,11 @@ $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
 $env:GIT_SSH = $((Get-Command ssh).Source)
 
 # https://github.com/vors/ZLocation
-ensureModule ZLocation
-# alternative: https://github.com/badmotorfinger/z
+# ensureModule ZLocation
+
+# Zoxide:
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+Function zl { &zoxide query --list | bat }
 
 addToPath "$env:ProgramFiles\Git\usr\bin"
 
@@ -98,8 +101,10 @@ $env:PAGER='bat'
 Remove-Item alias:\cat -Force
 Set-Alias -Name 'cat' bat
 Set-Alias -Name 'l' bat
+Set-Alias -Name 'v' nvim
 Set-Alias -Name 'vi' nvim
 Set-Alias -Name 'vim' nvim
+
 
 # scoop install lsd
 # https://github.com/Peltoche/lsd
@@ -130,6 +135,20 @@ function ... { Set-Location ..\.. }
 function bb { Push-Location $env:USERPROFILE }
 function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
+
+function ff { param ([string] $optSearchTerm)
+    $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { '' }
+     &fd $optSearchTerm `
+        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --info=inline --border --margin=1 --preview='bat --color=always {}' --bind 'enter:execute(code {})'
+}
+
+function fff {  param ([string] $optSearchTerm)
+    $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { '' }
+    &rg $optSearchTerm --smart-case --color=always --line-number --no-heading --smart-case  `
+        | &fzf $optFzfSearchTerm --ansi --delimiter : --height=75% --layout=reverse --color 'hl:-1:underline,hl+:-1:underline:reverse' --border --margin=1 `
+            --preview='bat --color=always {1} --highlight-line {2}' --bind 'enter:execute(code {1})'
+}
+
 function which { param ([string] $cmd) Get-Command $cmd }
 function xx { exit }
 function msb { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
