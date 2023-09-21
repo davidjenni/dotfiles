@@ -2,29 +2,25 @@
 ...=cd ..\.. && cd $*
 ....=cd ..\..\.. && cd $*
 dir=dir /ogen $*
-L=less -i -M $*
+L=bat $*
 xx=exit
 la=lsd -a --group-directories-first --extensionsort $*
 ll=lsd -l --group-directories-first --extensionsort $*
 ls=lsd --group-directories-first --extensionsort $*
-ld=dir /b /ad $*
+ld=tre -d $*
 msb=msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
 a=attrib $*
 c=cd $*
 cc=pushd $*
 -=popd
+c=zoxide add $1 $T cd /d $1
 e=nvim $*
 v=nvim $*
 view=nvim -R $*
 bb=pushd %USERPROFILE%
 hex=od -A x -t xC -t c -w16 $*
-ff=dir /a-d /b /s $*
-fff=findstr /n /s $*
+ff=fd $* | fzf --height=40% --layout=reverse --info=inline --border --margin=1 --preview="bat --color=always {}" --bind "enter:execute(code {})"
+fff=rg --color=always --line-number --no-heading --smart-case $* | fzf --ansi --delimiter : --height=75% --layout=reverse --color "hl:-1:underline,hl+:-1:underline:reverse" --border --margin=1 --preview="bat --color=always {1} --highlight-line {2}" --bind "enter:execute(code {1})"
 nv=net view $*
 nu=net use $*
 home=pushd %USERPROFILE%\$*
-gd=git --no-pager diff --color $*
-gdc=git --no-pager diff --color --cached $*
-gdl=git --no-pager diff $* | less
-gdcl=git --no-pager diff --cached $* | less
-gs=git status
