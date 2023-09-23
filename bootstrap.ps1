@@ -349,8 +349,9 @@ function setupShellEnvs {
     Write-Host "setting up PowerShell profiles:"
     $pscoreProfile = (& pwsh -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
     copyFile (Join-Path 'win' 'profile.ps1') $pscoreProfile
-    $psProfile = (& powershell -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
-    copyFile (Join-Path 'win' 'profile.ps1') $psProfile
+    # can't use on WinPS, too many at-work scripts fail
+    # $psProfile = (& powershell -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
+    # copyFile (Join-Path 'win' 'profile.ps1') $psProfile
 
     Write-Host "configuring user home dir..."
     $configDir = (Join-Path $env:USERPROFILE '.config')
