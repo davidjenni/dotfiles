@@ -78,10 +78,6 @@ $env:GIT_SSH = $((Get-Command ssh).Source)
 # https://github.com/vors/ZLocation
 # ensureModule ZLocation
 
-# Zoxide:
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
-Function zl { &zoxide query --list | bat }
-
 addToPath "$env:ProgramFiles\Git\usr\bin"
 
 $env:LESS="-i -M -q -x4 -R"
@@ -227,3 +223,7 @@ if ((Get-Command 'starship' -ErrorAction SilentlyContinue)) {
     # needs to be late in profile script
     Enable-TransientPrompt
 }
+
+# Zoxide: load last to ensure its CD hooks work
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+Function zl { &zoxide query --list | bat }
