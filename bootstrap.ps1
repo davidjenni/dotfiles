@@ -230,6 +230,23 @@ function mklink {
     New-Item -ItemType SymbolicLink -Path $link -value $target
 }
 
+function copyDir {
+    param (
+        [Parameter(Mandatory = $true)] [string] $sourceRelPath,
+        [Parameter(Mandatory = $true)] [string] $targetDir
+    )
+    if (Test-Path $targetDir) {
+        # TODO: add backup story
+        Remove-Item -Path $targetDir -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
+    }
+    New-Item -ItemType Directory -Path $targetDir -ErrorAction SilentlyContinue | Out-Null
+
+    Write-Verbose "Copying $sourceRelPath -> $targetDir"
+    $source = (Join-Path $PSScriptRoot $sourceRelPath)
+    Write-Host "  $(Split-Path $source -Leaf) -> $targetDir"
+    Copy-Item -Path $source\* -Destination $targetDir -Force -Recurse
+}
+
 function copyFile {
     param (
         [Parameter(Mandatory = $true)] [string] $sourceRelPath,
@@ -250,7 +267,7 @@ function copyFile {
 
 function installScoopApps {
     Write-Host "Installing apps via scoop..."
-    & scoop install 7zip bat delta dust fd fzf helix less lsd neovim nuget nvm ripgrep starship tre-command tokei zoxide
+    & scoop install 7zip bat delta dust fd fzf helix less lsd neovim nuget nvm ripgrep starship tre-command tokei zig zoxide
     & scoop bucket add nerd-fonts
     & scoop install hack-nf-mono hack-nf JetBrainsMono-NF JetBrainsMono-NF-mono
     & scoop bucket add extras
@@ -363,8 +380,10 @@ function setupShellEnvs {
     writeGitConfig (Join-Path $PSScriptRoot 'gitconfig.ini')
 
     Write-Host "setting up neovim:"
+    # remove existing neovim status/install dir:
+    Remove-Item -Path (Join-Path $env:LOCALAPPDATA 'nvim-data') -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
-    copyFile 'init.lua' (Join-Path $nvimConfigDir 'init.lua')
+    copyDir 'nvim' $nvimConfigDir
 
     Write-Host "setting up alacritty:"
     $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
