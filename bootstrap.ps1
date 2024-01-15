@@ -368,7 +368,7 @@ function setupShellEnvs {
 
     Write-Host "setting up alacritty:"
     $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
-    copyFile 'alacritty.yml' (Join-Path $alacrittyConfigDir 'alacritty.yml')
+    copyFile 'alacritty.toml' (Join-Path $alacrittyConfigDir 'alacritty.toml')
 }
 
 function main {
