@@ -5,19 +5,19 @@ return {
 
   {
     "folke/tokyonight.nvim",
-    lazy = true,
+    lazy = false,
     opts = { style = "moon" },
   },
 
   {
     "catppuccin/nvim",
-    lazy = true,
+    lazy = false,
     name = "catppuccin",
   },
 
   {
     "nordtheme/vim",
-    lazy = true,
+    lazy = false,
     name = "nordtheme",
   },
 }
