@@ -300,12 +300,14 @@ function installWinGetApps {
 }
 
 function setup {
+    ensureLocalGit
     modernizeWinPowerShell
     ensureWinGet
     ensureScoop
 }
 
 function installApps {
+    ensureLocalGit
     installScoopApps
     installWinGetApps
 }
