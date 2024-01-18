@@ -79,9 +79,75 @@ function cloneDotFiles {
   echo ">> git clone $originGitHub $dotPath"
 }
 
-main() {
-  echo "Starting bootstrap... $1"
+function installAppsMacOS {
+  echo "Installing apps via brew..."
+  local var apps=(
+    7zip
+    bat
+    dust
+    fd
+    fish
+    fzf
+    git-delta
+    helix
+    less
+    lsd
+    neovim
+    nvm
+    ripgrep
+    starship
+    tmux
+    tre-command
+    tokei
+    wget
+    xz
+    )
 
+  local var casks=(
+    alacritty
+    font-jetbrains-mono-nerd-font
+    )
+  local var _apps=${apps[*]}
+  # echo ">> brew install $_apps"
+  brew install $_apps
+  if [ $? -ne 0 ] ; then
+    echo "Failed to install apps via brew"
+    exit 2
+  fi
+  local var _casks=${casks[*]}
+  # echo ">> brew install --cask $_casks"
+  brew install --casks $_casks
+  exit $?
+}
+
+function installAppsLinux {
+  echo "Installing apps via apt..."
+  local var apps=(
+    bat
+    fd-find
+    fish
+    fzf
+    git
+    git-delta
+    less
+    # lsd # no lsd installer for linux :-()
+    neovim
+    ripgrep
+    tmux
+    wget
+    xz-utils
+    )
+
+  # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  # curl -sS https://starship.rs/install.sh | sh
+
+  local var _apps=${apps[*]}
+  # echo ">> sudo apt install $_apps"
+  sudo apt install $_apps
+  exit $?
+}
+
+main() {
   case $1 in
     "clone")
       if [ -x "$dotPath/.git2" ] ; then
@@ -101,39 +167,17 @@ main() {
       ;;
     "apps")
       case `uname` in
-          'Darwin')
-            pkgMgr="brew"
-          ;;
-
-          'Linux')
-            pkgMgr="sudo apt-get"
-          ;;
+          'Darwin') installAppsMacOS ;;
+          'Linux') installAppsLinux ;;
       esac
-      echo "Installing apps via $pkgMgr..."
-      $pkgMgr install 7zip bat dust fd fzf git-delta helix less lsd neovim nvm ripgrep starship tre-command tokei
-      if [ $? -ne 0 ] ; then
-        echo "Failed to install apps via $pkgMgr"
-        exit 2
-      fi
-      $pkgMgr install fish tmux wget xz
-      if [ $? -ne 0 ] ; then
-        echo "Failed to install apps via $pkgMgr"
-        exit 2
-      fi
-      $pkgMgr install --cask alacritty
-      if [ $? -ne 0 ] ; then
-        echo "Failed to install apps via $pkgMgr"
-        exit 2
-      fi
-      $pkgMgr install --cask font-jetbrains-mono-nerd-font
-      exit $?
+      main env
       ;;
     "env")
       echo "NOT IMPLEMENTED"
       ensureGitNames noprompt
       writeGitConfig $dotPath/gitconfig.ini
 
-      exit 1
+      exit 0
       ;;
     "-h" | "--help")
       echo "Usage: $0 {clone|setup|apps|env}"
@@ -141,7 +185,7 @@ main() {
       echo "  setup:       setup package managers, git. Includes 'apps' and 'env'."
       echo "  apps:        install apps via package manager"
       echo "  env:         setups consoles and configurations for git, neovim etc."
-      exit 0
+      exit 9
       ;;
     *)
       main clone
@@ -151,4 +195,5 @@ main() {
   echo "Done."
 }
 
+echo "Starting bootstrap.sh..."
 main $*
