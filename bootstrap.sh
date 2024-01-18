@@ -5,8 +5,12 @@ dotPath=$HOME/dotfiles
 
 shopt -s nocasematch
 
+function have {
+  hash "$1" >&/dev/null
+}
+
 function ensureLocalGit {
-  if hash git 2>/dev/null ; then
+  if have git; then
     echo "git is installed"
     return
   fi
@@ -56,7 +60,7 @@ function writeGitConfig {
 }
 
 function ensureBrew {
-  if hash brew 2>/dev/null ; then
+  if have brew; then
     echo "Homebrew is installed"
     return
   fi
