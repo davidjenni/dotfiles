@@ -11,6 +11,3 @@ vimfiles/.netrwhist
 # secrets files
 .secrets
 .ssh/
-
-# fisherman plugins
-/fish/functions/__*

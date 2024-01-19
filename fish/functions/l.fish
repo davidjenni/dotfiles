@@ -1,4 +1,5 @@
 function l
-    less $argv
+    # less $argv
+    bat $argv
 end
 

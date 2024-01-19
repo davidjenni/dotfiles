@@ -1,138 +1,64 @@
-"$schema" = 'https://starship.rs/config-schema.json'
-
 format = """
-[](#9A348E)\
-$username\
-$hostname\
-[](bg:#DA627D fg:#9A348E)\
+[░▒▓](#a3aed2)\
+[  ](bg:#a3aed2 fg:#090c0c)\
+[](bg:#769ff0 fg:#a3aed2)\
 $directory\
-[](fg:#DA627D bg:#FCA17D)\
+[](fg:#769ff0 bg:#394260)\
 $git_branch\
 $git_status\
-$git_commit\
-[](fg:#FCA17D bg:#86BBD8)\
-$c\
-$dotnet\
-$golang\
-$julia\
+[](fg:#394260 bg:#212736)\
 $nodejs\
 $rust\
-[](fg:#86BBD8 bg:#06969A)\
-$docker_context\
-[](fg:#06969A bg:#33658A)\
+$golang\
+$php\
+[](fg:#212736 bg:#1d2230)\
 $time\
-$cmd_duration\
-[ ](fg:#33658A)\
-$line_break\
-$status\
-$character"""
-
-# Disable the blank line at the start of the prompt
-add_newline = false
-command_timeout = 2000
-
-[character]
-success_symbol = "[❯](green)"
-error_symbol = "[✗](bold red)"
-vicmd_symbol = "[](green)"
-
-# You can also replace your username with a neat symbol like  to save some space
-[username]
-show_always = true
-style_user = "bg:#9A348E"
-style_root = "bg:#9A348E"
-format = '[$user ]($style)'
-
-[hostname]
-ssh_only = true
-format = "[$ssh_symbol$hostname ]($style)"
+[ ](fg:#1d2230)\
+\n$character"""
 
 [directory]
-style = "bg:#DA627D"
+style = "fg:#e3e5e5 bg:#769ff0"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
-# Here is how you can shorten some long paths by text replacement
 [directory.substitutions]
-"Documents" = " "
+"Documents" = "󰈙 "
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
 
-[docker_context]
-symbol = " "
-style = "bg:#06969A"
-format = '[ $symbol $context ]($style) $path'
-
 [git_branch]
 symbol = ""
-style = "bg:#FCA17D fg:#03070C"
-format = '[ $symbol $branch ]($style)'
+style = "bg:#394260"
+format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
 
 [git_status]
-style = "bg:#FCA17D fg:#03070C"
-format = '[$all_status$ahead_behind ]($style)'
-# up_to_date = ' ✓${count}'
-untracked = ' 🤷${count}'
-staged = ' +$count'
-stashed = ''
-modified = ' 📝${count}'
-renamed = ' 👅${count}'
-deleted = ' 🗑${count}'
-conflicted = ' !${count}'
-diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
-ahead = ' ⇡${count}'
-behind = ' ⇣${count}'
-
-[git_commit]
-style = "bg:#FCA17D fg:#03070C"
-only_detached = true
-tag_symbol = "🔖"
-format = "[\\($hash$tag\\)]($style)"
-
-[c]
-symbol = " "
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) ]($style)'
-
-[dotnet]
-symbol = " "
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) (🎯 $tfm)]($style)'
-
-[golang]
-symbol = " "
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = " "
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#394260"
+format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#86BBD8 fg:#3C4260"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
-[status]
-disabled = false
-format = "[$symbol$status]($style) "
+[golang]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[php]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
 [time]
 disabled = false
-style = "bg:#33658A"
-format = '[ 🕙 $time ]($style)'
-# https://docs.rs/chrono/0.4.7/chrono/format/strftime/index.html
-time_format = "%I:%M:%S %p"
-
-[cmd_duration]
-style = "bg:#33658A fg:bold yellow"
-format = "[$duration]($style)"
-min_time = 10_000
+time_format = "%R" # Hour:Minute Format
+style = "bg:#1d2230"
+format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'

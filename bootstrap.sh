@@ -151,6 +151,67 @@ function installAppsLinux {
   exit $?
 }
 
+function copyFile {
+  local sourceRelPath=$1
+  local target=$2
+  if [ -f $target ] ; then
+    # TODO: add backup story
+    rm -f $target >&/dev/null
+  fi
+  targetDir=$(dirname $target)
+  mkdir -p $targetDir
+  sourceFile=$dotPath/$sourceRelPath
+  echo "  $sourceFile -> $target"
+  cp $sourceFile $target
+}
+
+function copyDir {
+  local sourceRelPath=$1
+  local targetDir=$2
+  if [ -d $targetDir ] ; then
+    # TODO: add backup story
+    rm -rf $targetDir >&/dev/null
+  fi
+  mkdir -p $targetDir
+  sourceDir=$dotPath/$sourceRelPath
+  echo "  $sourceDir -> $targetDir"
+  cp -R $sourceDir/* $targetDir
+}
+
+function setupShellEnv {
+  echo "Setting up shell environment..."
+  ensureGitNames noprompt
+  writeGitConfig $dotPath/gitconfig.ini
+
+  local configDir=$HOME/.config
+  if [ ! -d "$configDir" ] ; then
+      mkdir -p $configDir
+  fi
+  # neovim
+  local nvimDir=$configDir/nvim
+  copyDir nvim $nvimDir
+  # alacritty
+  local alacrittyDir=$configDir/alacritty
+  copyFile alacritty.toml $alacrittyDir/alacritty.toml
+
+  copyFile bash/bash_aliases $HOME/.bash_aliases
+  copyFile bash/inputrc $HOME/.inputrc
+  copyFile bash/tmux.conf $HOME/.tmux.conf
+
+  # starship.rs:
+  copyFile starship.toml $configDir/starship.toml
+
+  # fish:
+  local fishConfigDir=$configDir/fish
+  copyFile fish/config.fish $fishConfigDir/config.fish
+  copyFile fish/fish_plugins $fishConfigDir/fish_plugins
+  copyFile fish/functions/fisher.fish $fishConfigDir/functions
+  copyFile fish/functions/l.fish $fishConfigDir/functions
+  copyFile fish/functions/la.fish $fishConfigDir/functions
+  copyFile fish/functions/ll.fish $fishConfigDir/functions
+  copyFile fish/functions/ls.fish $fishConfigDir/functions
+}
+
 main() {
   case $1 in
     "clone")
@@ -177,10 +238,7 @@ main() {
       main env
       ;;
     "env")
-      echo "NOT IMPLEMENTED"
-      ensureGitNames noprompt
-      writeGitConfig $dotPath/gitconfig.ini
-
+      setupShellEnv
       exit 0
       ;;
     "-h" | "--help")
