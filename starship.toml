@@ -15,6 +15,7 @@ $nodejs\
 $rust\
 $golang\
 $php\
+$docker_context\
 [](fg:#212736 bg:#1d2230)\
 $time\
 $cmd_duration\
