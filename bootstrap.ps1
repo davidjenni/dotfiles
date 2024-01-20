@@ -398,6 +398,14 @@ function setupShellEnvs {
     Write-Host "setting up bat:"
     $batConfigDir = (Join-Path $env:APPDATA 'bat')
     copyFile 'bat_config' (Join-Path $batConfigDir 'config')
+
+    $sshDir = (Join-Path $env:USERPROFILE '.ssh')
+    # ensure 1Password's identity agent is visible to OpenSSH; cannot have both config and socket on Windows
+    # https://developer.1password.com/docs/ssh/agent/advanced#windows
+    # https://developer.1password.com/docs/ssh/get-started/#step-4-configure-your-ssh-or-git-client
+    Remove-Item (Join-Path $sshDir 'config') -ErrorAction SilentlyContinue -Force | Out-Null
+    $openSsh=((Join-Path $env:windir 'System32\OpenSSH\ssh.exe').Replace("\", "/"))
+    & git config --global core.sshCommand $openSsh
 }
 
 function main {
