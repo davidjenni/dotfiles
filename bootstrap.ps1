@@ -382,8 +382,12 @@ function setupShellEnvs {
     writeGitConfig (Join-Path $PSScriptRoot 'gitconfig.ini')
 
     Write-Host "setting up neovim:"
-    # remove existing neovim status/install dir:
-    Remove-Item -Path (Join-Path $env:LOCALAPPDATA 'nvim-data') -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
+    # remove existing neovim status/install dir, but only if tree-sitter parser is not yet present:
+    # parsers for nvim-treesitter are expensive to build and take a long time on Windows
+    if (-not (Test-Path (Join-Path $env:LOCALAPPDATA 'nvim-data\lazy\nvim-treesitter\parser'))) {
+        Write-Host "removing stale neovim status/install dir..."
+        Remove-Item -Path (Join-Path $env:LOCALAPPDATA 'nvim-data') -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
+    }
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
     copyDir 'nvim' $nvimConfigDir
 

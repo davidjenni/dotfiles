@@ -1,7 +1,7 @@
-# [░▒▓](#a3aed2)\
 format = """
-[▒▓](#a3aed2)\
+[█](#a3aed2)\
 $os\
+[█](#a3aed2)\
 [](bg:#769ff0 fg:#a3aed2)\
 $directory\
 [](fg:#769ff0 bg:#394260)\
