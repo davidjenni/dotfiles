@@ -96,6 +96,7 @@ function installAppsMacOS {
     helix
     less
     lsd
+    neofetch
     neovim
     nvm
     ripgrep
