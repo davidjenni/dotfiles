@@ -220,6 +220,24 @@ function setupShellEnv {
   copyFile fish/functions/la.fish $fishConfigDir/functions/la.fish
   copyFile fish/functions/ll.fish $fishConfigDir/functions/ll.fish
   copyFile fish/functions/ls.fish $fishConfigDir/functions/ls.fish
+
+  # setup ssh to play with 1Password as identity agent:
+  copyFile ssh/config $HOME/.ssh/config
+  sshPerms=u+rwx,go-rwx
+  chmod $sshPerms $HOME/.ssh
+  chmod $sshPerms $HOME/.ssh/config
+  touch $HOME/.ssh/known_hosts && chmod $sshPerms $HOME/.ssh/known_hosts
+  case `uname` in
+      'Darwin')
+        if [ -d "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password" ] ; then
+          echo "   1Password socket exists, setting symlink."
+          mkdir -p $HOME/.1password && chmod $sshPerms $HOME/.1password
+          ln -s "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" $HOME/.1password/agent.sock
+        fi
+      ;;
+      'Linux') ;;
+  esac
+
 }
 
 main() {
