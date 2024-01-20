@@ -1,5 +1,0 @@
-# OSX/Linux-specific .gitconfig
-# see also http://git-scm.com/docs/git-config
-
-[core]
-	editor = nvim

@@ -1,142 +1,277 @@
 #!/bin/bash
-this="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
 
-myGitHub='https://github.com/davidjenni/dotfiles.git'
+originGitHub='https://github.com/davidjenni/dotfiles.git'
 dotPath=$HOME/dotfiles
 
+shopt -s nocasematch
 
-createBackupDir() {
-    local _thisTime=`date "+%y%m%d-%H%M%S"`
-    local _bkpDir=$HOME/bootstrapBackups-$_thisTime
-
-    mkdir $_bkpDir
-    echo $_bkpDir
+function have {
+  hash "$1" >&/dev/null
 }
 
-getRepository() {
-    pushd $HOME
-    local repo=$1
-    echo "Cloning git repo from: $repo"
-    echo "      into local repo: $dotPath"
-    git clone --recursive $repo $dotPath
-    popd
+function ensureLocalGit {
+  if have git; then
+    echo "git is installed"
+    return
+  fi
+  echo "No local git is installed"
+  # TODO: Install temp copy of git
 }
 
-saveLink() {
-    local srcFile=$1
-    local targetFile=$2
-    if [ -s "$targetFile" ]
-    then
-        # don't just move, do copy to break any previous soft link
-        cp -vL "$targetFile" $bkpDir/
-        rm -f "$targetFile"
-    fi
-    ln -sf $srcFile "$targetFile"
+function ensureGitNames {
+  prompt=$1
+  username=$(git config --global user.name)
+  if [ -z $username ] ; then
+    defUsername="$USER@$(hostname -s)"
+  else
+    defUsername=$username
+  fi
+  if [ -z $prompt ] ; then
+    read -p "Enter git username (default: $defUsername): " username
+  fi
+  if [ -z $username ] ; then
+    username=$defUsername
+  fi
+  git config --global user.name "$username"
+
+  email=$(git config --global user.email)
+  if [ -z $email ] ; then
+    defEmail="3200210+davidjenni@users.noreply.github.com"
+  else
+    defEmail=$email
+  fi
+  if [ -z $prompt ] ; then
+    read -p "Enter git email (default: $defEmail): " email
+  fi
+  if [ -z $email ] ; then
+    email=$defEmail
+  fi
+  git config --global user.email "$email"
 }
 
-saveLinkRecursive() {
-    local srcFile=$1
-    local targetDirParent=$2
-    local targetDir="${targetDirParent}/$3"
-    if [ -d $targetDir ]
-    then
-        # don't just move, do copy to break any previous soft link
-        cp -vLR $targetDir $bkpDir/
-        if [ -L $targetDir ]
-        then
-            # don't rm recursively since the symbolic link is only a file level link
-            rm -f $targetDir
-        else
-            rm -rf $targetDir
-        fi
-    fi
-    ln -sf $srcFile $targetDirParent
+function writeGitConfig {
+  local var configGitIni=$1
+  cat $configGitIni \
+  | grep -v "^\s*#" \
+  | while IFS='=' read -r key value; do \
+        # echo "git config --global $key $value"
+        git config --global $key "$value"
+    done
 }
 
-doSetup() {
-    # generate git secrets file:
-    local _gitSecretsFile=$HOME/.gitSecrets.sh
-    local _gitEmail
-    echo "Enter email address to be used with Git (empty string will skip creating $_gitSecretsFile)."
-    echo "   email: \c"
-    read _gitEmail
-    if [ "$_gitEmail" != "" ]; then
-        local _defaultGitUser=$USER@`hostname -s`
-        local _gitUser
-        echo "Enter user name to be used with Git (default is $_defaultGitUser)."
-        echo "    name: \c"
-        read _gitUser
-        if [ "$_gitUser" = "" ]; then
-            echo "default user"
-            _gitUser=$_defaultGitUser
-        fi
-
-        cat << EndOfSecrets > $_gitSecretsFile
-export GIT_AUTHOR_NAME="$_gitUser"
-export GIT_AUTHOR_EMAIL="$_gitEmail"
-export GIT_COMMITTER_NAME=\$GIT_AUTHOR_NAME
-export GIT_COMMITTER_EMAIL=\$GIT_AUTHOR_EMAIL
-EndOfSecrets
-
-        echo "Git secrets file created: $_gitSecretsFile"
-    fi
-
-    bkpDir=$(createBackupDir)
-    echo Original dot files will be saved away under: $bkpDir
-    echo
-
-    saveLink $dotPath/gitconfig $HOME/.gitconfig
-    local configDir=$HOME/.config
-    if [ ! -d "$configDir" ] ; then
-        mkdir -p $configDir
-    fi
-    # neovim
-    local nvimDir=$configDir/nvim
-    if [ ! -d "$nvimDir" ] ; then
-        mkdir -p $nvimDir
-    fi
-    saveLink $dotPath/init.lua $nvimDir/init.lua
-    # alacritty
-    local alacrittyDir=$configDir/alacritty
-    if [ ! -d "$alacrittyDir" ] ; then
-        mkdir -p $alacrittyDir
-    fi
-    saveLink $dotPath/alacritty.yml $alacrittyDir/alacritty.yml
-    # local vscodeDir="$HOME/Library/Application Support/Code/User"
-    # if [ -d "$vscodeDir" ] ; then
-    #     saveLink $dotPath/code.user.settings.json "$HOME/settings.json"
-    # fi
-
-    saveLink $dotPath/bash/os.gitconfig $HOME/.os.gitconfig
-    # saveLink $dotPath/bash/os.hgrc $HOME/.os.hgrc
-    saveLink $dotPath/bash/profile $HOME/.profile
-    saveLink $dotPath/bash/bashrc $HOME/.bashrc
-    saveLink $dotPath/bash/inputrc $HOME/.inputrc
-    saveLink $dotPath/bash/pythonrc.py $HOME/.pythonrc.py
-    saveLink $dotPath/bash/tmux.conf $HOME/.tmux.conf
-    # saveLink $dotPath/bash/liquidpromptrc $HOME/.liquidpromptrc
-
-    # starship.rs:
-    saveLink $dotPath/starship.toml $configDir/starship.toml
-
-    # fish:
-    local fishConfigDir=$configDir/fish
-    if [ ! -d "$fishConfigDir" ] ; then
-        mkdir -p $fishConfigDir
-    fi
-    saveLink $dotPath/fish/config.fish $fishConfigDir/config.fish
-    saveLink $dotPath/fish/functions/la $fishConfigDir/functions
-    saveLink $dotPath/fish/functions/ll $fishConfigDir/functions
-    saveLink $dotPath/fish/functions/ls $fishConfigDir/functions
-    # saveLinkRecursive $dotPath/fish/functions $fishConfigDir functions
+function ensureBrew {
+  if have brew; then
+    echo "Homebrew is installed"
+    return
+  fi
+  echo "Installing Homebrew..."
+  # TODO: Test brew install
+  echo ">> curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 }
 
-# main:
-if [ $1 = "setup" ]; then
-    doSetup
-else
-    getRepository $myGitHub
-    echo do clean setup
-    doSetup
-fi
+function cloneDotFiles {
+  echo "Cloning $originGitHub -> $dotPath"
+  read -p "OK to proceed with clone of repo? [Y/n] " answer
+  answer=${answer:-Y}
+  if [[ $answer != "Y" ]]; then
+    echo "Aborting clone."
+    exit 4
+  fi
+  echo "Cloning dotfiles..."
+  # setup config for git: username, email, etc.
+  ensureGitNames
+  git clone $originGitHub $dotPath
+}
 
+function installAppsMacOS {
+  echo "Installing apps via brew..."
+  local var apps=(
+    7zip
+    bat
+    dust
+    fd
+    fish
+    fzf
+    git-delta
+    helix
+    less
+    lsd
+    neovim
+    nvm
+    ripgrep
+    starship
+    tmux
+    tre-command
+    tokei
+    wget
+    xz
+    )
+
+  local var casks=(
+    alacritty
+    font-jetbrains-mono-nerd-font
+    )
+  local var _apps=${apps[*]}
+  # echo ">> brew install $_apps"
+  brew install $_apps
+  if [ $? -ne 0 ] ; then
+    echo "Failed to install apps via brew"
+    exit 2
+  fi
+  local var _casks=${casks[*]}
+  # echo ">> brew install --cask $_casks"
+  brew install --casks $_casks
+  exit $?
+}
+
+function installAppsLinux {
+  echo "Installing apps via apt..."
+  echo "NOTE: apps install for Linux is still very brittle and incomplete, YMMV !!!"
+  local var apps=(
+    bat
+    fd-find
+    fish
+    fzf
+    git
+    # git-delta # no apt installer for git-delta, but snap has it?
+    less
+    # lsd # no lsd installer for linux :-()
+    neovim
+    ripgrep
+    tmux
+    wget
+    xz-utils
+    )
+
+  # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  # curl -sS https://starship.rs/install.sh | sh
+
+  local var _apps=${apps[*]}
+  # echo ">> sudo apt install $_apps"
+  sudo apt install $_apps
+  exit $?
+}
+
+function copyFile {
+  local sourceRelPath=$1
+  local target=$2
+  if [ -f $target ] ; then
+    # TODO: add backup story
+    rm -f $target >&/dev/null
+  fi
+  targetDir=$(dirname $target)
+  mkdir -p $targetDir
+  sourceFile=$dotPath/$sourceRelPath
+  echo "  $sourceFile -> $target"
+  cp $sourceFile $target
+}
+
+function copyDir {
+  local sourceRelPath=$1
+  local targetDir=$2
+  if [ -d $targetDir ] ; then
+    # TODO: add backup story
+    rm -rf $targetDir >&/dev/null
+  fi
+  mkdir -p $targetDir
+  sourceDir=$dotPath/$sourceRelPath
+  echo "  $sourceDir -> $targetDir"
+  cp -R $sourceDir/* $targetDir
+}
+
+function setupShellEnv {
+  echo "Setting up shell environment..."
+  ensureGitNames noprompt
+  writeGitConfig $dotPath/gitconfig.ini
+
+  local configDir=$HOME/.config
+  if [ ! -d "$configDir" ] ; then
+      mkdir -p $configDir
+  fi
+  # neovim
+  local nvimDir=$configDir/nvim
+  copyDir nvim $nvimDir
+
+  # alacritty
+  local alacrittyDir=$configDir/alacritty
+  copyFile alacritty.toml $alacrittyDir/alacritty.toml
+
+  # bat: https://github.com/sharkdp/bat#configuration-file
+  copyFile bat_config $configDir/bat/config
+
+  copyFile bash/bash_aliases $HOME/.bash_aliases
+  copyFile bash/inputrc $HOME/.inputrc
+  copyFile bash/tmux.conf $HOME/.tmux.conf
+
+  # starship.rs:
+  copyFile starship.toml $configDir/starship.toml
+
+  # fish:
+  local fishConfigDir=$configDir/fish
+  # rm -f $fishConfigDir/functions/fisher.fish >&/dev/null
+  # curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+  copyFile fish/config.fish $fishConfigDir/config.fish
+  copyFile fish/fish_plugins $fishConfigDir/fish_plugins
+  # copyFile fish/functions/fisher.fish $fishConfigDir/functions
+  copyFile fish/functions/l.fish $fishConfigDir/functions/l.fish
+  copyFile fish/functions/la.fish $fishConfigDir/functions/la.fish
+  copyFile fish/functions/ll.fish $fishConfigDir/functions/ll.fish
+  copyFile fish/functions/ls.fish $fishConfigDir/functions/ls.fish
+}
+
+main() {
+  case $1 in
+    "clone")
+      if [ -x "$dotPath/.git" ] ; then
+          echo "local git repo already exists, skipping."
+          main setup
+          return
+      fi
+      cloneDotFiles
+      if [ $? -ne 0 ] ; then
+        exit $?
+      fi
+      # continue with now-local bootstrap.ps1 from cloned repo:
+      bash $dotPath/bootstrap.sh setup
+      exit $?
+      ;;
+    "setup")
+      echo "Setting up..."
+      case `uname` in
+          'Darwin') ensureBrew ;;
+          'Linux') ;;
+      esac
+      main apps
+      ;;
+    "apps")
+      case `uname` in
+          'Darwin') installAppsMacOS ;;
+          'Linux') installAppsLinux ;;
+      esac
+      if [ $? -ne 0 ] ; then
+        exit $?
+      fi
+      main env
+      ;;
+    "env")
+      setupShellEnv
+      exit 0
+      ;;
+    "-h" | "--help")
+      echo "Usage: $0 {clone|setup|apps|env}"
+      echo "  clone:       clone the dotfiles repo and continue with 'setup' etc."
+      echo "  setup:       setup package managers, git. Includes 'apps' and 'env'."
+      echo "  apps:        install apps via package manager"
+      echo "  env:         setups consoles and configurations for git, neovim etc."
+      exit 9
+      ;;
+    *)
+      main clone
+      ;;
+  esac
+
+  echo "Done."
+}
+
+echo "Starting bootstrap.sh..."
+main $*

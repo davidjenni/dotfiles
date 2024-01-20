@@ -12,7 +12,7 @@ param (
     [ValidateSet('clone', 'setup', 'apps', 'env', IgnoreCase = $true)]
     [Parameter(Position = 0)] [string]
     # verb that indicates stage:
-    #  clone:       clone the dotfiles repo and continue with 'bootstrap' etc.
+    #  clone:       clone the dotfiles repo and continue with 'setup' etc.
     #  setup:       setup PS, package managers, git. Includes 'apps' and 'env'.
     #  apps:        install apps via winget and scoop
     #  env:         setups consoles and configurations for git, neovim, PowerShell etc.
@@ -382,14 +382,22 @@ function setupShellEnvs {
     writeGitConfig (Join-Path $PSScriptRoot 'gitconfig.ini')
 
     Write-Host "setting up neovim:"
-    # remove existing neovim status/install dir:
-    Remove-Item -Path (Join-Path $env:LOCALAPPDATA 'nvim-data') -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
+    # remove existing neovim status/install dir, but only if tree-sitter parser is not yet present:
+    # parsers for nvim-treesitter are expensive to build and take a long time on Windows
+    if (-not (Test-Path (Join-Path $env:LOCALAPPDATA 'nvim-data\lazy\nvim-treesitter\parser'))) {
+        Write-Host "removing stale neovim status/install dir..."
+        Remove-Item -Path (Join-Path $env:LOCALAPPDATA 'nvim-data') -ErrorAction SilentlyContinue -Recurse -Force | Out-Null
+    }
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
     copyDir 'nvim' $nvimConfigDir
 
     Write-Host "setting up alacritty:"
     $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
     copyFile 'alacritty.toml' (Join-Path $alacrittyConfigDir 'alacritty.toml')
+
+    Write-Host "setting up bat:"
+    $batConfigDir = (Join-Path $env:APPDATA 'bat')
+    copyFile 'bat_config' (Join-Path $batConfigDir 'config')
 }
 
 function main {

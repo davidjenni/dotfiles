@@ -225,5 +225,7 @@ if ((Get-Command 'starship' -ErrorAction SilentlyContinue)) {
 }
 
 # Zoxide: load last to ensure its CD hooks work
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
-Function zl { &zoxide query --list | bat }
+if ((Get-Command 'zoxide' -ErrorAction SilentlyContinue)) {
+    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+    Function zl { &zoxide query --list | bat }
+}

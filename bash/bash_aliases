@@ -1,0 +1,20 @@
+alias cls='clear'
+alias la='ls -AGF'
+alias ls='ls -GF'
+alias ll='ls -lGF'
+
+alias l='less'
+export LESS="-c -i -x4 -J -w -M -r"
+export VISUAL='nvim'
+alias v='nvim'
+alias vv='nvim'
+
+alias ff='fd'
+#alias '-'='popd'
+alias ..='cd ../'
+alias ...='cd ../../'
+
+# vi mode; can be switched on temp with: set -o vi
+set editing-mode vi
+
+myip() { wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'; }
