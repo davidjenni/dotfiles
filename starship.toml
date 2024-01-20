@@ -1,20 +1,28 @@
+# [░▒▓](#a3aed2)\
 format = """
-[░▒▓](#a3aed2)\
-[  ](bg:#a3aed2 fg:#090c0c)\
+[▒▓](#a3aed2)\
+$os\
 [](bg:#769ff0 fg:#a3aed2)\
 $directory\
 [](fg:#769ff0 bg:#394260)\
 $git_branch\
 $git_status\
 [](fg:#394260 bg:#212736)\
+$dotnet\
 $nodejs\
 $rust\
 $golang\
 $php\
 [](fg:#212736 bg:#1d2230)\
 $time\
+$cmd_duration\
 [ ](fg:#1d2230)\
 \n$character"""
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[](green)"
 
 [directory]
 style = "fg:#e3e5e5 bg:#769ff0"
@@ -28,6 +36,31 @@ truncation_symbol = "…/"
 "Music" = " "
 "Pictures" = " "
 
+[os]
+disabled = false
+style = "fg:#090c0c bg:#a3aed2"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
 [git_branch]
 symbol = ""
 style = "bg:#394260"
@@ -36,6 +69,26 @@ format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
 [git_status]
 style = "bg:#394260"
 format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+untracked = ' 🤷${count}'
+staged = ' ✓$count'
+stashed = ''
+modified = ' +${count}'
+renamed = ' 👅${count}'
+deleted = ' 🗑${count}'
+conflicted = ' !${count}'
+diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
+ahead = ' ⇡${count}'
+behind = ' ⇣${count}'
+
+[dotnet]
+symbol = " "
+style = "bg:#86BBD8 fg:#3C4260"
+format = '[ $symbol ($version) ($tfm)]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#86BBD8 fg:#3C4260"
+format = '[ $symbol $context ]($style) $path'
 
 [nodejs]
 symbol = ""
@@ -62,3 +115,8 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#1d2230"
 format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+
+[cmd_duration]
+style = "bg:#1d2230 fg:bold yellow"
+format = "[$duration]($style)"
+min_time = 5_000

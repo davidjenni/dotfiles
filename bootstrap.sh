@@ -71,16 +71,16 @@ function ensureBrew {
 
 function cloneDotFiles {
   echo "Cloning $originGitHub -> $dotPath"
-  read -p "OK to proceed with setup? [Y/n] " answer
+  read -p "OK to proceed with clone of repo? [Y/n] " answer
   answer=${answer:-Y}
   if [[ $answer != "Y" ]]; then
-    echo "Aborting setup."
+    echo "Aborting clone."
     exit 4
   fi
   echo "Cloning dotfiles..."
   # setup config for git: username, email, etc.
   ensureGitNames
-  echo ">> git clone $originGitHub $dotPath"
+  git clone $originGitHub $dotPath
 }
 
 function installAppsMacOS {
@@ -126,13 +126,14 @@ function installAppsMacOS {
 
 function installAppsLinux {
   echo "Installing apps via apt..."
+  echo "NOTE: apps install for Linux is still very brittle and incomplete, YMMV !!!"
   local var apps=(
     bat
     fd-find
     fish
     fzf
     git
-    git-delta
+    # git-delta # no apt installer for git-delta, but snap has it?
     less
     # lsd # no lsd installer for linux :-()
     neovim
@@ -190,9 +191,13 @@ function setupShellEnv {
   # neovim
   local nvimDir=$configDir/nvim
   copyDir nvim $nvimDir
+
   # alacritty
   local alacrittyDir=$configDir/alacritty
   copyFile alacritty.toml $alacrittyDir/alacritty.toml
+
+  # bat: https://github.com/sharkdp/bat#configuration-file
+  copyFile bat_config $configDir/bat/config
 
   copyFile bash/bash_aliases $HOME/.bash_aliases
   copyFile bash/inputrc $HOME/.inputrc
@@ -203,24 +208,32 @@ function setupShellEnv {
 
   # fish:
   local fishConfigDir=$configDir/fish
+  # rm -f $fishConfigDir/functions/fisher.fish >&/dev/null
+  # curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
   copyFile fish/config.fish $fishConfigDir/config.fish
   copyFile fish/fish_plugins $fishConfigDir/fish_plugins
-  copyFile fish/functions/fisher.fish $fishConfigDir/functions
-  copyFile fish/functions/l.fish $fishConfigDir/functions
-  copyFile fish/functions/la.fish $fishConfigDir/functions
-  copyFile fish/functions/ll.fish $fishConfigDir/functions
-  copyFile fish/functions/ls.fish $fishConfigDir/functions
+  # copyFile fish/functions/fisher.fish $fishConfigDir/functions
+  copyFile fish/functions/l.fish $fishConfigDir/functions/l.fish
+  copyFile fish/functions/la.fish $fishConfigDir/functions/la.fish
+  copyFile fish/functions/ll.fish $fishConfigDir/functions/ll.fish
+  copyFile fish/functions/ls.fish $fishConfigDir/functions/ls.fish
 }
 
 main() {
   case $1 in
     "clone")
-      if [ -x "$dotPath/.git2" ] ; then
+      if [ -x "$dotPath/.git" ] ; then
           echo "local git repo already exists, skipping."
           main setup
           return
       fi
       cloneDotFiles
+      if [ $? -ne 0 ] ; then
+        exit $?
+      fi
+      # continue with now-local bootstrap.ps1 from cloned repo:
+      bash $dotPath/bootstrap.sh setup
+      exit $?
       ;;
     "setup")
       echo "Setting up..."
@@ -235,6 +248,9 @@ main() {
           'Darwin') installAppsMacOS ;;
           'Linux') installAppsLinux ;;
       esac
+      if [ $? -ne 0 ] ; then
+        exit $?
+      fi
       main env
       ;;
     "env")

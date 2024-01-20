@@ -390,6 +390,10 @@ function setupShellEnvs {
     Write-Host "setting up alacritty:"
     $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
     copyFile 'alacritty.toml' (Join-Path $alacrittyConfigDir 'alacritty.toml')
+
+    Write-Host "setting up bat:"
+    $batConfigDir = (Join-Path $env:APPDATA 'bat')
+    copyFile 'bat_config' (Join-Path $batConfigDir 'config')
 }
 
 function main {
