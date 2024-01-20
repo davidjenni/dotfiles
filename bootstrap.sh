@@ -61,12 +61,13 @@ function writeGitConfig {
 
 function ensureBrew {
   if have brew; then
-    echo "Homebrew is installed"
+    echo "$(brew --version) is installed"
+    brew update
     return
   fi
   echo "Installing Homebrew..."
   # TODO: Test brew install
-  echo ">> curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
 function cloneDotFiles {
@@ -113,15 +114,16 @@ function installAppsMacOS {
     font-jetbrains-mono-nerd-font
     )
   local var _apps=${apps[*]}
-  # echo ">> brew install $_apps"
+  echo ">> brew install $_apps"
   brew install $_apps
   if [ $? -ne 0 ] ; then
     echo "Failed to install apps via brew"
     exit 2
   fi
+  brew tap homebrew/cask-fonts
   local var _casks=${casks[*]}
-  # echo ">> brew install --cask $_casks"
-  brew install --casks $_casks
+  echo ">> brew install --cask $_casks"
+  brew install --cask $_casks
   exit $?
 }
 

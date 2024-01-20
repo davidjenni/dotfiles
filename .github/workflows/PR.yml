@@ -11,14 +11,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-latest ]
+        os: [ windows-latest, macos-latest ]
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Run bootstrap script from PR branch;
+    - name: Run bootstrap.ps1 script from PR branch;
+      if: matrix.os == 'windows-latest'
       shell: powershell
       run: |
         Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
         Write-Host "skip bootstrap's repo 'clone' stage (already have correct script), start with 'setup'"
         ./bootstrap.ps1 setup -runAsAdmin
+
+    - name: Run bootstrap.sh script from PR branch;
+      if: matrix.os == 'macos-latest'
+      shell: bash
+      run: |
+        echo "skip bootstrap's repo 'clone' stage (already have correct script), start with 'setup'"
+        ./bootstrap.sh setup
