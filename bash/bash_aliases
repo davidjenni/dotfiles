@@ -23,3 +23,16 @@ if uname -r | grep -q "WSL"; then
   alias ssh='ssh.exe'
   alias ssh-add='ssh-add.exe'
 fi
+
+case `uname` in
+  'Darwin')
+    if [ -d "/opt/homebrew/bin" ] ; then
+      eval "$(/opt/homebrew/bin/brew shellenv)" ;;
+    fi
+    ;;
+  'Linux')
+    if [ -d "home/linuxbrew/.linuxbrew/bin" ] ; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
+    fi
+    ;;
+esac
