@@ -222,10 +222,11 @@ function setupShellEnv {
   copyFile fish/functions/ls.fish $fishConfigDir/functions/ls.fish
 
   # setup ssh to play with 1Password as identity agent:
-  copyFile ssh/config $HOME/.ssh/config
+  sshConfig=$HOME/.ssh/config
+  copyFile ssh/config $sshConfig
   sshPerms=u+rwx,go-rwx
   chmod $sshPerms $HOME/.ssh
-  chmod $sshPerms $HOME/.ssh/config
+  chmod $sshPerms $sshConfig
   touch $HOME/.ssh/known_hosts && chmod $sshPerms $HOME/.ssh/known_hosts
   case `uname` in
       'Darwin')
@@ -235,7 +236,14 @@ function setupShellEnv {
           ln -s "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" $HOME/.1password/agent.sock
         fi
       ;;
-      'Linux') ;;
+      'Linux')
+      if uname -r | grep -q "WSL"; then
+        echo "on WSL, let the Windows host OS' 1Password identity agent resolve ssh authN"
+        # https://developer.1password.com/docs/ssh/integrations/wsl
+        rm $sshConfig >&/dev/null
+        git config --global core.sshCommand ssh.exe
+      fi
+      ;;
   esac
 
 }

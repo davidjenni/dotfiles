@@ -18,3 +18,8 @@ alias ...='cd ../../'
 set editing-mode vi
 
 myip() { wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'; }
+
+if uname -r | grep -q "WSL"; then
+  alias ssh='ssh.exe'
+  alias ssh-add='ssh-add.exe'
+fi
