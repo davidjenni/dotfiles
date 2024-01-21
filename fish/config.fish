@@ -7,18 +7,20 @@ set -x EDITOR "nvim"
 
 set fish_greeting ""
 
+
 switch (uname)
     case Linux
         if test -x /usr/bin/lesspipe.sh
             set -x LESSOPEN "|lesspipe.sh %s"
         end
     case Darwin
-        set -g fish_user_paths "(brew --prefix)/bin" $fish_user_paths
-        if test -x (brew --prefix)/bin/lesspipe.sh
-            set -x LESSOPEN "|lesspipe.sh %s"
+        if test -d /opt/homebrew/bin
+            fish_add_path /opt/homebrew/bin
+            set -g fish_user_paths "(brew --prefix)/bin" $fish_user_paths
+            if test -x (brew --prefix)/bin/lesspipe.sh
+                set -x LESSOPEN "|lesspipe.sh %s"
+            end
         end
-        # ensure openssl installed via brew is found before the system version (which is outdated)
-        # set -g fish_user_paths "/bin" $fish_user_paths
 end
 
 if test -d "$HOME/node_modules/.bin"
@@ -35,8 +37,6 @@ if test -d "$HOME/.cargo/bin"
 end
 
 fish_vi_key_bindings
-# fish_ssh_agent
-fish_add_path /opt/homebrew/sbin
 
 if command -s zoxide > /dev/null
     zoxide init fish | source
@@ -54,4 +54,12 @@ if command -s starship > /dev/null
     # contents of enable_trancience function, which is not callable yet after above source
     bind --user \r transient_execute
     bind --user -M insert \r transient_execute
+end
+
+if status is-login
+    if command -q neofetch
+        neofetch
+    else
+        uptime
+    end
 end
