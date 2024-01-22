@@ -58,3 +58,16 @@ fi
 if have zoxide; then
   eval "$(zoxide init bash)"
 fi
+
+case $- in
+  *i*)  # interactive
+    if `shopt -q login_shell`; then
+      if have neofetch; then
+        neofetch
+      else
+        echo " $(uname -a)"
+        uptime
+      fi
+    fi
+  ;;
+esac
