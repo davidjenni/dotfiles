@@ -62,6 +62,13 @@ function writeGitConfig {
     done
 }
 
+function initBrew {
+  case `uname` in
+    'Darwin') eval "$(/opt/homebrew/bin/brew shellenv)" ;;
+    'Linux') eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
+  esac
+}
+
 function ensureBrew {
   if have brew; then
     echo "$(brew --version) is installed"
@@ -80,11 +87,7 @@ function ensureBrew {
   # https://brew.sh/
   # https://docs.brew.sh/Homebrew-on-Linux
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  case `uname` in
-    'Darwin') eval "$(/opt/homebrew/bin/brew shellenv)" ;;
-    'Linux') eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
-  esac
-  # TODO: Test brew install
+  initBrew
 }
 
 function cloneDotFiles {
@@ -133,6 +136,7 @@ function installApps {
 
   local var _apps=${apps[*]}
   echo ">> brew install $_apps"
+  initBrew
   brew install $_apps
   if [ $? -ne 0 ] ; then
     echo "Failed to install apps via brew"
