@@ -1,7 +1,10 @@
 #!/bin/bash
+# install with:
+# > curl -fsSL https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.sh | bash
 
 originGitHub='https://github.com/davidjenni/dotfiles.git'
 dotPath=$HOME/dotfiles
+scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 shopt -s nocasematch
 
@@ -65,9 +68,23 @@ function ensureBrew {
     brew update
     return
   fi
+  case `uname` in
+    'Darwin')
+      xcode-select --install
+    ;;
+    'Linux')
+      sudo apt-get install -y build-essential procps curl file git
+    ;;
+  esac
   echo "Installing Homebrew..."
-  # TODO: Test brew install
+  # https://brew.sh/
+  # https://docs.brew.sh/Homebrew-on-Linux
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  case `uname` in
+    'Darwin') eval "$(/opt/homebrew/bin/brew shellenv)" ;;
+    'Linux') eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
+  esac
+  # TODO: Test brew install
 }
 
 function cloneDotFiles {
@@ -84,7 +101,7 @@ function cloneDotFiles {
   git clone $originGitHub $dotPath
 }
 
-function installAppsMacOS {
+function installApps {
   echo "Installing apps via brew..."
   local var apps=(
     7zip
@@ -105,7 +122,7 @@ function installAppsMacOS {
     tmux
     tre-command
     tokei
-    wget
+    zoxide
     xz
     )
 
@@ -113,6 +130,7 @@ function installAppsMacOS {
     alacritty
     font-jetbrains-mono-nerd-font
     )
+
   local var _apps=${apps[*]}
   echo ">> brew install $_apps"
   brew install $_apps
@@ -120,39 +138,16 @@ function installAppsMacOS {
     echo "Failed to install apps via brew"
     exit 2
   fi
-  brew tap homebrew/cask-fonts
+
   local var _casks=${casks[*]}
-  echo ">> brew install --cask $_casks"
-  brew install --cask $_casks
-  exit $?
-}
-
-function installAppsLinux {
-  echo "Installing apps via apt..."
-  echo "NOTE: apps install for Linux is still very brittle and incomplete, YMMV !!!"
-  local var apps=(
-    bat
-    fd-find
-    fish
-    fzf
-    git
-    # git-delta # no apt installer for git-delta, but snap has it?
-    less
-    # lsd # no lsd installer for linux :-()
-    neovim
-    ripgrep
-    tmux
-    wget
-    xz-utils
-    )
-
-  # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-  # curl -sS https://starship.rs/install.sh | sh
-
-  local var _apps=${apps[*]}
-  # echo ">> sudo apt install $_apps"
-  sudo apt install $_apps
-  exit $?
+  case `uname` in
+    'Darwin')
+      brew tap homebrew/cask-fonts
+      echo ">> brew install --cask $_casks"
+      brew install --cask $_casks
+    ;;
+  esac
+  return $?
 }
 
 function copyFile {
@@ -164,7 +159,7 @@ function copyFile {
   fi
   targetDir=$(dirname $target)
   mkdir -p $targetDir
-  sourceFile=$dotPath/$sourceRelPath
+  sourceFile=$scriptDir/$sourceRelPath
   echo "  $sourceFile -> $target"
   cp $sourceFile $target
 }
@@ -177,7 +172,7 @@ function copyDir {
     rm -rf $targetDir >&/dev/null
   fi
   mkdir -p $targetDir
-  sourceDir=$dotPath/$sourceRelPath
+  sourceDir=$scriptDir/$sourceRelPath
   echo "  $sourceDir -> $targetDir"
   cp -R $sourceDir/* $targetDir
 }
@@ -185,7 +180,7 @@ function copyDir {
 function setupShellEnv {
   echo "Setting up shell environment..."
   ensureGitNames noprompt
-  writeGitConfig $dotPath/gitconfig.ini
+  writeGitConfig $scriptDir/gitconfig.ini
 
   local configDir=$HOME/.config
   if [ ! -d "$configDir" ] ; then
@@ -266,17 +261,11 @@ main() {
       ;;
     "setup")
       echo "Setting up..."
-      case `uname` in
-          'Darwin') ensureBrew ;;
-          'Linux') ;;
-      esac
+      ensureBrew
       main apps
       ;;
     "apps")
-      case `uname` in
-          'Darwin') installAppsMacOS ;;
-          'Linux') installAppsLinux ;;
-      esac
+      installApps
       if [ $? -ne 0 ] ; then
         exit $?
       fi
@@ -302,5 +291,5 @@ main() {
   echo "Done."
 }
 
-echo "Starting bootstrap.sh..."
+echo "Starting bootstrap.sh (in $scriptDir with working dir: $(pwd))..."
 main $*

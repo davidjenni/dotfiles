@@ -10,13 +10,15 @@ set fish_greeting ""
 
 switch (uname)
     case Linux
+        if test -d /home/linuxbrew/.linuxbrew/bin
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        end
         if test -x /usr/bin/lesspipe.sh
             set -x LESSOPEN "|lesspipe.sh %s"
         end
     case Darwin
         if test -d /opt/homebrew/bin
-            fish_add_path /opt/homebrew/bin
-            set -g fish_user_paths "(brew --prefix)/bin" $fish_user_paths
+            eval "$(brew shellenv)"
             if test -x (brew --prefix)/bin/lesspipe.sh
                 set -x LESSOPEN "|lesspipe.sh %s"
             end

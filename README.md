@@ -18,7 +18,7 @@ irm 'https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1' |
 to bootstrap, run this in a default Terminal.app prompt:
 
 ````shell
-    curl -fsSL https://github.com/davidjenni/dotfiles/raw/master/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.sh | bash
 ````
 
 ### Linux (Ubuntu/Debian)
@@ -29,5 +29,5 @@ still missing apps!
 * open terminal/WSL:
 
 ````shell
-    curl -fsSL https://github.com/davidjenni/dotfiles/raw/master/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.sh | bash
 ````
