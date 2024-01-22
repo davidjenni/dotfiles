@@ -121,7 +121,7 @@ function installApps {
     tmux
     tre-command
     tokei
-    wget
+    zoxide
     xz
     )
 
@@ -146,7 +146,7 @@ function installApps {
       brew install --cask $_casks
     ;;
   esac
-  exit $?
+  return $?
 }
 
 function copyFile {
