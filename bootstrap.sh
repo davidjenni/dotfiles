@@ -4,6 +4,7 @@
 
 originGitHub='https://github.com/davidjenni/dotfiles.git'
 dotPath=$HOME/dotfiles
+scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 shopt -s nocasematch
 
@@ -158,7 +159,7 @@ function copyFile {
   fi
   targetDir=$(dirname $target)
   mkdir -p $targetDir
-  sourceFile=$dotPath/$sourceRelPath
+  sourceFile=$scriptDir/$sourceRelPath
   echo "  $sourceFile -> $target"
   cp $sourceFile $target
 }
@@ -171,7 +172,7 @@ function copyDir {
     rm -rf $targetDir >&/dev/null
   fi
   mkdir -p $targetDir
-  sourceDir=$dotPath/$sourceRelPath
+  sourceDir=$scriptDir/$sourceRelPath
   echo "  $sourceDir -> $targetDir"
   cp -R $sourceDir/* $targetDir
 }
@@ -179,7 +180,7 @@ function copyDir {
 function setupShellEnv {
   echo "Setting up shell environment..."
   ensureGitNames noprompt
-  writeGitConfig $dotPath/gitconfig.ini
+  writeGitConfig $scriptDir/gitconfig.ini
 
   local configDir=$HOME/.config
   if [ ! -d "$configDir" ] ; then
@@ -290,5 +291,5 @@ main() {
   echo "Done."
 }
 
-echo "Starting bootstrap.sh..."
+echo "Starting bootstrap.sh (in $scriptDir with working dir: $(pwd))..."
 main $*
