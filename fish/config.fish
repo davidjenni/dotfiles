@@ -7,7 +7,6 @@ set -x EDITOR "nvim"
 
 set fish_greeting ""
 
-
 switch (uname)
     case Linux
         if test -d /home/linuxbrew/.linuxbrew/bin
@@ -18,7 +17,7 @@ switch (uname)
         end
     case Darwin
         if test -d /opt/homebrew/bin
-            eval "$(brew shellenv)"
+            eval "$(/opt/homebrew/bin/brew shellenv)"
             if test -x (brew --prefix)/bin/lesspipe.sh
                 set -x LESSOPEN "|lesspipe.sh %s"
             end
