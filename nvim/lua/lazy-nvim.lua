@@ -15,5 +15,15 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('dotfiles.plugins')
+local opts = {
+  -- defaults = {
+  --   lazy = true,
+  -- },
+  install = {
+    colorscheme = { "catppuccin" },
+  },
+}
 
+-- merge and load all .lua files under lua/plugins, see:
+-- https://github.com/folke/lazy.nvim#-structuring-your-plugins
+require("lazy").setup("plugins", opts)

@@ -2,11 +2,10 @@
 -- github.com/davidjenni/dotfiles
 
 return {
-
   {
     "folke/tokyonight.nvim",
     lazy = false,
-    opts = { style = "moon" },
+    opts = { style = "light" },
   },
 
   {
@@ -21,3 +20,4 @@ return {
     name = "nordtheme",
   },
 }
+

@@ -13,6 +13,6 @@ end_of_line = lf
 [*.{cmd,ps1,csv,doskey}]
 end_of_line = crlf
 
-[*.{sh,yml}]
+[*.{lua,sh,yml}]
 indent_size = 2
 

@@ -1,25 +1,4 @@
---
--- neovim init file
--- github.com/davidjenni/dotfiles
-
 return {
-  -- gitsigns:
-  {
-    'lewis6991/gitsigns.nvim',
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
-      },
-    },
-  },
-
-  -- telescope:
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -53,21 +32,37 @@ return {
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
       { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
       { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-    }
+    },
   },
-
-  -- treesitter:
   {
-      'nvim-treesitter/nvim-treesitter',
-      dependencies = {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-      },
-      build = ":TSUpdate",
-  },
+    "nvim-telescope/telescope-ui-select.nvim",
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+              -- even more opts
+            }
 
-  -- devicons:
-  {
-    'nvim-tree/nvim-web-devicons',
-    lazy = true,
+            -- pseudo code / specification for writing custom displays, like the one
+            -- for "codeactions"
+            -- specific_opts = {
+            --   [kind] = {
+            --     make_indexed = function(items) -> indexed_items, width,
+            --     make_displayer = function(widths) -> displayer
+            --     make_display = function(displayer) -> function(e)
+            --     make_ordinal = function(e) -> string
+            --   },
+            --   -- for example to disable the custom builtin "codeactions" display
+            --      do the following
+            --   codeactions = false,
+            -- }
+              }
+        }
+      })
+
+      require("telescope").load_extension("ui-select")
+    end
   },
 }
