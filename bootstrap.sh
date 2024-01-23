@@ -201,7 +201,7 @@ function setupShellEnv {
   # bat: https://github.com/sharkdp/bat#configuration-file
   copyFile bat_config $configDir/bat/config
 
-  copyFile bash/bash_aliases $HOME/.bash_aliases
+  copyFile bash/bash_aliases.sh $HOME/.bash_aliases
   copyFile bash/inputrc $HOME/.inputrc
   copyFile bash/tmux.conf $HOME/.tmux.conf
 

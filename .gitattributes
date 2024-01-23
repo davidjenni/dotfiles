@@ -3,12 +3,20 @@
 # also force this repo's crlf handling to not be magic:
 # git config --local core.autocrlf input
 # git add --renormalize .
+# check with:
+# git ls-files --eol
+# to force changed line endings to be committed:
+# git rm --cached -r .
+# git reset --hard
+
 * text eol=lf
 
 # win scripts
-*.{cmd,[cC][mM][dD]} text eol=crlf
-*.{bat,[bB][aA][tT]} text eol=crlf
-*.{ps1} text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.doskey text eol=crlf
+
 
 # data files:
 *.json text eol=lf
