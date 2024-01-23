@@ -1,4 +1,4 @@
-# see https://aka.ms/editorconfigdocs
+# see https://editorconfig.org/
 root = true
 
 [*]
@@ -8,7 +8,11 @@ charset = utf-8
 trim_trailing_whitespace = true
 indent_size = 4
 tab_width = 4
-
-[*.sh]
 end_of_line = lf
+
+[*.{cmd,ps1,csv,doskey}]
+end_of_line = crlf
+
+[*.{sh,yml}]
 indent_size = 2
+
