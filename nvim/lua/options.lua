@@ -67,3 +67,6 @@ opt.swapfile = false
 opt.hidden = true
 opt.switchbuf = 'useopen'
 
+-- disable folding; see also `set nofoldenable`
+opt.foldlevel = 99
+

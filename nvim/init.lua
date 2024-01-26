@@ -4,14 +4,8 @@
 -- neovim standard paths:
 -- https://neovim.io/doc/user/starting.html#standard-path
 
-local cmd = vim.cmd
+require('options')
+require('keymaps')
+require('lazy-nvim')
 
-require('dotfiles.core.options')
-require('dotfiles.core.keymaps')
-require('dotfiles.lazy-nvim')
-
-cmd[[ colorscheme tokyonight]]
--- cmd[[ colorscheme nord]]
-
-require('dotfiles.plugin-config')
-
+vim.cmd[[ colorscheme tokyonight]]
