@@ -117,9 +117,9 @@ function installApps {
     helix
     less
     lsd
+    lua-language-server
     neofetch
     neovim
-    nvm
     ripgrep
     starship
     tmux
