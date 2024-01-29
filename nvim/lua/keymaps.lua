@@ -11,3 +11,21 @@ k.set('n', '<c-l>', ':wincmd l<CR>', { desc = 'Move to window right' })
 
 -- plugins set their own keymaps in ~/.config/nvim/lua/plugins/*.lua
 --
+--
+k.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+k.set("n", "<leader>fp", "<cmd>echo expand('%:p')<cr>", { desc = "Show full path of current buffer"})
+
+local nvimTreeFocusOrToggle = function ()
+	local nvimTree=require("nvim-tree.api")
+	local currentBuf = vim.api.nvim_get_current_buf()
+	local currentBufFt = vim.api.nvim_get_option_value("filetype", { buf = currentBuf })
+	if currentBufFt == "NvimTree" then
+		nvimTree.tree.toggle()
+	else
+		nvimTree.tree.focus()
+	end
+end
+
+
+vim.keymap.set("n", "<leader>e", nvimTreeFocusOrToggle, { desc = "Toggle tree explorer"})
