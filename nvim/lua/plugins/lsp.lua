@@ -1,15 +1,6 @@
 
 return {
   {
-   "folke/neodev.nvim",
-    -- neodev needs to start before nvim-lspconfig
-    priority = 1000,
-    config = function()
-        require("neodev").setup({})
-    end,
-  },
-
-  {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
@@ -28,9 +19,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "folke/neodev.nvim",
       "j-hui/fidget.nvim",
     },
     config = function()
@@ -42,6 +33,13 @@ return {
       vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'Show code actions' })
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Show references' })
     end
+  },
+
+  {
+   "folke/neodev.nvim",
+    config = function()
+        require("neodev").setup({})
+    end,
   },
 
   {
