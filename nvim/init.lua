@@ -6,6 +6,7 @@
 
 require('options')
 require('keymaps')
+require('autocmds')
 require('lazy-nvim')
 
 vim.cmd[[ colorscheme tokyonight]]

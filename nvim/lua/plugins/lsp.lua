@@ -1,4 +1,14 @@
+
 return {
+  {
+   "folke/neodev.nvim",
+    -- neodev needs to start before nvim-lspconfig
+    priority = 1000,
+    config = function()
+        require("neodev").setup({})
+    end,
+  },
+
   {
     "williamboman/mason.nvim",
     config = function()
@@ -16,20 +26,12 @@ return {
   },
 
   {
-    -- neodev needs to start before nvim-lspconfig
-    "folke/neodev.nvim",
-    config = function()
-        require("neodev").setup({})
-    end,
-  },
-
-  {
     "neovim/nvim-lspconfig",
     dependencies = {
+      "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "j-hui/fidget.nvim",
-      "folke/neodev.nvim",
     },
     config = function()
       local lspconfig = require('lspconfig')

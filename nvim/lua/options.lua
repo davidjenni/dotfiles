@@ -3,6 +3,10 @@
 
 local g, opt = vim.g, vim.opt
 
+-- nvim-tree: disable netrw at the very start of your init.lua
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
 g.mapleader = ' '
 g.maplocalleader = ' '
 
@@ -46,7 +50,7 @@ opt.virtualedit = 'onemore'
 opt.joinspaces = false
 opt.formatoptions = 'crqnj'
 
-opt.completeopt = 'menuone,noselect,preview'
+opt.completeopt = 'menuone,preview'
 
 opt.incsearch = true
 opt.ignorecase = true
