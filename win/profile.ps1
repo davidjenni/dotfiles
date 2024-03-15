@@ -155,6 +155,21 @@ function msb { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest
         $rest
         Write-Host 'logs at: $env:TMP\msbuild.log & $env:TMP\msbuild.diagnostics.log'
 }
+function msbl { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
+    & dotnet msbuild "-nr:false" "-m" `
+        "-clp:verbosity=minimal" `
+        "-bl:$env:TMP\msbuild.binlog" `
+        $rest
+        Write-Host 'log at: $env:TMP\msbuild.binlog'
+}
+function msblnoref { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
+    & dotnet msbuild "-nr:false" "-m" `
+        "-clp:verbosity=minimal" `
+        "-bl:$env:TMP\msbuild.binlog" `
+        "-p:BuildProjectReferences=false" `
+        $rest
+        Write-Host 'log at: $env:TMP\msbuild.binlog'
+}
 
 function OnViModeChange {
     if ($args[0] -eq 'Command') {
