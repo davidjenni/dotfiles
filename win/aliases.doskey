@@ -8,7 +8,9 @@ la=lsd -a --group-directories-first --extensionsort $*
 ll=lsd -l --group-directories-first --extensionsort $*
 ls=lsd --group-directories-first --extensionsort $*
 ld=tre -d $*
-msb=msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
+msb=dotnet msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
+msbl=dotnet msbuild /nr:false /m /clp:verbosity=minimal /bl $*
+msblnoref=dotnet msbuild /nr:false /m /clp:verbosity=minimal /p:BuildProjectReferences=false /bl $*
 a=attrib $*
 c=cd $*
 cc=pushd $*
