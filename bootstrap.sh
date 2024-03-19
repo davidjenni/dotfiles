@@ -72,7 +72,8 @@ function initBrew {
 function ensureBrew {
   if have brew; then
     echo "$(brew --version) is installed"
-    brew update
+    # skip update for now, causes errors in CI:
+    # brew update
     return
   fi
   case `uname` in
