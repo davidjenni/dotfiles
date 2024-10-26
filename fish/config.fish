@@ -58,8 +58,8 @@ if command -s starship > /dev/null
 end
 
 if status is-login
-    if command -q neofetch
-        neofetch
+    if command -q hyfetch
+        hyfetch
     else
         uptime
     end

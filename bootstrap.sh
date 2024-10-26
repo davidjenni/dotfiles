@@ -119,7 +119,7 @@ function installApps {
     less
     lsd
     lua-language-server
-    neofetch
+    hyfetch
     neovim
     ripgrep
     starship
