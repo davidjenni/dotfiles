@@ -179,7 +179,8 @@ function ensureWinGet {
     }
     if ((Get-AppxPackage -Name Microsoft.UI.Xaml.2.8 -ErrorAction SilentlyContinue) -eq $null) {
         Write-Host "  - Installing dependency: Microsoft.UI.Xaml..."
-        $uixaml = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.8.6 -force
+        $_pkgs = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.8.6 -force
+        $uixaml = ($_pkgs | Where-Object { $_.name -like 'Microsoft.UI.Xaml' })
         Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
     }
 
