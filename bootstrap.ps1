@@ -146,7 +146,7 @@ function modernizeWinPowerShell {
 
 function ensureWinGet {
     # https://github.com/microsoft/winget-cli/releases
-    $wgTargetVersion = '1.8.1791'    # Note: update origin path for license file as it changes with each release
+    $wgTargetVersion = '1.8.1911'    # Note: update origin path for license file as it changes with each release
     $wgVersion = "v$wgTargetVersion"
 
     if ($PSVersionTable.PSEdition -ne "Desktop") {
@@ -189,7 +189,7 @@ function ensureWinGet {
     (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle", $wgPkg)
     if ($runAsAdmin) {
         Write-Host "  - getting winget license file..."
-        (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/fb2830f66c95424aa35457b05e88998a_License1.xml", $wgLic)
+        (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/76fba573f02545629706ab99170237bc_License1.xml", $wgLic)
         Add-AppxProvisionedPackage -Online -PackagePath $wgPkg -LicensePath $wgLic
     }
     # ensure package is installed for current user:
