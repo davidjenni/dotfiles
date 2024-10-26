@@ -146,7 +146,7 @@ function modernizeWinPowerShell {
 
 function ensureWinGet {
     # https://github.com/microsoft/winget-cli/releases
-    $wgTargetVersion = '1.5.1572'    # Note: upload origin path for license file as it changes with each release
+    $wgTargetVersion = '1.8.1911'    # Note: update origin path for license file as it changes with each release
     $wgVersion = "v$wgTargetVersion"
 
     if ($PSVersionTable.PSEdition -ne "Desktop") {
@@ -177,9 +177,10 @@ function ensureWinGet {
         (New-Object Net.WebClient).DownloadFile('https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx', $vc14)
         Add-AppxPackage -Path $vc14
     }
-    if ((Get-AppxPackage -Name Microsoft.UI.Xaml.2.7 -ErrorAction SilentlyContinue) -eq $null) {
+    if ((Get-AppxPackage -Name Microsoft.UI.Xaml.2.8 -ErrorAction SilentlyContinue) -eq $null) {
         Write-Host "  - Installing dependency: Microsoft.UI.Xaml..."
-        $uixaml = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.7.3 -force
+        $_pkgs = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.8.6 -force
+        $uixaml = ($_pkgs | Where-Object { $_.name -like 'Microsoft.UI.Xaml' })
         Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
     }
 
@@ -188,7 +189,8 @@ function ensureWinGet {
     $wgLic = (Join-Path $env:TEMP "winget-license.xml")
     (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle", $wgPkg)
     if ($runAsAdmin) {
-        (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/d925da7ed2bb4baabc481e13ed01e6f7_License1.xml", $wgLic)
+        Write-Host "  - getting winget license file..."
+        (New-Object Net.WebClient).DownloadFile("https://github.com/microsoft/winget-cli/releases/download/$wgVersion/76fba573f02545629706ab99170237bc_License1.xml", $wgLic)
         Add-AppxProvisionedPackage -Online -PackagePath $wgPkg -LicensePath $wgLic
     }
     # ensure package is installed for current user:
