@@ -65,7 +65,8 @@ opt.list = true
 
 opt.mouse = 'a'
 opt.belloff = 'all'
-opt.clipboard = 'unnamed'
+-- no automatic copy to system clipboard
+opt.clipboard = ''
 opt.writebackup = false
 opt.swapfile = false
 opt.hidden = true
