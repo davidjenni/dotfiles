@@ -1,0 +1,52 @@
+;; Caps key is esc on tap, ctrol on hold
+;; home row modifiers G-A-S-C
+;; navigation layer on space hold
+;;      vim-like navigation: hjkl
+;;      row below: home(n), pgdn(m), pgup(,), end(.)
+;; https://github.com/jtroo/kanata
+
+(defcfg
+  process-unmapped-keys yes
+  log-layer-changes no
+)
+
+(defsrc
+  caps a s d f h j k l ;
+               n m , .
+  spc
+)
+
+(defvar
+  t-tap 150
+  t-hold 200
+)
+
+(defalias
+  nav (layer-while-held navigation)
+
+  escctrl (tap-hold 100 100 esc lctl)
+  a (tap-hold $t-tap $t-hold a lmet)
+  s (tap-hold $t-tap $t-hold s lalt)
+  d (tap-hold $t-tap $t-hold d lsft)
+  f (tap-hold $t-tap $t-hold f lctl)
+
+  j (tap-hold $t-tap $t-hold j rctl)
+  k (tap-hold $t-tap $t-hold k rsft)
+  l (tap-hold $t-tap $t-hold l ralt)
+  ; (tap-hold $t-tap $t-hold ; rmet)
+
+  spcnav (tap-hold $t-tap $t-hold spc @nav)
+)
+
+(deflayer base
+  @escctrl @a @s @d @f    h @j @k @l @;
+                          _  _  _  _
+  @spcnav
+)
+
+(deflayer navigation
+  _ _ _ _ _    left down up right _
+               home pgdn pgup end
+  _
+)
+
