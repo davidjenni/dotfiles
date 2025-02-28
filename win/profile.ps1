@@ -10,6 +10,11 @@
 #
 # https://thirty25.com/posts/2021/12/optimizing-your-powershell-load-times
 
+if ($PSVersionTable.PSEdition -ne 'Core') {
+    Write-Host "This profile is for PowerShell Core (pwsh) only."
+    return
+}
+
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 function ensureModule {
@@ -85,10 +90,10 @@ $env:LESSBINFMT="*d[%02x]"
 $env:VISUAL="code --wait"
 
 if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
-    Remove-Item alias:\curl -Force
+    Remove-Item alias:\curl -force -ErrorAction SilentlyContinue | Out-Null
 }
 
-Remove-Item alias:\rm -Force    # favor git's rm.exe
+Remove-Item alias:\rm -force -ErrorAction SilentlyContinue | Out-Null # favor git's rm.exe
 
 # nudge WinPS and pwsh to use bat/less instead of more:
 Set-Alias -Name 'more' -Value 'less'
@@ -102,44 +107,55 @@ Set-Alias -Name 'vi' nvim
 Set-Alias -Name 'vim' nvim
 
 
-# scoop install lsd
-# https://github.com/Peltoche/lsd
-# https://github.com/ogham/exa not yet for Windows
+# https://github.com/eza-community/eza
+Remove-Item alias:\ls -force -ErrorAction SilentlyContinue | Out-Null
+function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
+    # hacky attempt to handle wilrdcard expansion:
+    # https://github.com/eza-community/eza/issues/337
+    if ($rest -ne $null) {
+        $args = $rest | Where-Object { $_.StartsWith("-") }
+        $files = $rest | Get-Item -ErrorAction SilentlyContinue | ForEach-Object { $_.Name }
+    }
+    eza --sort ext --group-directories-first --classify --color=auto --icons=never $args $files
+}
+function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )  ls -l $rest }
 
-Remove-Item alias:\ls -force
-# lsd doesn't work properly on domain joined machines:
-$inDomain = $false
-try {
-    # $inDomain = [System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -ne $null
-    $inDomain = ($env:USERDNSDOMAIN.ToLower().Contains('.com'))
-}
-catch {
-}
-if ($inDomain) {
-    function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) Get-ChildItem -Name $rest }
-    function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) Get-ChildItem $rest }
-} else {
-    # https://github.com/Peltoche/lsd/pull/297
-    # https://github.com/Peltoche/lsd/pull/475#issuecomment-777101864
-    function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) lsd -F --group-directories-first --extensionsort $rest }
-    function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest ) & ls -l $rest }
-}
-
+# setup eza themes: https://github.com/eza-community/eza-themes?tab=readme-ov-file
+$env:EZA_CONFIG_DIR = "$env:USERPROFILE\dotfiles\eza-themes"
 
 function .. { Set-Location .. }
 function ... { Set-Location ..\.. }
 function bb { Push-Location $env:USERPROFILE }
-function c { param ([string] $folder) Set-Location -Path $folder }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
 
+# cd to directory with fuzzy search:
+function c { param ([string] $optSearchTerm)
+    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
+    (&fd --type d `
+        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1  --select-1 )`
+        | Set-Location
+}
+
+# cd to git root:
+function cg { param ()
+    $root = (&git rev-parse --show-toplevel 2>1)
+    if ($LASTEXITCODE -eq 0) {
+        Set-Location $root
+    } else {
+        Write-Host "Not in a git repo."
+    }
+}
+
+# find files:
 function ff { param ([string] $optSearchTerm)
-    $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { '' }
-     &fd $optSearchTerm `
+    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
+     &fd $optSearchTerm --type f `
         | &fzf $optFzfSearchTerm --height=40% --layout=reverse --info=inline --border --margin=1 --preview='bat --color=always {}' --bind 'enter:execute(code {})'
 }
 
+# find in files content:
 function fff {  param ([string] $optSearchTerm)
-    $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { '' }
+    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
     &rg $optSearchTerm --smart-case --color=always --line-number --no-heading --smart-case  `
         | &fzf $optFzfSearchTerm --ansi --delimiter : --height=75% --layout=reverse --color 'hl:-1:underline,hl+:-1:underline:reverse' --border --margin=1 `
             --preview='bat --color=always {1} --highlight-line {2}' --bind 'enter:execute(code {1})'
@@ -242,5 +258,12 @@ if ((Get-Command 'starship' -ErrorAction SilentlyContinue)) {
 # Zoxide: load last to ensure its CD hooks work
 if ((Get-Command 'zoxide' -ErrorAction SilentlyContinue)) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    Function zl { &zoxide query --list | bat }
+
+    function zz { param ([string] $optSearchTerm='')
+        $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { $null }
+        (&zoxide query --list `
+            | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1  --select-1 )`
+            | Set-Location
+    }
 }
+
