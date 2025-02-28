@@ -43,7 +43,7 @@ fish_vi_key_bindings
 
 if command -s zoxide > /dev/null
     zoxide init fish | source
-    function zl
+    function zz
         if test -n $argv
             set fzfSearchTerm "--query=$argv"
         end
