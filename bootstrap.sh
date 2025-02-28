@@ -116,6 +116,7 @@ function installApps {
     fzf
     git-delta
     helix
+    kanata
     less
     lsd
     lua-language-server

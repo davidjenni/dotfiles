@@ -11,6 +11,7 @@
 )
 
 (defsrc
+  f1 f2
   caps a s d f h j k l ;
                n m , .
   spc
@@ -39,6 +40,7 @@
 )
 
 (deflayer base
+  f1 f2
   @escctrl @a @s @d @f    h @j @k @l @;
                           _  _  _  _
   @spcnav
@@ -48,5 +50,8 @@
   _ _ _ _ _    left down up right _
                home pgdn pgup end
   _
+)
+
+(deflayer fn
 )
 

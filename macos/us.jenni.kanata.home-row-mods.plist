@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!--
+Install:
+sudo cp ./macos/us.jenni.kanata.home-row-mods.plist /Library/LaunchDaemons/
+sudo launchctl load /Library/LaunchDaemons/us.jenni.kanata.home-row-mods.plist
+sudo launchctl start us.jenni.kanata.home-row-mods
+-->
+<dict>
+    <key>Label</key>
+    <string>us.jenni.kanata.home-row-mods</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/Cellar/kanata/1.7.0/bin/kanata</string>
+        <string>-c</string>
+        <string>/Users/david/dotfiles/home-row-mods.kbd</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/david/.local/Logs/Kanata/kanata.out.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/david/.local/Logs/Kanata/kanata.err.log</string>
+</dict>
+</plist>
