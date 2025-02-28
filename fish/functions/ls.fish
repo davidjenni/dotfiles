@@ -1,4 +1,4 @@
 function ls
-    command lsd --group-directories-first $argv
+    command eza --sort ext --group-directories-first --classify --color=auto --icons=never $argv
 end
 

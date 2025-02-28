@@ -132,13 +132,13 @@ function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else
 function c { param ([string] $optSearchTerm)
     $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
     (&fd --type d `
-        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1  --select-1 )`
+        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1 --select-1 )`
         | Set-Location
 }
 
 # cd to git root:
 function cg { param ()
-    $root = (&git rev-parse --show-toplevel 2>1)
+    $root = (&git rev-parse --show-toplevel 2>&1)
     if ($LASTEXITCODE -eq 0) {
         Set-Location $root
     } else {
