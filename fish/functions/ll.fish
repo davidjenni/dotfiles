@@ -1,3 +1,3 @@
 function ll
-    command lsd -l --group-directories-first $argv
+    ls -l $argv
 end

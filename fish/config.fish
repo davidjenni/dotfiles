@@ -4,6 +4,8 @@ set -x CLICOLOR "yes"
 set -x LESS "-c -i -x4 -J -w -M -r"
 set -x VISUAL "nvim"
 set -x EDITOR "nvim"
+# setup eza themes: https://github.com/eza-community/eza-themes?tab=readme-ov-file
+set -x EZA_CONFIG_DIR  "$HOME/dotfiles/eza-themes"
 
 set fish_greeting ""
 
@@ -41,6 +43,12 @@ fish_vi_key_bindings
 
 if command -s zoxide > /dev/null
     zoxide init fish | source
+    function zl
+        if test -n $argv
+            set fzfSearchTerm "--query=$argv"
+        end
+        cd (zoxide query -l | fzf $fzfSearchTerm --height=40% --layout=reverse --border --margin=1  --select-1 )
+    end
 end
 
 if command -s starship > /dev/null
