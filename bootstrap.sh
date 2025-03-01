@@ -148,7 +148,6 @@ function installApps {
   local var _casks=${casks[*]}
   case `uname` in
     'Darwin')
-      brew tap homebrew/cask-fonts
       echo ">> brew install --cask $_casks"
       brew install --cask $_casks
     ;;
