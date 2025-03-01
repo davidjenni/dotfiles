@@ -132,7 +132,7 @@ function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else
 function c { param ([string] $optSearchTerm)
     $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
     (&fd --type d `
-        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1 --select-1 )`
+        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1 --select-1 --exit-0 )`
         | Set-Location
 }
 
@@ -147,6 +147,7 @@ function cg { param ()
 }
 
 # find files:
+# note: fzf preview window has scroll up/dowm with shift-up/down by default
 function ff { param ([string] $optSearchTerm)
     $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
      &fd $optSearchTerm --type f `
@@ -158,7 +159,24 @@ function fff {  param ([string] $optSearchTerm)
     $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
     &rg $optSearchTerm --smart-case --color=always --line-number --no-heading --smart-case  `
         | &fzf $optFzfSearchTerm --ansi --delimiter : --height=75% --layout=reverse --color 'hl:-1:underline,hl+:-1:underline:reverse' --border --margin=1 `
-            --preview='bat --color=always {1} --highlight-line {2}' --bind 'enter:execute(code {1})'
+            --preview='bat --color=always {1} --highlight-line {2}' --preview-window '~3,+{2}+3,/2' --bind 'enter:execute(code {1})'
+}
+
+# git log with fzf:
+function fgl { param ([string] $optSearchTerm)
+    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
+    &git log --date=short --format='%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)' --graph `
+        | &fzf $optFzfSearchTerm --ansi --reverse --height=75% --border --no-sort `
+            --preview 'git show --color {3}' `
+            --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down,shift-up:preview-top,shift-down:preview-bottom
+}
+
+function fgb { param ([string] $optSearchTerm)
+    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
+    &git branch -r `
+        | &fzf $optFzfSearchTerm --reverse --height=75% --border `
+            --preview 'git log {1} --no-source --color' `
+            --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down,shift-up:preview-top,shift-down:preview-bottom
 }
 
 function which { param ([string] $cmd) Get-Command $cmd }
