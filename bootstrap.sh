@@ -133,6 +133,7 @@ function installApps {
   local var casks=(
     alacritty
     font-jetbrains-mono-nerd-font
+    ghostty
     )
 
   local var _apps=${apps[*]}
@@ -198,6 +199,10 @@ function setupShellEnv {
   # alacritty
   local alacrittyDir=$configDir/alacritty
   copyFile alacritty.toml $alacrittyDir/alacritty.toml
+
+  # ghostty
+  local ghosttyDirMac="$HOME/Library/Application Support/com.mitchellh.ghostty"
+  copyFile ghostty/config $ghosttyDirMac/config
 
   # bat: https://github.com/sharkdp/bat#configuration-file
   copyFile bat_config $configDir/bat/config
