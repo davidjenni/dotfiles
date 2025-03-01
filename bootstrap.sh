@@ -157,16 +157,16 @@ function installApps {
 
 function copyFile {
   local sourceRelPath=$1
-  local target=$2
-  if [ -f $target ] ; then
+  local target="$2"
+  if [ -f "$target" ] ; then
     # TODO: add backup story
-    rm -f $target >&/dev/null
+    rm -f "$target" >&/dev/null
   fi
   targetDir=$(dirname $target)
-  mkdir -p $targetDir
+  mkdir -p "$targetDir"
   sourceFile=$scriptDir/$sourceRelPath
   echo "  $sourceFile -> $target"
-  cp $sourceFile $target
+  cp $sourceFile "$target"
 }
 
 function copyDir {
@@ -201,7 +201,7 @@ function setupShellEnv {
 
   # ghostty
   local ghosttyDirMac="$HOME/Library/Application Support/com.mitchellh.ghostty"
-  copyFile ghostty/config $ghosttyDirMac/config
+  copyFile ghostty/config "$ghosttyDirMac/config"
 
   # bat: https://github.com/sharkdp/bat#configuration-file
   copyFile bat_config $configDir/bat/config
