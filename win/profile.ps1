@@ -79,6 +79,8 @@ $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
 # Set-Alias ssh "$env:ProgramFiles\git\usr\bin\ssh.exe"
 # Start-SshAgent
 $env:GIT_SSH = $((Get-Command ssh).Source)
+ # WSL by default emits unicode, which most tools like less don't handle well
+ $env:WSL_UTF8=1
 
 # https://github.com/vors/ZLocation
 # ensureModule ZLocation
@@ -106,6 +108,7 @@ Set-Alias -Name 'v' nvim
 Set-Alias -Name 'vi' nvim
 Set-Alias -Name 'vim' nvim
 
+$env:FZF_DEFAULT_OPS="--height=50% --layout=reverse --border --margin=1 --padding=1"
 
 # https://github.com/eza-community/eza
 Remove-Item alias:\ls -force -ErrorAction SilentlyContinue | Out-Null
@@ -129,10 +132,16 @@ function bb { Push-Location $env:USERPROFILE }
 function cc { param ([string] $folder) if (!$folder) { Get-Location -Stack} else { Push-Location -Path $folder } }
 
 # cd to directory with fuzzy search:
-function c { param ([string] $optSearchTerm)
-    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
-    (&fd --type d `
-        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1 --select-1 )`
+function c { param ([string] $searchTerm)
+    $_Q=($searchTerm -ne $null) ? "$searchTerm" : "''"
+    fzf --ansi --disabled --query=$_Q `
+        --height=20% --layout=reverse-list --border --margin=1 --padding=1 --info=inline `
+        --bind 'start:reload:fd --type d {q}' `
+        --bind 'change:reload:sleep 0.2 && fd --type d {q}' `
+        --color 'hl:-1:underline,hl+:-1:underline:reverse' `
+        --preview 'eza --sort ext --group-directories-first --classify --color=auto --icons=always {1}' `
+        --select-1 --exit-0 `
+        --preview-window '60%,border-bottom,+{2}+3/3,~3' `
         | Set-Location
 }
 
@@ -147,18 +156,56 @@ function cg { param ()
 }
 
 # find files:
-function ff { param ([string] $optSearchTerm)
-    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
-     &fd $optSearchTerm --type f `
-        | &fzf $optFzfSearchTerm --height=40% --layout=reverse --info=inline --border --margin=1 --preview='bat --color=always {}' --bind 'enter:execute(code {})'
+# note: fzf preview window has scroll up/down with shift-up/down by default
+function ff { param ([string] $searchTerm)
+    $_Q=($searchTerm -ne $null) ? "$searchTerm" : "''"
+
+    fzf --ansi --disabled --query=$_Q `
+        --height=50% --layout=reverse-list --border --margin=1 --padding=1 `
+        --bind 'start:reload:fd --type f {q}' `
+        --bind 'change:reload:sleep 0.2 && fd --type f {q}' `
+        --color 'hl:-1:underline,hl+:-1:underline:reverse' `
+        --preview 'bat --color=always {1} --theme base16-256' `
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' `
+        --bind 'enter:become(vim {1} +{2})'
 }
 
 # find in files content:
-function fff {  param ([string] $optSearchTerm)
-    $optFzfSearchTerm=($optSearchTerm -ne $null) ? "--query=$optSearchTerm" : $null
-    &rg $optSearchTerm --smart-case --color=always --line-number --no-heading --smart-case  `
-        | &fzf $optFzfSearchTerm --ansi --delimiter : --height=75% --layout=reverse --color 'hl:-1:underline,hl+:-1:underline:reverse' --border --margin=1 `
-            --preview='bat --color=always {1} --highlight-line {2}' --bind 'enter:execute(code {1})'
+function fff {  param ([string] $searchTerm)
+    $_Q=($searchTerm -ne $null) ? "$searchTerm" : "''"
+
+    fzf --ansi --disabled --query=$_Q `
+        --height=50% --layout=reverse-list --border --margin=1 --padding=1 `
+        --bind 'start:reload:rg --column --line-number --no-heading --color=always --smart-case {q}' `
+        --bind 'change:reload:sleep 0.2 && rg --column --line-number --no-heading --color=always --smart-case {q}' `
+        --color 'hl:-1:underline,hl+:-1:underline:reverse' `
+        --delimiter : `
+        --preview 'bat --color=always {1} --highlight-line {2} --theme base16-256' `
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' `
+        --bind 'enter:become(vim {1} +{2})'
+}
+
+# git log with fzf:
+Remove-Item alias:\gl -force -ErrorAction SilentlyContinue | Out-Null
+function gl { param ([string] $searchTerm)
+    $_Q=($searchTerm -ne $null) ? "$searchTerm" : "''"
+    &git log --date=short --format='%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)' --graph `
+        | &fzf --ansi --query=$_Q --no-sort `
+            --height=50% --layout=reverse-list --border --margin=1 --padding=1 `
+            --preview 'git show --color {3}' `
+            --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down `
+            --bind shift-up:preview-top,shift-down:preview-bottom
+}
+
+# git branches with fzf:
+function gb { param ([string] $searchTerm)
+    $_Q=($searchTerm -ne $null) ? "$searchTerm" : "''"
+    &git branch -r `
+        | &fzf --query=$_Q --no-sort `
+            --height=50% --layout=reverse-list --border --margin=1 --padding=1 `
+            --preview 'git log {1} --no-source --color' `
+            --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down `
+            --bind shift-up:preview-top,shift-down:preview-bottom
 }
 
 function which { param ([string] $cmd) Get-Command $cmd }
@@ -259,8 +306,8 @@ if ((Get-Command 'starship' -ErrorAction SilentlyContinue)) {
 if ((Get-Command 'zoxide' -ErrorAction SilentlyContinue)) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
-    function zz { param ([string] $optSearchTerm='')
-        $optFzfSearchTerm = if ($optSearchTerm) { "--query=$optSearchTerm" } else { $null }
+    function zz { param ([string] $searchTerm='')
+        $optFzfSearchTerm = if ($searchTerm) { "--query=$searchTerm" } else { $null }
         (&zoxide query --list `
             | &fzf $optFzfSearchTerm --height=40% --layout=reverse --border --margin=1  --select-1 )`
             | Set-Location

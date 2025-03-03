@@ -4,8 +4,14 @@ set -x CLICOLOR "yes"
 set -x LESS "-c -i -x4 -J -w -M -r"
 set -x VISUAL "nvim"
 set -x EDITOR "nvim"
+alias v nvim
+alias vi nvim
+alias vim nvim
+
 # setup eza themes: https://github.com/eza-community/eza-themes?tab=readme-ov-file
 set -x EZA_CONFIG_DIR  "$HOME/dotfiles/eza-themes"
+
+set -x FZF_DEFAULT_OPS "--height=50% --layout=reverse --border --margin=1 --padding=1"
 
 set fish_greeting ""
 

@@ -220,12 +220,11 @@ function setupShellEnv {
   copyFile fish/config.fish $fishConfigDir/config.fish
   copyFile fish/fish_plugins $fishConfigDir/fish_plugins
   # copyFile fish/functions/fisher.fish $fishConfigDir/functions
-  copyFile fish/functions/c.fish $fishConfigDir/functions/c.fish
-  copyFile fish/functions/cg.fish $fishConfigDir/functions/cg.fish
-  copyFile fish/functions/l.fish $fishConfigDir/functions/l.fish
-  copyFile fish/functions/la.fish $fishConfigDir/functions/la.fish
-  copyFile fish/functions/ll.fish $fishConfigDir/functions/ll.fish
-  copyFile fish/functions/ls.fish $fishConfigDir/functions/ls.fish
+
+  myFunctions=( "c" "cg" "ff" "fff" "gb" "gl" "l" "la" "ll" "ls")
+  for f in "${myFunctions[@]}" ; do
+    copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
+  done
 
   # setup ssh to play with 1Password as identity agent:
   sshConfig=$HOME/.ssh/config
