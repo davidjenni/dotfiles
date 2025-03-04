@@ -112,16 +112,23 @@ $env:FZF_DEFAULT_OPS="--height=50% --layout=reverse --border --margin=1 --paddin
 
 # https://github.com/eza-community/eza
 Remove-Item alias:\ls -force -ErrorAction SilentlyContinue | Out-Null
-function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
-    # hacky attempt to handle wilrdcard expansion:
+function ls { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $zrest )
+    # hacky attempt to handle wildcard expansion by PS shell; exa expects unix-shell-like expansion before it is launched:
     # https://github.com/eza-community/eza/issues/337
-    if ($rest -ne $null) {
-        $args = $rest | Where-Object { $_.StartsWith("-") }
-        $files = $rest | Get-Item -ErrorAction SilentlyContinue | ForEach-Object { $_.Name }
+    # name parameter with a letter NOT used by any eza options to avoid PS claiming that as a function parameter
+    if ($($zrest.Length) -gt 0) {
+        $regular = ($zrest | Where-Object { $_ -notmatch '[*\?]+' })
+        $expanded = ($zrest | Where-Object { $_ -match '[*\?]+' } | Get-Item -ErrorAction SilentlyContinue | ForEach-Object { $_.Name })
     }
-    eza --sort ext --group-directories-first --classify --color=auto --icons=never $args $files
+    eza --sort ext --group-directories-first --classify --color=auto --icons=auto $regular $expanded
 }
-function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )  ls -l $rest }
+function ll { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $zrest )
+    if ($($zrest.Length) -gt 0) {
+        ls -l @zrest
+    } else {
+        ls -l
+    }
+}
 
 # setup eza themes: https://github.com/eza-community/eza-themes?tab=readme-ov-file
 $env:EZA_CONFIG_DIR = "$env:USERPROFILE\dotfiles\eza-themes"
