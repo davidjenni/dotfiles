@@ -3,6 +3,7 @@
 palette = "catppuccin_frappe"
 
 add_newline = true
+command_timeout = 10000
 
 format = """
 $os\
@@ -19,8 +20,8 @@ $cmd_duration\
 \n$character"""
 
 [character]
-success_symbol = "[[󰄛](green) ❯](peach)"
-error_symbol = "[[✗](bold red) ](peach)"
+success_symbol = "[[](green) ❯](peach)"
+error_symbol = "[[✗](bold red) ❯](peach)"
 vicmd_symbol = "[[](green)](peach)"
 
 [directory]
