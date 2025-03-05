@@ -204,8 +204,7 @@ function setupShellEnv {
   copyFile ghostty/config "$ghosttyDirMac/config"
 
   # bat: https://github.com/sharkdp/bat#configuration-file
-  export BAT_CONFIG_DIR = "$HOME/dotfiles/bat"
-  bat cache --build
+  (BAT_CONFIG_DIR="$HOME/dotfiles/bat" && bat cache --build)
 
   copyFile bash/bash_aliases.sh $HOME/.bash_aliases
   copyFile bash/inputrc $HOME/.inputrc
