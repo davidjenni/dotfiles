@@ -91,6 +91,8 @@ $env:LESS="-i -M -q -x4 -R"
 $env:LESSBINFMT="*d[%02x]"
 $env:VISUAL="code --wait"
 
+$env:BAT_CONFIG_DIR = "$env:USERPROFILE\dotfiles\bat"
+
 if ($null -ne (Get-Alias -Name curl -ErrorAction SilentlyContinue)) {
     Remove-Item alias:\curl -force -ErrorAction SilentlyContinue | Out-Null
 }

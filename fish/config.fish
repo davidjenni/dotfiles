@@ -13,6 +13,8 @@ set -x EZA_CONFIG_DIR  "$HOME/dotfiles/eza-themes"
 
 set -x FZF_DEFAULT_OPS "--height=50% --layout=reverse --border --margin=1 --padding=1"
 
+set -x BAT_CONFIG_DIR "$HOME/dotfiles/bat"
+
 set fish_greeting ""
 
 switch (uname)

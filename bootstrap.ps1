@@ -398,8 +398,8 @@ function setupShellEnvs {
     copyFile 'alacritty.toml' (Join-Path $alacrittyConfigDir 'alacritty.toml')
 
     Write-Host "setting up bat:"
-    $batConfigDir = (Join-Path $env:APPDATA 'bat')
-    copyFile 'bat_config' (Join-Path $batConfigDir 'config')
+    $env:BAT_CONFIG_DIR = "$env:USERPROFILE\dotfiles\bat"
+    & bat cache --build
 
     $sshDir = (Join-Path $env:USERPROFILE '.ssh')
     # ensure 1Password's identity agent is visible to OpenSSH; cannot have both config and socket on Windows
