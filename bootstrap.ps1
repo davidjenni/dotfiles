@@ -9,13 +9,14 @@
 #>
 [CmdletBinding()]
 param (
-    [ValidateSet('clone', 'setup', 'apps', 'env', IgnoreCase = $true)]
+    [ValidateSet('clone', 'setup', 'apps', 'env', 'wt', IgnoreCase = $true)]
     [Parameter(Position = 0)] [string]
     # verb that indicates stage:
     #  clone:       clone the dotfiles repo and continue with 'setup' etc.
     #  setup:       setup PS, package managers, git. Includes 'apps' and 'env'.
     #  apps:        install apps via winget and scoop
     #  env:         setups consoles and configurations for git, neovim, PowerShell etc.
+    #  wt:          configure Windows Terminal settings
     $verb = 'clone',
     [Parameter()] [string]
     # user name for git commits, defaults to '$env:USERNAME@$env:COMPUTERNAME'
@@ -450,6 +451,8 @@ function main {
         'apps' { installApps }
 
         'env' { setupShellEnvs }
+
+        'wt' { & (Join-Path $PSScriptRoot 'win\configWinTerm.ps1' ) }
     }
 
     Write-Host "Done."
