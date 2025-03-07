@@ -22,7 +22,7 @@ $cmd_duration\
 [character]
 success_symbol = "[[](green) ❯](peach)"
 error_symbol = "[[✗](bold red) ❯](peach)"
-vicmd_symbol = "[[](green)](peach)"
+vicmd_symbol = "[[](green) ❯](peach)"
 
 [directory]
 style = "blue"
