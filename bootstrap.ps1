@@ -269,7 +269,7 @@ function copyFile {
 
 function installScoopApps {
     Write-Host "Installing apps via scoop..."
-    & scoop install 7zip bat delta dust eza fd fzf helix less lua-language-server neovim nuget nvm ripgrep starship tre-command tokei zig zoxide
+    & scoop install 7zip bat delta dust eza fd fzf helix less lua-language-server neovim nuget nvm ripgrep starship tre-command tokei zoxide
     & scoop bucket add nerd-fonts
     & scoop install hack-nf-mono hack-nf JetBrainsMono-NF JetBrainsMono-NF-mono
     & scoop bucket add extras
