@@ -6,6 +6,12 @@
     to bootstrap directly from github, run these 2 cmdlets in a PowerShell prompt:
     > Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
     > irm 'https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1' | iex
+
+    to bootstrap without user interaction, e.g. to setup an Azure DevBox,
+    set env var DOT_HEADLESS=1; ideally this should be called from an elevated shell
+    to avoid elevation prompts when installing apps:
+
+    >  powershell -command { $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 #>
 [CmdletBinding()]
 param (
@@ -33,6 +39,11 @@ $ErrorActionPreference = 'Stop'
 
 $originGitHub='https://github.com/davidjenni/dotfiles.git'
 $dotPath=(Join-Path $env:USERPROFILE 'dotfiles')
+$isHeadless = (($null -ne $env:DOT_HEADLESS -and $env:DOT_HEADLESS -ne 0 ))
+if ($isHeadless) {
+    $runAsAdmin = $true
+    Write-Host "!! headless mode detected, setting runAsAdmin, assuming running elevated (user name is $env:USERNAME)."
+}
 
 # should be the default on all Win10+, but just in case...
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor
@@ -63,11 +74,14 @@ function ensureLocalGit {
 
 function cloneDotfiles {
     Write-Host "Cloning $originGitHub -> $dotPath"
-    Write-Host -NoNewline "OK to proceed with setup? [Y/n] "
-    $answer = (Read-Host).ToUpper()
-    if ($answer -ne 'Y' -and $answer -ne '') {
-        Write-Warning "Aborting."
-        return 4
+
+    if (-not $isHeadless) {
+        Write-Host -NoNewline "OK to proceed with setup? [Y/n] "
+        $answer = (Read-Host).ToUpper()
+        if ($answer -ne 'Y' -and $answer -ne '') {
+            Write-Warning "Aborting."
+            return 4
+        }
     }
 
     ensureLocalGit
@@ -83,10 +97,14 @@ function cloneDotfiles {
         $email = (& git config --global --get user.email)
     }
     if (-not $email -or $email -eq '') {
-        $email = Read-Host "Enter your email address for git commits"
-        if ($email -eq '') {
-            Write-Warning "Need email address, aborting."
-            return 3
+        if (-not $isHeadless) {
+            $email = Read-Host "Enter your email address for git commits"
+            if ($email -eq '') {
+                Write-Warning "Need email address, aborting."
+                return 3
+            }
+        } else {
+            $email = "$env:USERNAME@$env:COMPUTERNAME"
         }
     }
 
@@ -435,7 +453,7 @@ function main {
             # still stick with desktop PS since PSCore is not necessarily installed yet
             $script= (Join-Path $dotPath 'bootstrap.ps1')
             Write-Host "Continue $script in child process"
-            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -File $script setup" |
+            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -RunAsAdmin $runAsAdmin -File $script setup" |
                 Wait-Process
         }
 
