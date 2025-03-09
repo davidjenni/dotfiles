@@ -11,11 +11,12 @@ param ()
 $ErrorActionPreference = 'Stop'
 
 $wtSettingsFile = (Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
-$wtFragmentsRoot = (Join-Path $env:LOCALAPPDATA "Microsoft\Windows Terminal\Fragments")
+$wtFragmentsRoot = (Join-Path $env:LOCALAPPDATA "Microsoft\Windows Terminal\Fragments\davidjenni.dotfiles")
 
 function winTermConfiguration {
     if (-not (Test-Path $wtSettingsFile)) {
         Write-Warning "Windows Terminal settings file not found: $wtSettingsFile"
+        Write-Warning "Launch and exit Windows Terminal to create the default settings file."
         # TODO: launch wt.exe to have it create its default settings file
         return
     }
@@ -26,7 +27,7 @@ function winTermConfiguration {
     $_s | Add-Member -MemberType NoteProperty -Force -Name confirmCloseAllTabs -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyFormatting -Value "none"
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyOnSelect -Value $true
-    $_s | Add-Member -MemberType NoteProperty -Force -Name initialCols -Value 150
+    $_s | Add-Member -MemberType NoteProperty -Force -Name initialCols -Value 180
     $_s | Add-Member -MemberType NoteProperty -Force -Name initialRows -Value 50
     $_s | Add-Member -MemberType NoteProperty -Force -Name multiLinePasteWarning -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name useAcrylicInTabRow -Value $true
@@ -42,8 +43,17 @@ function winTermConfiguration {
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name opacity -Value 86
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name useAcrylic -Value $true
 
+    # https://learn.microsoft.com/en-us/windows/terminal/json-fragment-extensions
+    $themeFilesRoot = (Join-Path $PSScriptRoot "wtThemes")
+    $themes = Get-Item (Join-Path $themeFilesRoot "*.json") | Select-Object -ExpandProperty FullName
+    New-Item -Path $wtFragmentsRoot -ItemType Directory -Force | Out-Null
+    $themes | ForEach-Object {
+        Copy-Item -Path $_ -Destination "$wtFragmentsRoot\" -Force
+    }
+
     # schema must exist before setting it:
-    # $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name colorScheme -Value "Catppuccin Frappe"
+    $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name colorScheme -Value "Catppuccin Frappe"
+
 
     Set-Content -Path $wtSettingsFile -Encoding utf8 -Value ($_s | ConvertTo-Json -Depth 20)
     Write-Host "Windows Terminal settings updated."
