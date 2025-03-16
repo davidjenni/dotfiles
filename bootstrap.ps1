@@ -453,7 +453,11 @@ function main {
             # still stick with desktop PS since PSCore is not necessarily installed yet
             $script= (Join-Path $dotPath 'bootstrap.ps1')
             Write-Host "Continue $script in child process"
-            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -RunAsAdmin $runAsAdmin -File $script setup" |
+            $extra = ''
+            if ($runAsAdmin) {
+                $extra = '-runAsAdmin'
+            }
+            Start-Process -PassThru -NoNewWindow -FilePath "powershell.exe" -ArgumentList "-NoProfile -File `"$script`" -verb setup $extra" |
                 Wait-Process
         }
 
