@@ -66,8 +66,6 @@ function addToPath {
 
 # https://github.com/PowerShell/PSReadLine
 ensureModule PSReadLine 'ConsoleHost'
-# https://github.com/mmims/PSConsoleTheme
-ensureModule PSConsoleTheme
 # https://github.com/dahlbyk/posh-git
 ensureModule posh-git
 # NOTE: if git's ssh-agent was run, posh-git will read SSH_AGENT_PID from: %TEMP%\.ssh
