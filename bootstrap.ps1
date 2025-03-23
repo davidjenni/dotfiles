@@ -11,7 +11,7 @@
     set env var DOT_HEADLESS=1; ideally this should be called from an elevated shell
     to avoid elevation prompts when installing apps:
 
-    >  powershell -command { $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
+    > powershell -noprofile -executionpolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 #>
 [CmdletBinding()]
 param (
@@ -22,7 +22,6 @@ param (
     #  setup:       setup PS, package managers, git. Includes 'apps' and 'env'.
     #  apps:        install apps via winget and scoop
     #  env:         setups consoles and configurations for git, neovim, PowerShell etc.
-    #  wt:          configure Windows Terminal settings
     $verb = 'clone',
     [Parameter()] [string]
     # user name for git commits, defaults to '$env:USERNAME@$env:COMPUTERNAME'
@@ -361,6 +360,11 @@ function writeGitConfig {
     }
 }
 
+function configWinTerm {
+    Write-Host "configuring Windows Terminal:"
+    & (Join-Path $PSScriptRoot 'win\configWinTerm.ps1' )
+}
+
 function setupShellEnvs {
     Write-Host "setting cmd console properties:"
     $consolePath='HKCU\Console'
@@ -465,6 +469,7 @@ function main {
             Write-Host "Setting up..."
             setup
             installApps
+            configWinTerm
             setupShellEnvs
             Write-Host "Done (setup)."
             exit
@@ -473,8 +478,6 @@ function main {
         'apps' { installApps }
 
         'env' { setupShellEnvs }
-
-        'wt' { & (Join-Path $PSScriptRoot 'win\configWinTerm.ps1' ) }
     }
 
     Write-Host "Done."
