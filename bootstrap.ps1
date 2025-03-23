@@ -11,7 +11,7 @@
     set env var DOT_HEADLESS=1; ideally this should be called from an elevated shell
     to avoid elevation prompts when installing apps:
 
-    >  powershell -command { $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
+    > powershell -noprofile -executionpolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 #>
 [CmdletBinding()]
 param (
@@ -465,6 +465,7 @@ function main {
             Write-Host "Setting up..."
             setup
             installApps
+            wt
             setupShellEnvs
             Write-Host "Done (setup)."
             exit
