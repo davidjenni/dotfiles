@@ -7,6 +7,7 @@ DotFiles for my macOS, Win32 & Linux environments. Geared towards use of git and
 ## Screenshots
 
 macOS
+
 ![macOS alacritty terminal](assets/mac-terminal.png)
 
 Win11
