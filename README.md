@@ -23,22 +23,10 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 irm 'https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1' | iex
 ````
 
-For an Azure DevBox, add this to the DSC yaml:
+For a headless install (elevated), run
 
-```yaml
- #yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
-properties:
-  resources:
-    - resource: Script
-      directives:
-        description: "Bootstrap dotfiles from my dotfiles github repo"
-        allowPrerelease: true
-      settings:
-        SetScript: 'powershell -NoProfile -ExecutionPolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }'
-        TestScript: '$False'
-        GetScript: 'UNUSED'
-
-  configurationVersion: 0.2.0
+```bash
+powershell -NoProfile -ExecutionPolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 ```
 
 ### macOS 14+/Ubuntu 22+ (WSL or VM)
