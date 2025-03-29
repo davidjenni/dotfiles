@@ -4,9 +4,9 @@
 dir=dir /ogen $*
 L=bat $*
 xx=exit
-la=lsd -a --group-directories-first --extensionsort $*
-ll=lsd -l --group-directories-first --extensionsort $*
-ls=lsd --group-directories-first --extensionsort $*
+la=eza -a --sort ext --group-directories-first --classify --color=auto --icons=auto $*
+ll=eza -l --sort ext --group-directories-first --classify --color=auto --icons=auto $*
+ls=eza --sort ext --group-directories-first --classify --color=auto --icons=auto $*
 ld=tre -d $*
 msb=dotnet msbuild /p:TreatWarningsAsErrors=true /nr:false /m /clp:verbosity=minimal /flp:Verbosity=normal;LogFile=msbuild.log /flp3:PerformanceSummary;Verbosity=diag;LogFile=msbuild.diagnostics.log $*
 msbl=dotnet msbuild /nr:false /m /clp:verbosity=minimal /bl $*
