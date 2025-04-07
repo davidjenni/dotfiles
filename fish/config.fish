@@ -73,10 +73,3 @@ if command -s starship > /dev/null
     bind --user -M insert \r transient_execute
 end
 
-if status is-login
-    if command -q neofetch
-        neofetch
-    else
-        uptime
-    end
-end
