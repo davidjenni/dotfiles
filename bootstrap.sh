@@ -119,7 +119,6 @@ function installApps {
     helix
     less
     lua-language-server
-    neofetch
     neovim
     ripgrep
     starship
