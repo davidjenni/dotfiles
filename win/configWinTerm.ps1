@@ -27,6 +27,7 @@ function winTermConfiguration {
     $_s | Add-Member -MemberType NoteProperty -Force -Name confirmCloseAllTabs -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyFormatting -Value "none"
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyOnSelect -Value $true
+    $_s | Add-Member -MemberType NoteProperty -Force -Name centerOnLaunch -Value $true
     $_s | Add-Member -MemberType NoteProperty -Force -Name initialCols -Value 180
     $_s | Add-Member -MemberType NoteProperty -Force -Name initialRows -Value 50
     $_s | Add-Member -MemberType NoteProperty -Force -Name multiLinePasteWarning -Value $false
@@ -42,6 +43,7 @@ function winTermConfiguration {
     $_s.profiles.defaults.font | Add-Member -MemberType NoteProperty -Force -Name weight -Value light
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name opacity -Value 86
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name useAcrylic -Value $true
+
 
     # https://learn.microsoft.com/en-us/windows/terminal/json-fragment-extensions
     $themeFilesRoot = (Join-Path $PSScriptRoot "wtThemes")
