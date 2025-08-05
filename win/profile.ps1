@@ -1,6 +1,6 @@
 # this profile assumes PowerShell Core (pwsh)
 #
-# ===== Prerequisits that need one-off installation handled by bootstrap.ps1:
+# ===== Prerequisites that need one-off installation handled by bootstrap.ps1:
 #
 # 1) install scoop:
 # 2) then install starship.rs (https://starship.rs/):
@@ -29,7 +29,7 @@ function ensureModule {
             Write-Host  -NoNewline "Loading $($name.PadRight(40))"
             $foundModule = Import-Module -Name $name -PassThru -ErrorAction SilentlyContinue
             if ($null -ne $foundModule) {
-                Write-Host "`u{2705}" # checkmark emoji
+                Write-Host "`u{2705}" # check mark emoji
                 return
             }
         } else {
@@ -69,7 +69,7 @@ ensureModule PSReadLine 'ConsoleHost'
 # https://github.com/dahlbyk/posh-git
 ensureModule posh-git
 # NOTE: if git's ssh-agent was run, posh-git will read SSH_AGENT_PID from: %TEMP%\.ssh
-$GitPromptSettings.DefaultPromptPrefix = '($((get-date).tostring("HH:mm:ss"))) '
+$GitPromptSettings.DefaultPromptPrefix = '($((get-date).ToString("HH:mm:ss"))) '
 $GitPromptSettings.DefaultPromptSuffix = '`n$(''>'' * ($nestedPromptLevel + 1)) '
 $GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
 # Set-Alias ssh-agent "$env:ProgramFiles\git\usr\bin\ssh-agent.exe"

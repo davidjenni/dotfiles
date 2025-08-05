@@ -120,7 +120,7 @@ function modernizeWinPowerShell {
         Write-Host "Core edition detected, skipping modernization."
         return
     }
-    Write-Host "Updating package mgmt for stock PowerShell $($PSVersionTable.PSVersion)..."
+    Write-Host "Updating package management for stock PowerShell $($PSVersionTable.PSVersion)..."
 
     if (-not (Get-PackageSource -ProviderName nuget -Force -ErrorAction SilentlyContinue)) {
         Write-Host " - Installing NuGet provider..."
@@ -188,7 +188,7 @@ function ensureWinGet {
 
     Write-Host "Installing winget..."
     # https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/cpp/libraries/c-runtime-packages-desktop-bridge#how-to-install-and-update-desktop-framework-packages
-    # installing winget pre-reqs:
+    # installing winget pre-requisites:
     if ((Get-AppxPackage -Name Microsoft.VCLibs.140.00.UWPDesktop -ErrorAction SilentlyContinue) -eq $null) {
         Write-Host "  - Installing dependency: VC++ runtime UWPDesktop..."
         $vc14 = (Join-Path $env:TEMP "vc14.appx")
@@ -197,7 +197,7 @@ function ensureWinGet {
     }
     if ((Get-AppxPackage -Name Microsoft.UI.Xaml.2.8 -ErrorAction SilentlyContinue) -eq $null) {
         Write-Host "  - Installing dependency: Microsoft.UI.Xaml..."
-        $_pkgs = Install-Package Microsoft.UI.Xaml -scope currentuser -RequiredVersion 2.8.6 -force
+        $_pkgs = Install-Package Microsoft.UI.Xaml -scope CurrentUser -RequiredVersion 2.8.6 -force
         $uixaml = ($_pkgs | Where-Object { $_.name -like 'Microsoft.UI.Xaml' })
         Add-AppxPackage -Path $env:LOCALAPPDATA\PackageManagement\nuget\Packages\Microsoft.UI.Xaml.$($uixaml.Version)\tools\AppX\x64\Release\Microsoft.UI.Xaml.*.appx
     }
