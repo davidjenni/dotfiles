@@ -130,7 +130,6 @@ function installApps {
     )
 
   local var casks=(
-    alacritty
     font-jetbrains-mono-nerd-font
     ghostty
     )
@@ -193,10 +192,6 @@ function setupShellEnv {
   # neovim
   local nvimDir=$configDir/nvim
   copyDir nvim $nvimDir
-
-  # alacritty
-  local alacrittyDir=$configDir/alacritty
-  copyFile alacritty.toml $alacrittyDir/alacritty.toml
 
   # ghostty
   local ghosttyDirMac="$HOME/Library/Application Support/com.mitchellh.ghostty"

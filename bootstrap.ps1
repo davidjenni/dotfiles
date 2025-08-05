@@ -291,7 +291,7 @@ function installScoopApps {
     & scoop bucket add nerd-fonts
     & scoop install hack-nf-mono hack-nf JetBrainsMono-NF JetBrainsMono-NF-mono
     & scoop bucket add extras
-    & scoop install alacritty git-credential-manager ilspy neofetch vcredist2022
+    & scoop install git-credential-manager ilspy neofetch vcredist2022
 }
 
 function installWinGetApps {
@@ -415,10 +415,6 @@ function setupShellEnvs {
     }
     $nvimConfigDir = (Join-Path $env:LOCALAPPDATA 'nvim')
     copyDir 'nvim' $nvimConfigDir
-
-    Write-Host "setting up alacritty:"
-    $alacrittyConfigDir = (Join-Path $env:APPDATA 'alacritty')
-    copyFile 'alacritty.toml' (Join-Path $alacrittyConfigDir 'alacritty.toml')
 
     Write-Host "setting up bat:"
     & (Get-Process -Id $PID).Path -NoProfile -NonInteractive { $env:BAT_CONFIG_DIR = "$env:USERPROFILE\dotfiles\bat"; & bat cache --build }
