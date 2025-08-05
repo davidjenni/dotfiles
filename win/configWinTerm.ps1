@@ -26,12 +26,13 @@ function winTermConfiguration {
     # sigh, PS is weird, need to add non-existing properties to the object before setting them
     $_s | Add-Member -MemberType NoteProperty -Force -Name confirmCloseAllTabs -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyFormatting -Value "none"
-    $_s | Add-Member -MemberType NoteProperty -Force -Name copyOnSelect -Value $true
+    $_s | Add-Member -MemberType NoteProperty -Force -Name copyOnSelect -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name centerOnLaunch -Value $true
     $_s | Add-Member -MemberType NoteProperty -Force -Name initialCols -Value 180
     $_s | Add-Member -MemberType NoteProperty -Force -Name initialRows -Value 50
     $_s | Add-Member -MemberType NoteProperty -Force -Name multiLinePasteWarning -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name useAcrylicInTabRow -Value $true
+    $_s | Add-Member -MemberType NoteProperty -Force -Name defaultProfile -Value "{574e775e-4f2a-5b96-ac1e-a2962a402336}"
 
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name adjustIndistinguishableColors -Value "always"
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name bellStyle -Value "taskbar"
