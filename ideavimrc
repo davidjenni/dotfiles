@@ -1,0 +1,73 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set argtextobj
+set commentary
+set highlightedyank
+" set multiple-cursors
+" set easymotion
+set surround
+set textobj-entire
+set which-key
+
+Plug 'vim-surround'
+Plug 'machakann/vim-highlightedyank'
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showcmd
+set showmode
+set number
+set novisualbell
+set scrolloffset=5
+
+set hlsearch
+set incsearch
+set smartcase
+nmap <leader>nh :nohlsearch<CR>
+nnoremap <C-L> :nohlsearch<cr><esc>
+sethandler <C-L> n:vim i-x:ide
+
+" allow for which-key to show
+set timeoutlen=5000
+
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" Mappings --------------------------------
+nmap <leader>p <Action>(SearchEverywhere)
+nmap <leader>fb <Action>(Switcher)
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fr <Action>(RecentFiles)
+nmap <leader>fw <Action>(FindInPath)
+
+"" code jump
+nmap gd <Action>(GotoSuperMethod)
+nmap gD <Action>(GotoDeclaration)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap gri <Action>(GotoImplementation)
+nmap grr <Action>(FindUsages)
+nmap <leader>lR <Action>(FindUsages)
+nmap [e <Action>(GotoPreviousError)
+nmap ]e <Action>(GotoNextError)
+
+map <leader>d <Action>(Debug)
+map <leader>r <Action>(RenameElement)
+map <leader>c <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>s <Action>(SelectInProjectView)
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+map <S-Space> <Action>(GotoNextError)
+
+nmap <leader>= <Action>(ReformatCode)
+nmap K <Action>(ShowHoverInfo)
+
+nmap [b <Action>(PreviousTab)
+nmap ]b <Action>(NextTab)

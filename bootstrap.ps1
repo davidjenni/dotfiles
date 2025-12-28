@@ -403,6 +403,7 @@ function setupShellEnvs {
 
     copyFile 'starship.toml' (Join-Path $configDir 'starship.toml')
     copyFile (Join-Path 'win' 'vsvimrc') (Join-Path $env:USERPROFILE '_vsvimrc')
+    copyFile 'ideavimrc' (Join-Path $env:USERPROFILE '.ideavimrc')
 
     writeGitConfig (Join-Path $PSScriptRoot 'gitconfig.ini')
 

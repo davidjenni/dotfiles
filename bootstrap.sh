@@ -207,6 +207,8 @@ function setupShellEnv {
   # starship.rs:
   copyFile starship.toml $configDir/starship.toml
 
+  copyFile ideavimrc $HOME/.ideavimrc
+
   # fish:
   local fishConfigDir=$configDir/fish
   # rm -f $fishConfigDir/functions/fisher.fish >&/dev/null
