@@ -68,8 +68,6 @@ if command -s starship > /dev/null
         starship module time
     end
     starship init fish | source
-    # contents of enable_trancience function, which is not callable yet after above source
-    bind --user \r transient_execute
-    bind --user -M insert \r transient_execute
+    enable_transience
 end
 
