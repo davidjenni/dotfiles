@@ -6,11 +6,12 @@ DotFiles for my macOS, Win32 & Linux environments. Geared towards use of git and
 
 ## Screenshots
 
-macOS
+- macOS
 
 ![macOS terminal](assets/mac-terminal.png)
 
-Win11
+- Win11
+
 ![Windows terminal](assets/win-terminal.png)
 
 ## Installation
@@ -30,10 +31,16 @@ For a headless install (elevated), run
 powershell -NoProfile -ExecutionPolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 ```
 
-### macOS 14+/Ubuntu 22+ (WSL or VM)
+### macOS 14+/Ubuntu 22+/Debian 12+ (WSL or VM)
 
 to bootstrap, run this in a default Terminal.app prompt:
 
 ````shell
 curl -fsSL https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.sh | bash
 ````
+
+Some minimal Debian images don't have `curl` pre-installed (e.g. the WSL Debian image doesn't)
+
+```shell
+sudo apt update && sudo apt install curl -y
+```
