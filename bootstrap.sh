@@ -17,8 +17,17 @@ function ensureLocalGit {
     echo "git is installed"
     return
   fi
-  echo "No local git is installed"
-  # TODO: Install temp copy of git
+  echo "No local git is installed, installing git..."
+  case `uname` in
+    'Darwin')
+      # install XCode command line tools, which includes git; needed for homebraw later as well
+      xcode-select --install
+    ;;
+    'Linux')
+      sudo apt-get install -y git git-lfs
+      git lfs install
+    ;;
+  esac
 }
 
 function ensureGitNames {
@@ -81,7 +90,7 @@ function ensureBrew {
       xcode-select --install
     ;;
     'Linux')
-      sudo apt-get install -y build-essential procps curl file git
+      sudo apt-get install -y build-essential curl file man procps
     ;;
   esac
   echo "Installing Homebrew..."
@@ -100,6 +109,7 @@ function cloneDotFiles {
     exit 4
   fi
   echo "Cloning dotfiles..."
+  ensureLocalGit
   # setup config for git: username, email, etc.
   ensureGitNames
   git clone $originGitHub $dotPath
@@ -211,16 +221,30 @@ function setupShellEnv {
 
   # fish:
   local fishConfigDir=$configDir/fish
-  # rm -f $fishConfigDir/functions/fisher.fish >&/dev/null
-  # curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
   copyFile fish/config.fish $fishConfigDir/config.fish
-  copyFile fish/fish_plugins $fishConfigDir/fish_plugins
-  # copyFile fish/functions/fisher.fish $fishConfigDir/functions
 
   myFunctions=( "c" "cg" "ff" "fff" "gb" "gl" "l" "la" "ll" "ls")
   for f in "${myFunctions[@]}" ; do
     copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
   done
+
+  # Switch users shell to fish:
+  if ! grep -qi -- "fish" /etc/shells; then
+      echo "Adding fish to /etc/shells"
+      sudo echo $(which fish) >> /etc/shells
+  fi
+  if [[ ! "$SHELL" =~ "fish" ]] ; then
+    echo "Changing default shell to fish for current user..."
+    sudo chsh -s $(which fish)
+  fi
+  # ensure fish shell is on path:
+  if ! have brew ; then
+    initBrew
+  fi
+  # install fisher plugin manager for fish:
+  fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher'
+  # https://github.com/PatrickF1/fzf.fish
+  fish -c 'if ! string match -q "*fzf.fish*" (fisher list); fisher install PatrickF1/fzf.fish; end'
 
   # setup ssh to play with 1Password as identity agent:
   sshConfig=$HOME/.ssh/config

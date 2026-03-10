@@ -62,12 +62,9 @@ fi
 case $- in
   *i*)  # interactive
     if `shopt -q login_shell`; then
-      if have neofetch; then
-        neofetch
-      else
-        echo " $(uname -a)"
-        uptime
-      fi
+      echo " $(uname -a)"
+      uptime
+      who --all
     fi
   ;;
 esac
