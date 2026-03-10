@@ -231,11 +231,11 @@ function setupShellEnv {
   # Switch users shell to fish:
   if ! grep -qi -- "fish" /etc/shells; then
       echo "Adding fish to /etc/shells"
-      sudo echo $(which fish) >> /etc/shells
+      echo $(which fish) | sudo tee -a /etc/shells
   fi
   if [[ ! "$SHELL" =~ "fish" ]] ; then
     echo "Changing default shell to fish for current user..."
-    sudo chsh -s $(which fish)
+    sudo -u $USER chsh -s $(which fish)
   fi
   # ensure fish shell is on path:
   if ! have brew ; then
