@@ -104,6 +104,7 @@ $env:PAGER='bat'
 Remove-Item alias:\cat -Force
 Set-Alias -Name 'cat' bat
 Set-Alias -Name 'l' bat
+Set-Alias -Name 'lg' lazygit
 Set-Alias -Name 'v' nvim
 Set-Alias -Name 'vi' nvim
 Set-Alias -Name 'vim' nvim
