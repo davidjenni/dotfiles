@@ -39,5 +39,5 @@ function fish_greeting
     printf "Host:|$hostname\nOS:|$os_name-$os_version\nKernel:|$kernel_version\nArch:|$machine_arch\n" | column -t -s '|'
     echo "Uptime: $(uptime)"
     echo "Who:"
-    echo "$(who --all)"
+    echo "$(who -a)"
 end
