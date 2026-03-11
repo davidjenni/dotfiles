@@ -203,9 +203,11 @@ function setupShellEnv {
   local nvimDir=$configDir/nvim
   copyDir nvim $nvimDir
 
-  # ghostty
-  local ghosttyDirMac="$HOME/Library/Application Support/com.mitchellh.ghostty"
-  copyFile ghostty/config "$ghosttyDirMac/config"
+  # ghostty: macOS only; Linux it's assumed a WSL or ssh session
+  if [[ $(uname) == "Darwin" ]]; then
+    local ghosttyDirMac="$HOME/Library/Application Support/com.mitchellh.ghostty"
+    copyFile ghostty/config "$ghosttyDirMac/config"
+  fi
 
   # bat: https://github.com/sharkdp/bat#configuration-file
   (BAT_CONFIG_DIR="$HOME/dotfiles/bat" && bat cache --build)
