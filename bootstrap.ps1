@@ -291,7 +291,7 @@ function installScoopApps {
     & scoop bucket add nerd-fonts
     & scoop install hack-nf-mono hack-nf JetBrainsMono-NF JetBrainsMono-NF-mono
     & scoop bucket add extras
-    & scoop install git-credential-manager ilspy neofetch vcredist2022
+    & scoop install git-credential-manager ilspy vcredist2022
 }
 
 function installWinGetApps {
