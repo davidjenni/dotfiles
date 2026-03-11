@@ -225,7 +225,7 @@ function setupShellEnv {
   local fishConfigDir=$configDir/fish
   copyFile fish/config.fish $fishConfigDir/config.fish
 
-  myFunctions=( "c" "cg" "ff" "fff" "gb" "gl" "l" "la" "ll" "ls")
+  myFunctions=( "c" "cg" "ff" "fff" "fish_greeting" "gb" "gl" "l" "la" "ll" "ls")
   for f in "${myFunctions[@]}" ; do
     copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
   done

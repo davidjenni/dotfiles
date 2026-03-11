@@ -15,8 +15,6 @@ set -x FZF_DEFAULT_OPS "--height=50% --layout=reverse --border --margin=1 --padd
 
 set -x BAT_CONFIG_DIR "$HOME/dotfiles/bat"
 
-set fish_greeting ""
-
 switch (uname)
     case Linux
         if test -d /home/linuxbrew/.linuxbrew/bin
