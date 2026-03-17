@@ -1,0 +1,23 @@
+name: "Continue configuration for VSCode and Rider"
+version: "1.0"
+models:
+  - name: local qwen3-coder
+    provider: "openai"
+    model: qwen3-coder:128K
+    apiBase: "http://localhost:12434/engines/v1"
+    apiKey: "not needed"
+    roles:
+    - autocomplete
+    - apply
+    - chat
+    - edit
+  - name: local devstral
+    provider: "openai"
+    model: devstral-small-2:24B
+    apiBase: "http://localhost:12434/engines/v1"
+    apiKey: "not needed"
+    roles:
+    - autocomplete
+    - apply
+    - chat
+    - edit
