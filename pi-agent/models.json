@@ -1,0 +1,14 @@
+{
+  "providers": {
+    "DockerMR": {
+      "baseUrl": "http://localhost:12434/engines/v1",
+      "api": "openai-completions",
+      "apiKey": "dmr",
+      "models": [
+        { "id": "devstral-small-2:24B" },
+        { "id": "gpt-oss" },
+        { "id": "qwen3-coder:128K" }
+      ]
+    }
+  }
+}
