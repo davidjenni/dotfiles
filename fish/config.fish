@@ -32,6 +32,10 @@ switch (uname)
         end
 end
 
+# ensure node/npm are on path if nvm.fish is installed:
+if functions -q nvm
+    nvm use latest
+end
 if test -d "$HOME/node_modules/.bin"
     set -x PATH $HOME/node_modules/.bin $PATH
 end

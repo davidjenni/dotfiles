@@ -15,7 +15,7 @@
 #>
 [CmdletBinding()]
 param (
-    [ValidateSet('clone', 'setup', 'apps', 'env', 'wt', IgnoreCase = $true)]
+    [ValidateSet('clone', 'setup', 'apps', 'env', IgnoreCase = $true)]
     [Parameter(Position = 0)] [string]
     # verb that indicates stage:
     #  clone:       clone the dotfiles repo and continue with 'setup' etc.
@@ -88,8 +88,8 @@ function cloneDotfiles {
     if (-not $userName -or $userName -eq '') {
         $userName = (& git config --global --get user.name)
     }
-    if (-not $username -or $username -eq '') {
-        $username = "$env:USERNAME@$env:COMPUTERNAME"
+    if (-not $userName -or $userName -eq '') {
+        $userName = "$env:USERNAME@$env:COMPUTERNAME"
     }
 
     if (-not $email -or $email -eq '') {
