@@ -1,4 +1,4 @@
-function l
+function lg
     lazygit $argv
 end
 
