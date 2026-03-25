@@ -5,7 +5,7 @@ local minVersion = '0.12.0'
 if vim.fn.has('nvim-' .. minVersion) == 0 then
   vim.api.nvim_echo({
     { 'This nvim config requires neovim >= ' .. minVersion .. '\n', 'ErrorMsg' },
-    { 'Press any key to exit',                                      'MoreMsg' },
+    { 'Press any key to exit', 'MoreMsg' },
   }, true, {})
   vim.fn.getchar()
   vim.cmd([[quit]])
@@ -21,17 +21,18 @@ vim.pack.add({ 'https://github.com/j-hui/fidget.nvim' }, { confirm = false })
 require('fidget').setup({
   notification = {
     override_vim_notify = true,
-  }
+  },
 })
 
 -- https://neovim.io/doc/user/pack/#_plugin-manager
 vim.pack.add({
+  'https://github.com/stevearc/conform.nvim',
   'https://github.com/folke/lazydev.nvim',
-  'https://github.com/neovim/nvim-lspconfig',
   { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('1.10') },
   'https://github.com/williamboman/mason.nvim',
   'https://github.com/williamboman/mason-lspconfig.nvim',
   'https://github.com/mfussenegger/nvim-lint',
+  'https://github.com/neovim/nvim-lspconfig',
 }, { confirm = false })
 
 local cmd = vim.cmd
@@ -78,15 +79,12 @@ vim.lsp.enable({
 vim.lsp.config['*'] = {
   capabilities = require('blink.cmp').get_lsp_capabilities(),
 }
-
--- this also configures lua_ls
-require('lazydev').setup({
-  opts = {
-    library = {
-      -- See the configuration section for more details
-      -- Load luvit types when the `vim.uv` word is found
-      { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-    },
+require('conform').setup({
+  formatters_by_ft = {
+    lua = { 'stylua' },
+  },
+  format_on_save = {
+    lsp_format = 'fallback',
   },
 })
 
@@ -98,14 +96,14 @@ require('blink.cmp').setup({
     ['<Tab>'] = { 'select_and_accept', 'fallback' },
   },
   appearance = {
-    nerd_font_variant = 'mono'
+    nerd_font_variant = 'mono',
   },
   completion = {
     -- menu = { border = 'rounded' },
-    documentation = { auto_show = true, auto_show_delay_ms = 500 }
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
   },
   fuzzy = {
-    implementation = 'prefer_rust'
+    implementation = 'prefer_rust',
   },
   signature = { enabled = true },
   sources = {
@@ -119,6 +117,17 @@ require('blink.cmp').setup({
           end,
         },
       },
+    },
+  },
+})
+
+-- this also configures lua_ls
+require('lazydev').setup({
+  opts = {
+    library = {
+      -- See the configuration section for more details
+      -- Load luvit types when the `vim.uv` word is found
+      { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
     },
   },
 })
@@ -138,7 +147,7 @@ vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'marksman', 'rumdl' }, -- selene needds to be manually installed via :Mason
+  ensure_installed = { 'lua_ls', 'marksman', 'rumdl', 'stylua' }, -- selene needds to be manually installed via :Mason
 })
 
 local set = vim.keymap.set
@@ -159,26 +168,30 @@ vim.diagnostic.config({ virtual_text = virt_text })
 local function jumpDiagVirtLines(jumpCount)
   pcall(vim.api.nvim_del_augroup_by_name, 'jumpWithVirtLineDiags') -- prevent autocmd for repeated jumps
 
-  vim.diagnostic.jump { count = jumpCount }
+  vim.diagnostic.jump({ count = jumpCount })
 
   -- local org_virtual_text = vim.diagnostic.config().virtual_text
-  vim.diagnostic.config { virtual_text = false, virtual_lines = { current_line = true } }
+  vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
 
   vim.defer_fn(function() -- deferred to not trigger by jump itself
     vim.api.nvim_create_autocmd('CursorMoved', {
       once = true,
       group = vim.api.nvim_create_augroup('jumpWithVirtLineDiags', {}),
       callback = function()
-        vim.diagnostic.config { virtual_lines = false, virtual_text = virt_text }
+        vim.diagnostic.config({ virtual_lines = false, virtual_text = virt_text })
       end,
     })
   end, 1)
 end
 -- see other diag defaults: https://neovim.io/doc/user/diagnostic/#_defaults
 -- selene: allow(multiple_statements)
-vim.keymap.set('n', ']d', function() jumpDiagVirtLines(1) end, { desc = '󰒕 Next diagnostic' })
+vim.keymap.set('n', ']d', function()
+  jumpDiagVirtLines(1)
+end, { desc = '󰒕 Next diagnostic' })
 -- selene: allow(multiple_statements)
-vim.keymap.set('n', '[d', function() jumpDiagVirtLines(-1) end, { desc = '󰒕 Prev diagnostic' })
+vim.keymap.set('n', '[d', function()
+  jumpDiagVirtLines(-1)
+end, { desc = '󰒕 Prev diagnostic' })
 
 -- vim.diagnostic.config(virtual_Lines = new_config)
 -- vim.ss
