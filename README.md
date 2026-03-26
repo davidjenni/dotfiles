@@ -1,3 +1,5 @@
+<!-- rumdl-configure-file { "MD013": { "line_length": 100 } } -->
+
 # dot files
 
 DotFiles for my macOS, Win32 & Linux environments. Geared towards use of git and neovim.
@@ -26,10 +28,13 @@ irm 'https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1' |
 ````
 
 For a headless install (elevated), run
+<!-- rumdl-disable line-length -->
 
 ```bash
 powershell -NoProfile -ExecutionPolicy RemoteSigned -command { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; $env:DOT_HEADLESS=1; irm https://raw.githubusercontent.com/davidjenni/dotfiles/main/bootstrap.ps1 | iex }
 ```
+
+<!-- rumdl-enable line-length -->
 
 ### macOS 14+/Ubuntu 22+/Debian 12+ (WSL or VM)
 
