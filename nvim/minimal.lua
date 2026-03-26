@@ -1,5 +1,5 @@
 -- minimal, lite neovim configuration
--- loads just enough plugins to support markdown & lua LS/completions
+-- loads just enough plugins to support markdown & lua LS/completions/formatting
 
 local minVersion = '0.12.0'
 if vim.fn.has('nvim-' .. minVersion) == 0 then
@@ -8,7 +8,7 @@ if vim.fn.has('nvim-' .. minVersion) == 0 then
     { 'Press any key to exit', 'MoreMsg' },
   }, true, {})
   vim.fn.getchar()
-  vim.cmd([[quit]])
+  vim.cmd.quitall()
   return {}
 end
 
@@ -19,21 +19,13 @@ vim.g.maplocalleader = ' '
 -- load fidget's nicer notifications first
 vim.pack.add({ 'https://github.com/j-hui/fidget.nvim' }, { confirm = false })
 require('fidget').setup({
+  display = {
+    done_ttl = 8,
+  },
   notification = {
     override_vim_notify = true,
   },
 })
-
--- https://neovim.io/doc/user/pack/#_plugin-manager
-vim.pack.add({
-  'https://github.com/stevearc/conform.nvim',
-  'https://github.com/folke/lazydev.nvim',
-  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('1.10') },
-  'https://github.com/williamboman/mason.nvim',
-  'https://github.com/williamboman/mason-lspconfig.nvim',
-  'https://github.com/mfussenegger/nvim-lint',
-  'https://github.com/neovim/nvim-lspconfig',
-}, { confirm = false })
 
 local cmd = vim.cmd
 local o = vim.o
@@ -63,11 +55,22 @@ o.tabstop = indent
 o.softtabstop = indent
 o.shiftwidth = indent
 o.completeopt = 'menuone,popup,preinsert'
-o.concealcursor = 'nc'
-o.conceallevel = 2
 o.mouse = 'a'
 
 cmd.colorscheme('catppuccin')
+
+-- https://neovim.io/doc/user/pack/#_plugin-manager
+vim.pack.add({
+  -- sort by repo/plugin name:
+  'https://github.com/stevearc/conform.nvim',
+  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('1.10') },
+  'https://github.com/folke/lazydev.nvim',
+  'https://github.com/williamboman/mason.nvim',
+  'https://github.com/williamboman/mason-lspconfig.nvim',
+  'https://github.com/echasnovski/mini.nvim',
+  'https://github.com/mfussenegger/nvim-lint',
+  'https://github.com/neovim/nvim-lspconfig',
+}, { confirm = false })
 
 -- global keybindings see: https://neovim.io/doc/user/lsp/#_defaults
 vim.lsp.enable({
@@ -136,18 +139,41 @@ require('lint').linters_by_ft = {
   lua = { 'selene' },
   markdown = { 'rumdl' },
 }
-vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
+
+local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+vim.api.nvim_create_autocmd({ 'LspAttach', 'BufReadPost', 'BufWritePost', 'InsertLeave' }, {
+  group = lint_augroup,
   callback = function()
-    local lint_status, lint = pcall(require, 'lint')
-    if lint_status then
-      lint.try_lint()
+    if vim.bo.modifiable then
+      local lint_status, lint = pcall(require, 'lint')
+      if lint_status then
+        vim.diagnostic.reset()
+        lint.try_lint()
+      end
     end
   end,
 })
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'marksman', 'rumdl', 'stylua' }, -- selene needds to be manually installed via :Mason
+  ensure_installed = { 'lua_ls', 'marksman', 'rumdl', 'stylua' },
+})
+if vim.fn.executable('selene') == 0 then
+  cmd([[MasonInstall selene]])
+end
+
+require('mini.surround').setup({
+  -- retain muscle memory from tpope's vim-surround
+  mappings = {
+    add = 'ys',
+    delete = 'ds',
+    find = '',
+    find_left = '',
+    highlight = '',
+    replace = 'cs',
+    suffix_last = '',
+    suffix_next = '',
+  },
 })
 
 local set = vim.keymap.set
@@ -162,7 +188,7 @@ end, { desc = 'Toggle [l]istchars' })
 set('n', '<leader>h', '<cmd>nohlsearch<CR>', { desc = 'Clear search [h]ighlights' })
 
 -- diagnostics:
-local virt_text = { source = 'if_many', prefix = '●' }
+local virt_text = { source = 'always', prefix = '●' }
 vim.diagnostic.config({ virtual_text = virt_text })
 
 local function jumpDiagVirtLines(jumpCount)
