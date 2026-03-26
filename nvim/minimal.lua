@@ -145,7 +145,15 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'BufReadPost', 'BufWritePost', 'Inser
     if vim.bo.modifiable then
       local lint_status, lint = pcall(require, 'lint')
       if lint_status then
-        vim.diagnostic.hide(nil, vim.api.nvim_get_current_buf())
+        local bufnr = vim.api.nvim_get_current_buf()
+        local ft = vim.bo[bufnr].filetype
+        local linters = lint.linters_by_ft[ft] or {}
+        for _, linter in ipairs(linters) do
+          local ns = lint.get_namespace and lint.get_namespace(linter) or nil
+          if ns then
+            vim.diagnostic.reset(ns, bufnr)
+          end
+        end
         lint.try_lint()
       end
     end
