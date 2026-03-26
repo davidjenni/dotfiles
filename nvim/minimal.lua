@@ -72,16 +72,16 @@ vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
 }, { confirm = false })
 
+vim.lsp.config['*'] = {
+  capabilities = require('blink.cmp').get_lsp_capabilities(),
+}
+
 -- global keybindings see: https://neovim.io/doc/user/lsp/#_defaults
 vim.lsp.enable({
   'lua_ls',
   'marksman',
   'rumdl',
 })
-
-vim.lsp.config['*'] = {
-  capabilities = require('blink.cmp').get_lsp_capabilities(),
-}
 require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
@@ -162,7 +162,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'BufReadPost', 'BufWritePost', 'Inser
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'marksman', 'rumdl' },
+  ensure_installed = { 'lua_ls', 'marksman' },
 })
 local toolsToInstall = { 'rumdl', 'stylua', 'selene' }
 for _, tool in ipairs(toolsToInstall) do
