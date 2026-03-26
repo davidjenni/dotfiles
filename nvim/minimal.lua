@@ -126,12 +126,10 @@ require('blink.cmp').setup({
 
 -- this also configures lua_ls
 require('lazydev').setup({
-  opts = {
-    library = {
-      -- See the configuration section for more details
-      -- Load luvit types when the `vim.uv` word is found
-      { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-    },
+  library = {
+    -- See the configuration section for more details
+    -- Load luvit types when the `vim.uv` word is found
+    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
   },
 })
 
@@ -147,7 +145,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'BufReadPost', 'BufWritePost', 'Inser
     if vim.bo.modifiable then
       local lint_status, lint = pcall(require, 'lint')
       if lint_status then
-        vim.diagnostic.reset()
+        vim.diagnostic.hide(nil, vim.api.nvim_get_current_buf())
         lint.try_lint()
       end
     end
@@ -158,8 +156,11 @@ require('mason').setup()
 require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'marksman', 'rumdl', 'stylua' },
 })
-if vim.fn.executable('selene') == 0 then
-  cmd([[MasonInstall selene]])
+local toolsToInstall = { 'rumdl', 'stylua', 'selene' }
+for _, tool in ipairs(toolsToInstall) do
+  if vim.fn.executable(tool) == 0 then
+    cmd([[MasonInstall ]] .. tool)
+  end
 end
 
 require('mini.surround').setup({
@@ -218,11 +219,6 @@ end, { desc = '󰒕 Next diagnostic' })
 vim.keymap.set('n', '[d', function()
   jumpDiagVirtLines(-1)
 end, { desc = '󰒕 Prev diagnostic' })
-
--- vim.diagnostic.config(virtual_Lines = new_config)
--- vim.ss
---
--- vim.defer_fn()
 
 local function toggle_quickfix()
   local windows = vim.fn.getwininfo()
