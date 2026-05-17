@@ -1,4 +1,4 @@
-<!-- rumdl-configure-file { "MD013": { "line_length": 100 } } -->
+<!-- rumdl-configure-file { "MD013": { "line_length": 10 } } -->
 
 # dot files
 

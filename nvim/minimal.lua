@@ -1,5 +1,7 @@
 -- minimal, lite neovim configuration
 -- loads just enough plugins to support markdown & lua LS/completions/formatting
+-- show loaded plugins:
+-- :lua =vim.iter(vim.pack.get()):map(function(v) return v.spec.name end):totable()
 
 local minVersion = '0.12.0'
 if vim.fn.has('nvim-' .. minVersion) == 0 then
@@ -38,7 +40,7 @@ o.ignorecase = true
 o.smartcase = true
 o.number = true
 o.signcolumn = 'yes:2'
-o.shortmess = 'atToOcI'
+o.shortmess = 'atToOc'
 o.scrolloff = 10
 o.sidescrolloff = 4
 o.splitbelow = true
@@ -82,6 +84,7 @@ vim.lsp.enable({
   'marksman',
   'rumdl',
 })
+
 require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
