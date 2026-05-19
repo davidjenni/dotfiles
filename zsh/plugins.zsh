@@ -1,4 +1,4 @@
-# ~/.config/zsh/plugin.zsh
+# ~/.config/zsh/plugins.zsh
 
 ZPLUGINDIR="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
 
