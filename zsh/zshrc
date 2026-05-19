@@ -20,6 +20,8 @@ eval "$(zoxide init zsh)"
 
 # Load completion system
 autoload -Uz compinit
+# Ensure completion cache directory exists
+mkdir -p -- "$XDG_CACHE_HOME/zsh"
 # Initialize completion with cached metadata file
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 
