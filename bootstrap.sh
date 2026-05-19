@@ -234,7 +234,7 @@ function setupShellEnv {
   local zshConfigDir=$configDir/zsh
   copyFile zsh/zshenv $zshConfigDir/.zshenv
   copyFile zsh/zshrc $zshConfigDir/.zshrc
-  copyFile zsh/plugin.zsh $zshConfigDir/plugin.zsh
+  copyFile zsh/plugins.zsh $zshConfigDir/plugins.zsh
 
   # Switch user's shell to fish:
   if ! grep -qi -- "fish" /etc/shells; then
