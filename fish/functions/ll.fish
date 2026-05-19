@@ -1,3 +1,3 @@
 function ll
-    ls -l $argv
+    ls -lh --git $argv
 end

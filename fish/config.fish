@@ -47,6 +47,10 @@ end
 
 fish_vi_key_bindings
 
+if functions -q nvm
+    nvm use --silent lts > /dev/null
+end
+
 if command -s zoxide > /dev/null
     zoxide init fish | source
     function zz
@@ -61,9 +65,6 @@ if command -s starship > /dev/null
     # https://starship.rs/advanced-config/#transientprompt-and-transientrightprompt-in-fish
     function starship_transient_prompt_func
         starship module character
-    end
-    function starship_transient_rprompt_func
-        starship module time
     end
     starship init fish | source
     enable_transience
