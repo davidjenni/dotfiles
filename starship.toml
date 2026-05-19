@@ -15,9 +15,9 @@ $nodejs\
 $rust\
 $golang\
 $docker_context\
-$time\
 $cmd_duration\
-\n$character"""
+$time\
+$character"""
 
 [character]
 success_symbol = "[[](green) ❯](peach)"

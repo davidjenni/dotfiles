@@ -230,7 +230,13 @@ function setupShellEnv {
     copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
   done
 
-  # Switch users shell to fish:
+  # zsh:
+  local zshConfigDir=$configDir/zsh
+  copyFile zsh/zshenv $zshConfigDir/.zshenv
+  copyFile zsh/zshrc $zshConfigDir/.zshrc
+  copyFile zsh/plugin.zsh $zshConfigDir/plugin.zsh
+
+  # Switch user's shell to fish:
   if ! grep -qi -- "fish" /etc/shells; then
       echo "Adding fish to /etc/shells"
       echo $(which fish) | sudo tee -a /etc/shells
