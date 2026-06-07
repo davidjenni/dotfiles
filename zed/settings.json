@@ -1,0 +1,112 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "cli_default_open_behavior": "new_window",
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+    },
+  },
+  "agent": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
+      "enable_thinking": true,
+      "effort": "high",
+    },
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5-mini",
+        "enable_thinking": true,
+        "effort": "high",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5.4-mini",
+        "enable_thinking": true,
+        "effort": "high",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": true,
+        "effort": "high",
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-haiku-4.5",
+        "enable_thinking": true,
+      },
+    ],
+    "model_parameters": [],
+  },
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "csharp": true,
+    "dockerfile": true,
+    "docker-compose": true,
+  },
+  "file_types": {
+    "XML": ["csproj", "props", "proj", "slnx", "targets"],
+  },
+  "code_lens": "on",
+  "git": {
+    "inline_blame": {
+      "delay_ms": 1000,
+    },
+    "gutter_debounce": 2000,
+  },
+  "toolbar": {
+    "code_actions": true,
+  },
+  "terminal": {
+    "toolbar": {
+      "breadcrumbs": true,
+    },
+  },
+  "tabs": {
+    "file_icons": true,
+    "git_status": false,
+  },
+  "show_whitespaces": "all",
+  "colorize_brackets": true,
+  "auto_signature_help": true,
+  "show_signature_help_after_edits": true,
+  "minimap": {
+    "show": "auto",
+  },
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "which_key": {
+    "enabled": true,
+  },
+  "telemetry": {
+    "diagnostics": true,
+    "metrics": false,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  // https://zed.dev/docs/vim
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "on_yank",
+    "highlight_on_yank_duration": 500,
+  },
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 16,
+  "buffer_font_size": 14.0,
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Macchiato",
+  },
+  "base_keymap": "VSCode",
+}

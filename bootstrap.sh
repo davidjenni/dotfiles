@@ -135,6 +135,7 @@ function installApps {
     tmux
     tre-command
     tokei
+    zed
     zoxide
     xz
     )
@@ -229,6 +230,11 @@ function setupShellEnv {
   for f in "${myFunctions[@]}" ; do
     copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
   done
+
+  # zed:
+  local zedConfigDir=$configDir/zed
+  copyFile zed/settings.json $zedConfigDir/settings.json
+  copyFile zed/keymap.json $zedConfigDir/keymap.json
 
   # zsh:
   local zshConfigDir=$configDir/zsh
