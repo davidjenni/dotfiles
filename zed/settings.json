@@ -100,7 +100,7 @@
     "use_system_clipboard": "on_yank",
     "highlight_on_yank_duration": 500,
   },
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "Catppuccin Macchiato",
   "ui_font_size": 16,
   "buffer_font_size": 14.0,
   "theme": {
