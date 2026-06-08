@@ -13,5 +13,8 @@ end_of_line = lf
 [*.{cmd,ps1,csv,doskey}]
 end_of_line = crlf
 
-[*.{lua,json,sh,yml}]
+[*.{lua,sh,yml}]
+indent_size = 2
+
+[zed/*.json]
 indent_size = 2
