@@ -135,10 +135,12 @@ function installApps {
     tmux
     tre-command
     tokei
-    zed
     zoxide
     xz
     )
+
+   # TODO: brew's package for zed is mac-only: conditionally add brew to apps array
+   # for linux/WSL, install as documented in: https://zed.dev/docs/installation#linux
 
   local var casks=(
     font-jetbrains-mono-nerd-font
