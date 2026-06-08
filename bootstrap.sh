@@ -139,6 +139,9 @@ function installApps {
     xz
     )
 
+   # TODO: brew's package for zed is mac-only: conditionally add brew to apps array
+   # for linux/WSL, install as documented in: https://zed.dev/docs/installation#linux
+
   local var casks=(
     font-jetbrains-mono-nerd-font
     ghostty
@@ -229,6 +232,11 @@ function setupShellEnv {
   for f in "${myFunctions[@]}" ; do
     copyFile fish/functions/$f.fish $fishConfigDir/functions/$f.fish
   done
+
+  # zed:
+  local zedConfigDir=$configDir/zed
+  copyFile zed/settings.json $zedConfigDir/settings.json
+  copyFile zed/keymap.json $zedConfigDir/keymap.json
 
   # zsh:
   local zshConfigDir=$configDir/zsh

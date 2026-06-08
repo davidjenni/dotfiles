@@ -16,3 +16,5 @@ end_of_line = crlf
 [*.{lua,sh,yml}]
 indent_size = 2
 
+[zed/*.json]
+indent_size = 2
