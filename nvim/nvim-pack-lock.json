@@ -1,0 +1,16 @@
+{
+  "plugins": {
+    "fidget.nvim": {
+      "rev": "82404b196e73a00b1727a91903beef5ddc319d22",
+      "src": "https://github.com/j-hui/fidget.nvim"
+    },
+    "mini.nvim": {
+      "rev": "a59a9b7fb0a42cbcf022938ee5f0724320b66f63",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
+    "oil.nvim": {
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "src": "https://github.com/stevearc/oil.nvim"
+    }
+  }
+}
