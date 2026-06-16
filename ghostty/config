@@ -10,7 +10,9 @@
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
 font-family = JetBrainsMono NFM Medium
-theme = Catppuccin Macchiato
+theme = Catppuccin Frappe
+# theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+
 
 background-opacity = 0.95
 
@@ -18,4 +20,3 @@ window-width = 160
 window-height = 45
 window-padding-x = 4
 window-padding-y = 4
-

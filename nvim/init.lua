@@ -4,9 +4,10 @@
 -- neovim standard paths:
 -- https://neovim.io/doc/user/starting.html#standard-path
 
-if vim.fn.has("nvim-0.12.0") == 0 then
+local minVer = '0.12.0'
+if vim.fn.has("nvim-" .. minVer) == 0 then
   vim.api.nvim_echo({
-    { "This nvim config requires neovim >= 0.12.0\n", "ErrorMsg" },
+    { "This nvim config requires neovim >= " .. minVer .. "\n", "ErrorMsg" },
     { "Press any key to exit", "MoreMsg" },
   }, true, {})
   vim.fn.getchar()
@@ -20,11 +21,8 @@ require('vim._core.ui2').enable()
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- diagnostics:
-local virt_text = { source = 'always', prefix = '●' }
-vim.diagnostic.config({ virtual_text = virt_text })
-
 require("options")
 require("pack")
-
+require("lsp")
+require("commands")
 
