@@ -4,6 +4,7 @@ vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/nvim-mini/mini.nvim',
   'https://github.com/nvim-lualine/lualine.nvim',
+  -- 'https://github.com/seblyng/roslyn.nvim',
   'https://github.com/stevearc/oil.nvim',
   'https://github.com/williamboman/mason.nvim',
   'https://github.com/williamboman/mason-lspconfig.nvim',
@@ -101,15 +102,6 @@ require("oil").setup({
 set("n", "-", "<cmd>Oil --float<CR>", { desc = "Toggle floating Oil file explorer" })
 
 require('mason').setup()
-require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls' },
-})
-local toolsToInstall = { 'stylua' }
-for _, tool in ipairs(toolsToInstall) do
-  if vim.fn.executable(tool) == 0 then
-    cmd([[MasonInstall ]] .. tool)
-  end
-end
 
 require('mini.surround').setup({
   -- retain muscle memory from tpope's vim-surround
