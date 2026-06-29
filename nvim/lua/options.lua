@@ -26,7 +26,8 @@ o.tabstop = indent
 o.softtabstop = indent
 o.shiftwidth = indent
 -- o.completeopt = 'menuone,popup,preinsert'
-o.completeopt = 'menuone,noselect,fuzzy,nosort'
+-- o.completeopt = 'menuone,noselect,fuzzy,nosort'
+o.completeopt = 'menuone,noselect,fuzzy,popup'
 o.mouse = 'a'
 
 o.swapfile = false
