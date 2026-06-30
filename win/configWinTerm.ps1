@@ -10,7 +10,8 @@ param ()
 
 $ErrorActionPreference = 'Stop'
 
-$wtSettingsFile = (Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
+# $wtSettingsFile = (Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
+$wtSettingsFile = (Join-Path $env:USERPROFILE "my-settings.json")
 $wtFragmentsRoot = (Join-Path $env:LOCALAPPDATA "Microsoft\Windows Terminal\Fragments\davidjenni.dotfiles")
 
 function winTermConfiguration {
@@ -18,10 +19,29 @@ function winTermConfiguration {
         Write-Warning "Windows Terminal settings file not found: $wtSettingsFile"
         Write-Warning "Launch and exit Windows Terminal to create the default settings file."
         # TODO: launch wt.exe to have it create its default settings file
-        return
+        # return
+        $_s = New-Object PSObject
+        $_s | Add-Member -MemberType NoteProperty -Force -Name '$help' -Value "https://aka.ms/terminal-documentation"
+        $_s | Add-Member -MemberType NoteProperty -Force -Name '$schema' -Value "https://aka.ms/terminal-profiles-schema"
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'actions' -Value @()
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'keybindings' -Value @()
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'newTabMenu' -Value @()
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'profiles' -Value (New-Object PSObject)
+        # $_s.profiles | Add-Member -MemberType NoteProperty -Force -Name 'defaults' -Value (New-Object PSObject)
+        $_s.profiles | Add-Member -MemberType NoteProperty -Force -Name 'list' -Value ([System.Collections.ArrayList]@())
+        $pwshProfile = New-Object PSObject
+        $pwshProfile | Add-Member -MemberType NoteProperty -Force -Name 'guid' -Value "{574e775e-4f2a-5b96-ac1e-a2962a402336}"
+        $pwshProfile | Add-Member -MemberType NoteProperty -Force -Name 'name' -Value "PowerShell"
+        $pwshProfile | Add-Member -MemberType NoteProperty -Force -Name 'source' -Value "Windows.Terminal.PowershellCore"
+        $_s.profiles.list.Add($pwshProfile) | Out-Null
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'schemes' -Value @()
+        $_s | Add-Member -MemberType NoteProperty -Force -Name 'themes' -Value @()
+    } else {
+        Write-Host "Windows Terminal settings file found: $wtSettingsFile"
+        $_s = Get-Content -Path $wtSettingsFile -Encoding utf8 | ConvertFrom-Json
     }
 
-    $_s = Get-Content -Path $wtSettingsFile -Encoding utf8 | ConvertFrom-Json
+    # $_s = Get-Content -Path $wtSettingsFile -Encoding utf8 | ConvertFrom-Json
 
     # sigh, PS is weird, need to add non-existing properties to the object before setting them
     $_s | Add-Member -MemberType NoteProperty -Force -Name confirmCloseAllTabs -Value $false
