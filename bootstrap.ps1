@@ -388,9 +388,6 @@ function setupShellEnvs {
     # & reg add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /d 0000000000000000020000001D003A0000000000 /t REG_BINARY /f | Out-Null
     # Write-Host "CapsLock remapped, will be effective after next system reboot."
 
-    # TODO: initialize Terminal, but its .json file won't exist until after the first launch
-    # $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
-
     Write-Host "setting up PowerShell profiles:"
     $pscoreProfile = (& pwsh -NoProfile -Command '$PROFILE.CurrentUserAllHosts')
     copyFile (Join-Path 'win' 'profile.ps1') $pscoreProfile
