@@ -23,7 +23,6 @@ function winTermConfiguration {
 
     $_s = Get-Content -Path $wtSettingsFile -Encoding utf8 | ConvertFrom-Json
 
-    # sigh, PS is weird, need to add non-existing properties to the object before setting them
     $_s | Add-Member -MemberType NoteProperty -Force -Name confirmCloseAllTabs -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyFormatting -Value "none"
     $_s | Add-Member -MemberType NoteProperty -Force -Name copyOnSelect -Value $false
@@ -33,6 +32,19 @@ function winTermConfiguration {
     $_s | Add-Member -MemberType NoteProperty -Force -Name multiLinePasteWarning -Value $false
     $_s | Add-Member -MemberType NoteProperty -Force -Name useAcrylicInTabRow -Value $true
     $_s | Add-Member -MemberType NoteProperty -Force -Name defaultProfile -Value "{574e775e-4f2a-5b96-ac1e-a2962a402336}"
+
+    # https://harrymin.dev/posts/fix-terminal-keybindings-csi-u/#calculating-and-sending-csi-u-codes
+    # https://github.com/neovim/neovim/issues/19575#issuecomment-2888309292
+    $_csiCtrlSpace = "`u{001b}[32;5u"
+    $_found = $_s.actions | Where-Object { $_.command.input -eq $_csiCtrlSpace }
+    if (-not $_found) {
+        $ctrlSpace = New-Object PSObject
+        $ctrlSpace | Add-Member -MemberType NoteProperty -Force -Name keys -Value 'ctrl+space'
+        $ctrlSpace | Add-Member -MemberType NoteProperty -Force -Name command -Value (New-Object PSObject)
+        $ctrlSpace.command | Add-Member -MemberType NoteProperty -Force -Name action -Value "sendInput"
+        $ctrlSpace.command | Add-Member -MemberType NoteProperty -Force -Name input -Value $_csiCtrlSpace
+        $_s.actions += $ctrlSpace
+    }
 
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name adjustIndistinguishableColors -Value "always"
     $_s.profiles.defaults | Add-Member -MemberType NoteProperty -Force -Name bellStyle -Value "taskbar"
