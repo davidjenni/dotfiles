@@ -81,7 +81,7 @@ _miniPick.setup(
 set("n", "<leader>b", function() _miniPick.builtin.buffers() end, { desc = "Buffer picker" })
 set("n", "<leader>f", function() _miniPick.builtin.files() end, { desc = "Files picker" })
 set("n", "<leader>h", function() _miniPick.builtin.help() end, { desc = "Help picker" })
-set("n", "<leader>/", function() _miniPick.builtin.grep_live() end, { desc = "Help picker" })
+set("n", "<leader>/", function() _miniPick.builtin.grep_live() end, { desc = "Live grep" })
 
 require("oil").setup({
   columns = { "icons", "size", "mtime" },

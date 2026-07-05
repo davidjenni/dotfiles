@@ -1,14 +1,19 @@
 local api = vim.api
 local opt = vim.opt
 
+local augroup = api.nvim_create_augroup("user.commands", { clear = true })
+
 api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking (copying) text",
-    callback = function()
-        vim.hl.on_yank()
-    end,
+  group = augroup,
+  pattern = "*",
+  desc = "Highlight when yanking (copying) text",
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
 
 api.nvim_create_autocmd("WinEnter", {
+  group = augroup,
   pattern = "*",
   callback = function()
     local function count_non_floating_wins()

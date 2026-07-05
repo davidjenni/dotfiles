@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         else
           feedkeys '<S-Tab>'
         end
-      end, { desc = 'Select previoua completion' })
+      end, { desc = 'Select previous completion' })
 
       -- Inside a snippet, use backspace to remove the placeholder.
       set('s', '<BS>', '<C-o>s', { desc = 'Remove snippet placeholder' })
