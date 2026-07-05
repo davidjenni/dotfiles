@@ -1,77 +1,32 @@
--- neovim init file
--- github.com/davidjenni/dotfiles
+local o = vim.o
 
-local g, opt = vim.g, vim.opt
+o.cursorline = true
+o.smarttab = true
+o.expandtab = true
+o.incsearch = true
+o.ignorecase = true
+o.smartcase = true
+o.number = true
+o.signcolumn = 'yes:2'
+o.scrolloff = 10
+o.sidescrolloff = 4
+o.splitbelow = true
+o.splitright = true
+o.pumborder = 'rounded'
+o.winborder = 'rounded'
+o.list = true
+o.listchars = 'tab:>.,trail:#,extends:>,precedes:<'
+o.showmatch = true
+o.matchtime = 2
 
--- nvim-tree: disable netrw at the very start of your init.lua
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
-
-g.mapleader = ' '
-g.maplocalleader = ' '
-
--- :he options
-opt.backspace = 'indent,eol,start'
-opt.showcmd = true
-opt.laststatus = 3	-- new in neovim >= 0.7
--- TODO: :hightlight WinSeparator guibg=None
-
-opt.autowrite = true
-opt.autoread = true
-opt.cursorline = true
-
-opt.wildmode = { 'list', 'full' }
--- opt.wildmode = { 'list:full' }
-opt.wildignorecase = true
-opt.wildoptions = 'pum'
-opt.pumheight = 12
-
-opt.showmode = true
-opt.showcmd = true
-opt.showmatch = true
-
-opt.number = true
-opt.signcolumn = 'yes'
-opt.shortmess = 'atToOcI'
-opt.splitright = true
-opt.splitbelow = true
-
-opt.smarttab = true
-opt.expandtab = true
 local indent = 2
-opt.tabstop = indent
-opt.softtabstop = indent
-opt.shiftwidth = indent
-opt.autoindent = true
-opt.smartindent = true
-opt.shiftround = true
-opt.cindent = true
-opt.virtualedit = 'onemore'
-opt.joinspaces = false
-opt.formatoptions = 'crqnj'
+o.tabstop = indent
+o.softtabstop = indent
+o.shiftwidth = indent
+o.completeopt = 'menuone,noselect,fuzzy,popup'
+o.mouse = 'a'
 
-opt.completeopt = 'menuone,preview'
-
-opt.incsearch = true
-opt.ignorecase = true
-opt.smartcase = true
-
-opt.cursorline = true
-opt.scrolloff = 2
-opt.sidescrolloff = 2
-
-opt.listchars = { tab = '>.', trail = '#', extends = '>', precedes = '<' }
-opt.list = true
-
-opt.mouse = 'a'
-opt.belloff = 'all'
--- no automatic copy to system clipboard
-opt.clipboard = ''
-opt.writebackup = false
-opt.swapfile = false
-opt.hidden = true
-opt.switchbuf = 'useopen'
-
--- disable folding; see also `set nofoldenable`
-opt.foldlevel = 99
+o.swapfile = false
+o.backup = false
+o.undodir = vim.fn.stdpath("data") .. "/undodir"
 
