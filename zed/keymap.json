@@ -7,7 +7,7 @@
 // from the command palette.
 [
   {
-    "context": "VimControl && !menu",
+    "context": "VimControl && !menu && not_editing",
     "bindings": {
       "ctrl-\\": "terminal_panel::ToggleFocus",
       "space e": "pane::RevealInProjectPanel",
@@ -23,7 +23,7 @@
     },
   },
   {
-    "context": "Workspace",
+    "context": "Workspace && not_editing",
     "bindings": {
       "ctrl-\\": "terminal_panel::ToggleFocus",
       "space e": "workspace::ToggleRightDock",
