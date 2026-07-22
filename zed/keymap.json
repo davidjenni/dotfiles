@@ -7,11 +7,12 @@
 // from the command palette.
 [
   {
-    "context": "VimControl && !menu && not_editing",
+    "context": "VimControl && !menu",
     "bindings": {
       "ctrl-\\": "terminal_panel::ToggleFocus",
       "space e": "pane::RevealInProjectPanel",
       "space f": "file_finder::Toggle",
+      "space g": "git_panel::ToggleFocus",
       "space m p": "markdown::OpenPreview",
       "space m P": "markdown::OpenPreviewToTheSide",
     },
@@ -23,9 +24,14 @@
     },
   },
   {
-    "context": "Workspace && not_editing",
+    "context": "Workspace",
     "bindings": {
       "ctrl-\\": "terminal_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "Workspace && not_editing",
+    "bindings": {
       "space e": "workspace::ToggleRightDock",
       "space g": "git_panel::ToggleFocus",
     },
@@ -41,6 +47,8 @@
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "q": "workspace::ToggleRightDock",
+      "space e": "workspace::ToggleRightDock",
+      "space g": "git_panel::ToggleFocus",
     },
   },
   {
@@ -50,6 +58,7 @@
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown",
+      "space g": "git_panel::ToggleFocus",
     },
   },
   {
