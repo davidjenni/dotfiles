@@ -318,6 +318,7 @@ function installWinGetApps {
     & winget install Microsoft.WindowsTerminal --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
     & winget install Microsoft.VisualStudioCode --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
     & winget install ZedIndustries.Zed --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
+    & winget install psmux --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
 }
 
 function setup {
