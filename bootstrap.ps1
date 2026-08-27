@@ -427,6 +427,13 @@ function setupShellEnvs {
     $openSsh=((Join-Path $env:windir 'System32\OpenSSH\ssh.exe').Replace("\", "/"))
     & git config --global core.sshCommand $openSsh
 
+    # psmux:
+    $ppmDir = (Join-Path $env:USERPROFILE  '.psmux\plugins\ppm')
+    if (-not (Test-Path $ppmDir)) {
+        git clone https://github.com/psmux/psmux-plugins.git "$ppmDir"
+    }
+        copyFile tmux.conf (Join-Path $env:USERPROFILE '.tmux.conf')
+
     $zedConfigDir = (Join-Path $env:APPDATA 'zed')
     copyFile 'zed\settings.json' (Join-Path $zedConfigDir 'settings.json')
     copyFile 'zed\keymap.json' (Join-Path $zedConfigDir 'keymap.json')
