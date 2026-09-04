@@ -8,5 +8,6 @@ For each theme, the .json file is expected to be a JSON fragment, see:
 ## Themes
 
 - [Catppuccin](https://catppuccin.com/): <https://github.com/catppuccin/windows-terminal>
+- [Circadia](https://tanmaymanojgandhi.github.io/circadia/): <https://github.com/tanmaymanojgandhi/circadia/tree/main/ports/windows-terminal>
 - [Nord](https://www.nordtheme.com/): <https://github.com/thismat/nord-windows-terminal/>
 - [Solarized](https://ethanschoonover.com/solarized/): <https://github.com/Lucky-Loek/patched-solarized-dark-windows-terminal>

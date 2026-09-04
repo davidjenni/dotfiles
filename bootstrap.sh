@@ -217,7 +217,7 @@ function setupShellEnv {
 
   copyFile bash/bash_aliases.sh $HOME/.bash_aliases
   copyFile bash/inputrc $HOME/.inputrc
-  copyFile bash/tmux.conf $HOME/.tmux.conf
+  copyFile ./tmux.conf $HOME/.tmux.conf
 
   # starship.rs:
   copyFile starship.toml $configDir/starship.toml

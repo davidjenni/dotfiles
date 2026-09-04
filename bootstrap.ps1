@@ -318,6 +318,7 @@ function installWinGetApps {
     & winget install Microsoft.WindowsTerminal --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
     & winget install Microsoft.VisualStudioCode --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
     & winget install ZedIndustries.Zed --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
+    & winget install psmux --accept-source-agreements --accept-package-agreements --disable-interactivity --silent
 }
 
 function setup {
@@ -425,6 +426,10 @@ function setupShellEnvs {
     Remove-Item (Join-Path $sshDir 'config') -ErrorAction SilentlyContinue -Force | Out-Null
     $openSsh=((Join-Path $env:windir 'System32\OpenSSH\ssh.exe').Replace("\", "/"))
     & git config --global core.sshCommand $openSsh
+
+    # psmux:
+    $psmuxDir = (Join-Path $configDir 'psmux')
+    copyFile tmux.conf (Join-Path $psmuxDir 'psmux.conf')
 
     $zedConfigDir = (Join-Path $env:APPDATA 'zed')
     copyFile 'zed\settings.json' (Join-Path $zedConfigDir 'settings.json')
