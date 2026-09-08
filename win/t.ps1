@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-    Attach to a tmux/psmux session, either a formerly visited zoxide directory or named after the current directory '.'
+    Attach to a psmux session, either a formerly visited zoxide directory or named after the current directory '.'
 
     .DESCRIPTION
     PowerShell port of fish/functions/t.fish.
@@ -9,7 +9,7 @@
     Creates the session if it doesn't exist yet, then attaches to it (or switches the client when
     already running inside the multiplexer).
 
-    Uses psmux on Windows (https://github.com/psmux/psmux), falls back to tmux if psmux isn't installed.
+    Uses psmux on Windows (https://github.com/psmux/psmux)
 
     .PARAMETER Query
     zoxide query to preselect in fzf, or '.' to use the current directory.
