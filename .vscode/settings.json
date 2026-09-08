@@ -67,6 +67,7 @@
         "rhkp",
         "rprompt",
         "Scancode",
+        "setw",
         "shellenv",
         "Titlebar",
         "tokei",

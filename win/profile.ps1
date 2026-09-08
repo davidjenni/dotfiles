@@ -216,6 +216,9 @@ function gb { param ([string] $searchTerm)
             --bind shift-up:preview-top,shift-down:preview-bottom
 }
 
+# attach to a psmux/tmux session named after a zoxide directory or the current one ('.'):
+function t { & "$env:USERPROFILE\dotfiles\win\t.ps1" @args }
+
 function which { param ([string] $cmd) Get-Command $cmd }
 function xx { exit }
 function msb { param ( [string[]] [Parameter(ValueFromRemainingArguments)] $rest )
