@@ -12,7 +12,6 @@ function t --description "Attach to a tmux session, either a formerly visited zo
         set -l _Q (test -n "$_candidate"; and echo "$_candidate"; or echo '')
         set _dir (zoxide query -l | fzf --ansi --query=$_Q \
             --height=50% --layout=reverse-list --border --margin=1 --padding=1)
-        echo "dir=$_dir"
         if test -z "$_dir"
             # user bailed out of fzf
             return
